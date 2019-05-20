@@ -65,17 +65,19 @@ namespace iS3.Config
             Startup += App_Startup;
         }
 
+        //定义App_Stratup监听事件
         private void App_Startup(object sender, StartupEventArgs e)
         {
             GdbHelper.Initialize();
 
             // Load resources from ResourceDictionary.xaml
-            //
+            // 从ResourceDictionary.xaml中加载资源
             ResourceDictionary dict = (ResourceDictionary)Application.LoadComponent(
                 new Uri("/iS3.Config;Component/ResourceDictionary.xaml", System.UriKind.Relative));
             this.Resources.MergedDictionaries.Add(dict);
 
             // open a background window that start the configuration
+            // 打开一个后台窗口开始进行配置
             Window backgroundWnd = new Window();
             this.MainWindow = backgroundWnd;
 
@@ -97,7 +99,7 @@ namespace iS3.Config
             bool? success;
 
             // Preparation Step 1 - Config path to iS3 and data directory
-            //
+            // 准备环节第一步 配置iS3路径与data路径
             ConfPathWindow mainWnd = new ConfPathWindow();
             mainWnd.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             success = mainWnd.ShowDialog();
@@ -109,7 +111,7 @@ namespace iS3.Config
             dataPath = mainWnd.DataPath;
 
             // Preparation Step 2 - Config projects
-            //
+            // 准备环节第二步 配置项目
             string projListFile = dataPath + "\\ProjectList.xml";
             ProjectList projList = ConfigCore.LoadProjectList(projListFile);
             ProjectsWindow projsWnd = new ProjectsWindow(projList);
@@ -124,7 +126,7 @@ namespace iS3.Config
             projLocY = projsWnd.ProjLocY;
 
             // Step 1 - Config project general definition
-            //
+            // 配置环节第一步 配置项目整体描述
             ProjectDefinition projDef = ConfigCore.LoadProjectDefinition(dataPath, projID);
             if (projDef == null)
                 projDef = ConfigCore.CreateProjectDefinition(dataPath, projID);
@@ -137,7 +139,7 @@ namespace iS3.Config
             }
 
             // Step 2 - Config engineering maps definition of the project
-            //
+            // 配置环节第二步 配置地图
             ProjEMapDefWindow projEMapsDefWnd = new ProjEMapDefWindow(projDef);
             projEMapsDefWnd.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             success = projEMapsDefWnd.ShowDialog();
@@ -158,7 +160,7 @@ namespace iS3.Config
             //}
 
             // Step 3 - Config domains of the project
-            //
+            // 配置项目定义域
             List<EMapLayers> eMapLayersList = projEMapsDefWnd.EMapLayersList;
             Project prj = ConfigCore.LoadProject(dataPath, projID);
             DomainDefWindow domainDefWnd = new DomainDefWindow(projDef, prj, eMapLayersList);
@@ -170,7 +172,7 @@ namespace iS3.Config
             }
 
             // Step 4 - Config project tree
-            //
+            // 配置项目树
             ProjTreeDefWindow prjTreeDefWnd = new ProjTreeDefWindow(prj);
             prjTreeDefWnd.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             success = prjTreeDefWnd.ShowDialog();
@@ -180,7 +182,7 @@ namespace iS3.Config
             }
 
             // Write ProjectList.xml
-            //
+            // 
             ConfigCore.WriteProjectList(projListFile, projsWnd.ProjectList);
             
             // Write <projectID>.xml

@@ -51,7 +51,9 @@
         </StackPanel>
         <esri:MapView x:Name="MyMapView" WrapAround="True" Grid.Column="1" Grid.ColumnSpan="2">
             <esri:Map x:Name="Map" InitialViewpoint="{StaticResource China}">
-                <esri:ArcGISLocalTiledLayer ID="BaseMap" Path="..\Output\Data\TPKs\Topographic.tpk"/>
+                <!--<esri:ArcGISLocalTiledLayer ID="BaseMap" Path="..\Output\Data\TPKs\Topographic.tpk"/>-->
+                <esri:ArcGISTiledMapServiceLayer 
+                    ServiceUri="https://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineCommunity/MapServer"/>
                 <esri:GraphicsLayer x:Name="ProjectGraphicsLayer" ID="ProjectGraphicsLayer"/>
             </esri:Map>
         </esri:MapView>
