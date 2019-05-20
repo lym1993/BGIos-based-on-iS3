@@ -18,12 +18,14 @@
         <StackPanel Grid.Column="0" HorizontalAlignment="Center"
                         VerticalAlignment="Center" Orientation="Vertical">
             <IS3Controls:RaisedText x:Name="ProjectTitle1" Grid.Row="0"
-                                        Text="基础设施智慧服务系统" TextSize="60"
+                                        HorizontalAlignment="Center"
+                                        Text="北京市勘察设计研究院勘察系统" TextSize="53"
                                         TextWeight="Bold" 
                                         ShadowOpacity="0.5">
             </IS3Controls:RaisedText>
             <IS3Controls:RaisedText x:Name="ProjectTitle" Grid.Row="0"
-                                        Text="Infrastructure Smart Service System (iS3)" TextSize="30"
+                                        Text="BGI Geotechnical Investigation Information System" TextSize="29"
+                                        HorizontalAlignment="Center"
                                         TextWeight="Bold" 
                                         ShadowOpacity="0.5">
             </IS3Controls:RaisedText>
@@ -37,20 +39,20 @@
                     <RowDefinition Height="0.8*"/>
                 </Grid.RowDefinitions>
                 <Border Background="#4C000000" CornerRadius="10 10 0 0">
-                    <TextBlock Text="用户登录"  Foreground="#FFABB9C5"  FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Text="用户登录"  Foreground="#FFABB9C5"  FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <StackPanel Grid.Row="1" VerticalAlignment="Center" Orientation="Horizontal" Margin="40 0 0 0">
-                    <TextBlock  Text="账　户" Padding="10 3 10 3"  Foreground="#FFABB9C5" FontSize="15" VerticalAlignment="Center"></TextBlock>
-                    <TextBox Foreground="#FFABB9C5" Text="iS3Guest"   VerticalContentAlignment="Center" Background="Transparent"  Width="200"  Name="LoginNameTB"/>
+                    <TextBlock  Text="账　户" Padding="10 3 10 3"  Foreground="#FFABB9C5" FontSize="20" VerticalAlignment="Center"></TextBlock>
+                    <TextBox Foreground="#FFABB9C5" VerticalContentAlignment="Center" Text="iS3Guest" Background="Transparent" FontSize="20" Width="200"  Name="LoginNameTB"/>
                 </StackPanel>
                 <StackPanel Grid.Row="2" VerticalAlignment="Center" Orientation="Horizontal" Margin="40 0 0 0">
-                    <TextBlock  Text="密　码" Padding="10 3 10 3"  Foreground="#FFABB9C5" FontSize="15" VerticalAlignment="Center"></TextBlock>
-                    <PasswordBox Foreground="#FFABB9C5" Password="iS3Guest" VerticalContentAlignment="Center" Background="Transparent" Width="200" Name="LoginPasswordTB"/>
+                    <TextBlock  Text="密　码" Padding="10 3 10 3"  Foreground="#FFABB9C5" FontSize="20" VerticalAlignment="Center"></TextBlock>
+                    <PasswordBox Foreground="#FFABB9C5" Password="iS3Guest" VerticalContentAlignment="Center" Background="Transparent" FontSize="20" Width="200" Name="LoginPasswordTB"/>
                 </StackPanel>
                 <WrapPanel Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Button Name="LoginButton" 
-                                   HorizontalAlignment="Center" FontSize="15" Padding="4"  Width="100" BorderThickness="0"
-                                   Background="#196D83B0" Foreground="#FFABB9C5" Click="LoginButton_Click">用户登陆</Button>
+                    <Button Name="LoginButton"  IsDefault="True"
+                                   HorizontalAlignment="Center" FontSize="20" Padding="4"  Width="100" BorderThickness="1"
+                                   Background="#196D83B0" Foreground="#FFABB9C5" Click="LoginButton_Click">登  录</Button>
 
                 </WrapPanel>
             </Grid>

@@ -342,6 +342,10 @@
             <esri:ViewpointExtent x:Key="Shanghai"
                                   XMin="13500000" XMax="13560000"
                                   YMin="3640000" YMax="3690000" />
+            <esri:ViewpointExtent x:Key="Z14"
+                                  XMin="12964900" XMax="12965500"
+                                  YMin="4853000" YMax="4853500" />
+            
             <esri:SimpleMarkerSymbol x:Key="DefaultMarkerSymbol"
                                      Color="Red" Size="12" Style="Circle" />
             <esri:SimpleLineSymbol x:Key="DefaultLineSymbol"

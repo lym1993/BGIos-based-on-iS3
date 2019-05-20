@@ -42,17 +42,19 @@
     <Grid x:Name="RootVisual">
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
-            <!--<RowDefinition Height="24" />-->
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!-- Menu bar -->
+        <!-- 第一行 菜单栏 -->
         <Grid x:Name="TopMenuGrid" Grid.Row="0"
               Background="{StaticResource BaseColor}">
+            
+            <!--第一行分为三列-->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
             <Rectangle Fill="{StaticResource BaseColor}" Stroke="White"
 					   StrokeThickness="1" Stretch="Fill" 
@@ -63,12 +65,13 @@
             <StackPanel Grid.Column="0" HorizontalAlignment="Left"
                         VerticalAlignment="Center" Orientation="Horizontal">
                 <IS3Controls:RaisedText x:Name="ProjectTitle"
-                                        Text="Infrastructure Smart Service System (iS3)" TextSize="24"
+                                        Text="BGI Geotechnical Investigation Information System" TextSize="20"
                                         TextWeight="Bold" Margin="5,0,0,0"
                                         ShadowOpacity="0.5">
                 </IS3Controls:RaisedText>
             </StackPanel>
 
+            <!--第一行第二列 包含home与py按钮-->
             <StackPanel Grid.Column="1" 
 						HorizontalAlignment="Right" VerticalAlignment="Center"
 						Orientation="Horizontal" Margin="0,0,20,0">
@@ -106,15 +109,107 @@
             </StackPanel>
         </Grid>
 
-        <!--<StackPanel Grid.Row="1">
-            <Menu x:Name="MainMenu" IsMainMenu="True">
-                <MenuItem Header="Help">
-                    <MenuItem Header="About"></MenuItem>
-                </MenuItem>
-            </Menu>
-        </StackPanel>-->
+        <!--第二行 19.5.16 新添加的功能栏-->
+        <Grid Grid.Row="1" >
+            <StackPanel >
+                <Menu x:Name="MainMenu" IsMainMenu="True">
+                    <MenuItem  Header="  策划  " FontSize="25" >
+                        <MenuItem Header="工程设计条件" >
+                            <MenuItem Header="建设与结构"></MenuItem>
+                            <MenuItem Header="名称与范围"></MenuItem>
+                            <MenuItem Header="设计功能"></MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="场地条件" >
+                            <MenuItem Header="地形地貌图"></MenuItem>
+                            <MenuItem Header="地质图"></MenuItem>
+                            <MenuItem Header="地质构造图"></MenuItem>
+                            <MenuItem Header="地面沉降图"></MenuItem>
+                            <MenuItem Header="水系/液化分布图"></MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="地基条件" >
+                            <MenuItem Header="勘察"></MenuItem>
+                            <MenuItem Header="评估">
+                                <MenuItem Header="灾害评估"></MenuItem>
+                                <MenuItem Header="安全评估"></MenuItem>
+                            </MenuItem>
+                            <MenuItem Header="岩土">
+                                <MenuItem Header="设计"></MenuItem>
+                                <MenuItem Header="施工"></MenuItem>
+                            </MenuItem>
+                            <MenuItem Header="咨询"></MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="环境条件" >
+                            <MenuItem Header="权属">
+                                <MenuItem Header="产权方"></MenuItem>
+                                <MenuItem Header="使用方"></MenuItem>
+                            </MenuItem>
+                            <MenuItem Header="土地历史">
+                                <MenuItem Header="化工"></MenuItem>
+                                <MenuItem Header="农田"></MenuItem>
+                                <MenuItem Header="林地"></MenuItem>
+                                <MenuItem Header="养殖"></MenuItem>
+                            </MenuItem>
+                            <MenuItem Header="工程活动">
+                                <MenuItem Header="人防"></MenuItem>
+                                <MenuItem Header="地上障碍"></MenuItem>
+                                <MenuItem Header="地下设施"></MenuItem>
+                            </MenuItem>
+                            <MenuItem Header="勘探条件">
+                                <MenuItem Header="水"></MenuItem>
+                                <MenuItem Header="电"></MenuItem>
+                                <MenuItem Header="路"></MenuItem>
+                            </MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="规范标准" >
+                            <MenuItem Header="国标" ></MenuItem>
+                            <MenuItem Header="行标"></MenuItem>
+                            <MenuItem Header="地标"></MenuItem>
+                            <MenuItem Header="文件"></MenuItem>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="  外业  " FontSize="25">
+                        <MenuItem Header="测量" ></MenuItem>
+                        <MenuItem Header="交底" ></MenuItem>
+                        <MenuItem Header="变更" ></MenuItem>
+                        <MenuItem Header="调查与测绘" ></MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="  内业  " FontSize="25">
+                        <MenuItem Header="室内试验" ></MenuItem>
+                        <MenuItem Header="地层划分" ></MenuItem>
+                        <MenuItem Header="水" ></MenuItem>
+                        <MenuItem Header="地震分析" >
+                            <MenuItem Header="覆盖层厚度" ></MenuItem>
+                            <MenuItem Header="液化判别" ></MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="计算分析" >
+                            <MenuItem Header="沙土模量" ></MenuItem>
+                            <MenuItem Header="卵石模量" ></MenuItem>
+                            <MenuItem Header="地基承载力修正" ></MenuItem>
+                            <MenuItem Header="桩基础承载力" ></MenuItem>
+                            <MenuItem Header="抗浮验算" ></MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="绘制图件" >
+                            <!--这部分体现在下方页面即可-->
+                            <MenuItem Header="平面图" ></MenuItem>
+                            <MenuItem Header="剖面图" ></MenuItem>
+                            <MenuItem Header="三维地质图" ></MenuItem>
+                            <MenuItem Header="三维动画图" ></MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="输出报告" ></MenuItem>
 
-        <Grid Grid.Row="1">
+
+                    </MenuItem>
+                    <MenuItem Header="  地基方案与建议  " FontSize="25">
+                        <MenuItem Header="天然地基方案" ></MenuItem>
+                        <MenuItem Header="地基处理方案" ></MenuItem>
+                        <MenuItem Header="桩基础方案"  ></MenuItem>
+                    </MenuItem>
+                </Menu>
+            </StackPanel>
+        </Grid>
+        
+        <!--第三行 主程序页面-->
+        <Grid Grid.Row="2">
             <xcad:DockingManager x:Name="DocMan"
 			AllowMixedOrientation="True"
 			BorderBrush="Black"

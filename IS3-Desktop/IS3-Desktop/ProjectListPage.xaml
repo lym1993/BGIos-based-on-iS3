@@ -15,9 +15,12 @@
 
         <esri:MapView x:Name="MyMapView" WrapAround="True">
             <esri:Map x:Name="Map"
-                      InitialViewpoint="{StaticResource China}">
-                <esri:ArcGISLocalTiledLayer ID="BaseMap"
-                                            Path="Data\TPKs\Topographic.tpk"/>
+                      InitialViewpoint="{StaticResource Z14}">
+                <!--调用网上地图服务-->
+                <esri:ArcGISTiledMapServiceLayer 
+                    ServiceUri="https://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineCommunity/MapServer"/>
+                <!--<esri:ArcGISLocalTiledLayer ID="BaseMap"
+                                            Path="Data\TPKs\Topographic.tpk"/>-->
                 <esri:GraphicsLayer x:Name="ProjectGraphicsLayer"
                     ID="ProjectGraphicsLayer">
                 </esri:GraphicsLayer>
@@ -37,23 +40,33 @@
                 </esri:OverlayItemsControl>
             </esri:MapView.Overlays>
         </esri:MapView>
-
+        
+        <!--第一行标题-->
         <IS3Controls:RaisedText x:Name="Title"
-            Text="Infrastructure Smart Service System"
-            TextSize="20" TextWeight="Bold" ShadowOpacity="0.5"
+            Text="BGI Geotechnical Investigation Information System"
+            TextSize="18" TextWeight="Bold" ShadowOpacity="0.5"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Margin="10,10,0,0"
-            Height="30" TextBrush="Cyan"/>
-
+            Height="30" TextBrush="White"/>
+        
+        <!--第二行标题-->
         <IS3Controls:RaisedText x:Name="ProjectTitle"
             Text="Project Title"
-            TextSize="25" TextWeight="Bold"
-            TextBrush="Yellow" ShadowOpacity="0.5"
+            TextSize="20" TextWeight="Bold"
+            TextBrush="LightBlue" ShadowOpacity="0.2"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Margin="10,40,0,0"
             Height="35"/>
+        
+        <!--显示坐标 -->
+        <TextBlock x:Name="MapCoordsTextBlock" 
+                   HorizontalAlignment="Left" 
+                   VerticalAlignment="Bottom"
+                   Margin="68,0,0,00"
+                   Height="35"
+                   FontSize="18"/>
 
     </Grid>
 

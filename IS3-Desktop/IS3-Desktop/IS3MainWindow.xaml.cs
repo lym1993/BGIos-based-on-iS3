@@ -33,10 +33,12 @@ namespace iS3.Desktop
             this.Left = userPrefs.WindowLeft;
             this.WindowState = userPrefs.WindowState;
 
+            //首先加载用户登录界面（参数userLoginPage）
             UserLoginPage userLoginPage = new UserLoginPage();
             pageTransitionControl.ShowPage(userLoginPage);
         }
 
+        //关闭窗口的监听事件
         void MainWindow_Closing(object sender,
             System.ComponentModel.CancelEventArgs e)
         {
@@ -51,6 +53,7 @@ namespace iS3.Desktop
             userPrefs.Save();
         }
 
+        //跳转到主窗体方法（definitionFile参数）
         public void SwitchToMainFrame(string definitionFile)
         {
             pageTransitionControl.TransitionType =
@@ -62,6 +65,7 @@ namespace iS3.Desktop
             app.MainFrame = mainFrame;
         }
        
+        //跳转到项目选择页面
         public void SwitchToProjectListPage()
         {
             ProjectListPage projectListPage = new ProjectListPage();

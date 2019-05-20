@@ -91,6 +91,27 @@ namespace iS3.Desktop
 
         async void MyMapView_MouseMove(object sender, MouseEventArgs e)
         {
+            //加入XY坐标
+            var _currentLatLng = MyMapView.ScreenToLocation(e.GetPosition(MyMapView));
+            if (_currentLatLng != null)
+            {
+                MapCoordsTextBlock.Text = Corrds(_currentLatLng);
+            }
+            //转换为墨卡托投影坐标系统
+            // string MercatorToLngLat(MapPoint mercator)
+            //{
+            //    double x = mercator.X / 20037508.34 * 180;
+            //    double y = mercator.Y / 20037508.34 * 180;
+            //    y = 180 / Math.PI * (2 * Math.Atan(Math.Exp(y * Math.PI / 180)) - Math.PI / 2);
+            //    return "Lng:" + x + ",  " + "Lat:" + y;
+            //}
+            string Corrds(MapPoint point)
+            {
+                double x = point.X;
+                double y = point.Y;
+                return "X:" + x + " , " + "Y:" + y;
+            }
+
             if (_isHitTesting)
                 return;
 
