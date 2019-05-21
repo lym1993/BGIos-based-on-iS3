@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:iS3.Config"
         mc:Ignorable="d"
-        Title="iS3 Config V1.1" Height="450" Width="800">
+        Title="BGIos配置软件" Height="450" Width="800">
     <Grid>
-        <Button Content="iS3 Location..." HorizontalAlignment="Left" Margin="37,111,0,0" VerticalAlignment="Top" Width="200" Height="44" FontSize="18" Click="iS3LocBtn_Click"/>
-        <Button Content="my Data Location..." HorizontalAlignment="Left" Margin="37,177,0,0" VerticalAlignment="Top" Width="200" Height="44" FontSize="18" Click="myDatBtn_Click"/>
+        <Button Content="BGIos程序位置" HorizontalAlignment="Left" Margin="37,111,0,0" VerticalAlignment="Top" Width="200" Height="44" FontSize="18" Click="iS3LocBtn_Click"/>
+        <Button Content="个人数据位置" HorizontalAlignment="Left" Margin="37,177,0,0" VerticalAlignment="Top" Width="200" Height="44" FontSize="18" Click="myDatBtn_Click"/>
         <Label x:Name="iS3Labl" Content="iS3 Path" HorizontalAlignment="Left" Height="32" Margin="260,116,24,0" VerticalAlignment="Top" Width="Auto" FontSize="18" />
         <Label x:Name="myLabl" Content="my Data Path" HorizontalAlignment="Left" Height="36" Margin="260,177,24,0" VerticalAlignment="Top" Width="Auto" FontSize="18"/>
-        <Button Content="Start configuration" HorizontalAlignment="Left" Margin="260,305,0,0" VerticalAlignment="Top" Width="253" FontSize="24" Height="52" Click="startBtn_Click"/>
+        <Button Content="开始进行配置" HorizontalAlignment="Left" Margin="260,305,0,0" VerticalAlignment="Top" Width="253" FontSize="24" Height="52" Click="startBtn_Click"/>
 
     </Grid>
 </Window>

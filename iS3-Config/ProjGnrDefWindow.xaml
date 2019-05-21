@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:iS3.Config"
         mc:Ignorable="d"
-        Title="Step 1 - General config" Height="450" Width="800">
+        Title="第一步 整体配置" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -17,33 +17,33 @@
         </Grid.ColumnDefinitions>
         <!-- Row 1 -->
         <ListBox x:Name="ProjDefLB" Margin="5,0,5,0" ItemContainerStyle="{StaticResource MyListBoxStyle}">
-            <ListBoxItem Content="General" />
+            <ListBoxItem HorizontalContentAlignment="Center" FontSize="20" Content="概况" />
         </ListBox>
         
         <Grid x:Name="GeneralGrd" Grid.Column="1" Visibility="Visible" Margin="5,5,5,5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="25" />
-                <RowDefinition Height="25" />
-                <RowDefinition Height="25" />
-                <RowDefinition Height="25" />
-                <RowDefinition Height="25" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0" Text="ID" />
-            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0" Text="Title"  />
-            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0" Text="Local data path"  />
-            <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0" Text="Local tile path"  />
-            <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0" Text="Local database"  />
+            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18"
+                   Margin="5,0,0,0" Text="项目编号" />
+            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18"
+                   Margin="5,0,0,0" Text="项目标题"  />
+            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18"
+                   Margin="5,0,0,0" Text="本地数据路径"  />
+            <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18"
+                   Margin="5,0,0,0" Text="本地切片路径"  />
+            <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18"
+                   Margin="5,0,0,0" Text="本地数据库"  />
             <TextBox x:Name="IdTB" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,5,0" IsReadOnly="True"
                      Text="{Binding ID}"/>
             <TextBox x:Name="TitleTB" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,5,0" 
@@ -70,7 +70,7 @@
                    VerticalAlignment="Center" HorizontalAlignment="Left"
                    Text="" Foreground="Red" />
         <Button x:Name="NextBtn" Grid.Row="2" Grid.Column="1" Margin="0,0,10,0"
-                Content="Next" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="20"
+                Content="下一步" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="20"
                 Click="Next_Click"/>
 
     </Grid>

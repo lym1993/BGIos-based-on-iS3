@@ -81,6 +81,7 @@ namespace iS3.Config
             Window backgroundWnd = new Window();
             this.MainWindow = backgroundWnd;
 
+            //startconfig赋给bool值ok
             bool ok = StartConfig();
             if (ok)
             {
@@ -94,6 +95,7 @@ namespace iS3.Config
             Shutdown();
         }
 
+        //bool变量 开始配置
         bool StartConfig()
         {
             bool? success;

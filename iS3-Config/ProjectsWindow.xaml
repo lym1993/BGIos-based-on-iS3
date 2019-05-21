@@ -6,7 +6,7 @@
         xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
         xmlns:local="clr-namespace:iS3.Config"
         mc:Ignorable="d"
-        Title="Project location and description" Height="450" Width="800">
+        Title="项目地点与描述" Height="450" Width="800">
     <Grid>
         <Grid.Resources>
             <esri:PictureMarkerSymbol x:Key="DefaultMarkerSymbol"
@@ -27,7 +27,7 @@
 
         <!-- Row 1 -->
         <StackPanel Orientation="Vertical">
-            <TextBlock Text="Available projects:" />
+            <TextBlock Text="可用项目：" FontSize="18" FontWeight="Bold" Height="25" />
             <ListBox x:Name="ProjectListLB" Height="200"
                      ItemContainerStyle="{StaticResource MyListBoxStyle}"
                      SelectionChanged="ProjectListLB_SelectionChanged">
@@ -38,15 +38,15 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <StackPanel Orientation="Horizontal">
-                <Button Content="+" Width="25" Margin="5,0,5,0" Click="AddProject_Click"/>
-                <Button Content="-" Width="25" Margin="5,0,5,0" Click="RemoveProject_Click"/>
+                <Button Content="添加项目" Width="auto" Margin="5,0,5,0" Click="AddProject_Click"/>
+                <Button Content="删除项目" Width="auto" Margin="5,0,5,0" Click="RemoveProject_Click"/>
             </StackPanel>
-            <TextBlock Text="Configuration:" />
+            <TextBlock Text="配置信息"  FontSize="18" FontWeight="Bold" Height="25"/>
             <ListBox x:Name="StepLB" Height="170"
                      ItemContainerStyle="{StaticResource MyListBoxStyle}"
                      SelectionChanged="StepLB_SelectionChanged">
-                <ListBoxItem Content="Description"/>
-                <ListBoxItem Content="Location"/>
+                <ListBoxItem Content="项目描述"/>
+                <ListBoxItem Content="项目位置"/>
             </ListBox>
         </StackPanel>
         <esri:MapView x:Name="MyMapView" WrapAround="True" Grid.Column="1" Grid.ColumnSpan="2">
@@ -57,19 +57,20 @@
                 <esri:GraphicsLayer x:Name="ProjectGraphicsLayer" ID="ProjectGraphicsLayer"/>
             </esri:Map>
         </esri:MapView>
+        <!--描述框-->
         <TextBox x:Name="ProjectDescTB" Grid.Column="1"
             Text="Project title"
             HorizontalAlignment="Left" VerticalAlignment="Top"
             Margin="10,40,0,0" Visibility="Hidden"
             TextChanged="ProjectTitleTB_TextChanged" IsReadOnly="True"
-            Height="35" FontSize="24" Foreground="Red" Background="Yellow" Grid.ColumnSpan="2"/>
+            Height="35" FontSize="24" Foreground="Black" Background="AliceBlue" Grid.ColumnSpan="2"/>
 
         <!-- Row 2 -->
         <TextBlock x:Name="PromptTB" Grid.Row="1" Grid.ColumnSpan="2"
                    VerticalAlignment="Center" HorizontalAlignment="Left"
-                   Text="Select project from the list" Foreground="Red" Margin="0,7" />
+                   Text="请从列表中选择项目" Foreground="Red" Width="auto" Margin="0,7" />
         <Button x:Name="NextBtn" Grid.Row="1" Grid.Column="2" Margin="0,5,10,5"
-                Content="Next" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="20"
+                Content="下一步" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="20"
                 Click="Next_Click"/>
     </Grid>
 </Window>

@@ -20,6 +20,7 @@ namespace iS3.Config
 {
     /// <summary>
     /// Interaction logic for ConfPathWindow.xaml
+    /// ConfPathWindow.xaml的交互逻辑
     /// </summary>
     public partial class ConfPathWindow : Window
     {
@@ -33,6 +34,7 @@ namespace iS3.Config
             SetPath();
         }
 
+        //设置路径
         void SetPath()
         {
             if (ExePath.Length == 0)
@@ -51,6 +53,7 @@ namespace iS3.Config
 
         private void iS3LocBtn_Click(object sender, RoutedEventArgs e)
         {
+            //浏览器对话框
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.ShowNewFolderButton = false;
             dialog.SelectedPath = ExePath;

@@ -105,7 +105,7 @@ namespace iS3.Config
             _gLayer.Graphics.Clear();
             AddProjectLocationOnMap(loc);
 
-            PromptTB.Text = "Select operations from the configuration.";
+            PromptTB.Text = "请从配置信息中选择进行操作！";
             StepLB.SelectedIndex = -1;
         }
 
@@ -118,7 +118,7 @@ namespace iS3.Config
             int step = StepLB.SelectedIndex;
             if (step == 0)
             {
-                PromptTB.Text = "Input project description in the text box.";
+                PromptTB.Text = "请在文本框中输入项目描述！";
                 ProjectDescTB.IsReadOnly = false;
                 ProjectDescTB.Focus();
                 ProjectDescTB.SelectAll();
@@ -127,7 +127,7 @@ namespace iS3.Config
             }
             else if (step == 1)
             {
-                PromptTB.Text = "Drop the project location on the map.";
+                PromptTB.Text = "请在地图上选择项目位置！";
                 ProjectDescTB.Visibility = System.Windows.Visibility.Hidden;
                 AddProjectLocationOnMap(loc);
             }
@@ -198,7 +198,7 @@ namespace iS3.Config
             ProjectLocation loc = ProjectListLB.SelectedItem as ProjectLocation;
             if (loc == null)
             {
-                PromptTB.Text = "Please select a project before going to next step.";
+                PromptTB.Text = "进行下一步之前请选择一个项目！";
                 return;
             }
 
@@ -211,7 +211,7 @@ namespace iS3.Config
         }
 
         // Load picture 'pin_red.png' to _pinMarkerSymbol
-        //
+        // 大头钉
         private async void InitializePictureMarkerSymbol()
         {
             try

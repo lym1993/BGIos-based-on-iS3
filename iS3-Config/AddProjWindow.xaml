@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:iS3.Config"
         mc:Ignorable="d"
-        Title="Input project ID and description" Height="120" Width="350">
+        Title="输入项目编号与描述" Height="120" Width="350">
     <Grid Margin="0,5,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="25" />
@@ -18,11 +18,11 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0"
-                   Text="ID"  />
+                   Margin="38,0,0,0"
+                   Text="编号"  />
         <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0"
-                   Text="Description"  />
+                   Margin="38,0,0,0"
+                   Text="描述"  />
         <TextBox x:Name="IdTB" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" />
         <TextBox x:Name="DescTB" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" />
 
