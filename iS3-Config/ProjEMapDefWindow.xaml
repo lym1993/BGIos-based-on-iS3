@@ -8,7 +8,7 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:iS3.Config"
         mc:Ignorable="d"
-        Title="Step 2: 2D model config" Height="450" Width="800">
+        Title="第二步: 配置2D模型" Height="450" Width="800">
     <Grid>
         <Grid.Resources>
             <esri:ViewpointExtent x:Key="China"
@@ -46,8 +46,8 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <StackPanel Orientation="Horizontal" Grid.Row="1">
-                <Button Content="+" Width="25" Margin="5,0,5,0" Click="AddEMap_Click"/>
-                <Button Content="-" Width="25" Margin="5,0,5,0" Click="RemoveEMap_Click"/>
+                <Button Content="添加" Width="auto" Margin="5,0,5,0" Click="AddEMap_Click"/>
+                <Button Content="删除" Width="auto" Margin="5,0,5,0" Click="RemoveEMap_Click"/>
             </StackPanel>
         </Grid>
 
@@ -61,11 +61,11 @@
         <!-- Col 3 -->
         <Grid x:Name="EMapGrd" Grid.Column="2" Visibility="Visible" Margin="5,5,5,5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="25" />
-                <RowDefinition Height="25" />
-                <RowDefinition Height="25" />
-                <RowDefinition Height="25" />
-                <RowDefinition Height="25" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -74,38 +74,38 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0" Text="Eng. Map ID" />
+                   Margin="5,0,0,0" Text="工程图纸编号" FontSize="15" />
             <TextBox x:Name="IdTB" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,5,0"
                      Text="{Binding MapID, Mode=TwoWay}"/>
 
             <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0" Text="Eng. Map type"  />
+                   Margin="5,0,0,0" Text="工程地图类型" FontSize="15"  />
             <ComboBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"
                       Width="150" Margin="5,0,0,0" SelectedValue="{Binding MapType}"
                       ItemsSource="{Binding Source={StaticResource enumEngMapTypeValues}}"/>
 
             <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0" Text="Local tiled map"  />
+                   Margin="5,0,0,0" Text="本地瓦片地图" FontSize="15" />
             <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Margin="0,0,5,0">
                 <TextBox x:Name="LocalTile1TB" Width="130"  VerticalAlignment="Center" IsReadOnly="True"
                          Text="{Binding LocalTileFileName1}"/>
                 <Button x:Name="LocalTile1Btn" Content="..." Width="25" HorizontalAlignment="Right"
-                        Click="LocalTileBtn_Click"/>
+                        Click="LocalTileBtn_Click" Margin="5"/>
             </StackPanel>
 
             <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0" Text="Local GeoDB file"  />
+                   Margin="5,0,0,0" Text="GeoDB 文件:" FontSize="15"  />
             <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Margin="0,0,5,0">
                 <TextBox x:Name="LocalGeoDBTB" Width="130"  VerticalAlignment="Center" IsReadOnly="True"
                          Text="{Binding LocalGeoDbFileName}"/>
                 <Button x:Name="LocalGeoDBBtn" Content="..." Width="25" HorizontalAlignment="Right"
-                        Click="LocalGeoDBBtn_Click"/>
+                        Click="LocalGeoDBBtn_Click" Margin="5"/>
             </StackPanel>
 
             <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0" Text="GeoDB Layers:"  />
-            <Button x:Name="LyrSetting" Grid.Row="4" Grid.Column="2" Content="Layer Setting..." 
-                    Width="100" HorizontalAlignment="Right" Click="LyrSetting_Click"/>
+                   Margin="5,0,0,0" Text="GeoDB 图层:"  FontSize="15" />
+            <Button x:Name="LyrSetting" Grid.Row="4" Grid.Column="2" Content="图层设置" 
+                    Width="100" HorizontalAlignment="Right" Click="LyrSetting_Click" Margin="5"/>
             <ListBox Grid.Row="5" Grid.ColumnSpan="2" x:Name="GeoDBLayrLB" Margin="5,0,5,0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -116,8 +116,8 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <!--
-            <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
+            
+            <!--<TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
                    Margin="5,0,0,0" Text="Local tile map#2"  />
             <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" Margin="0,0,5,0">
                 <TextBox x:Name="LocalTile2TB" Width="130"  VerticalAlignment="Center" IsReadOnly="True"
@@ -163,8 +163,8 @@
             <TextBlock Grid.Row="11" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
                    Margin="5,0,0,0" Text="Scale Z"  />
             <TextBox x:Name="ScaleZTB" Grid.Row="11" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,5,0"
-                     Text="{Binding ScaleZ, Mode=TwoWay}"/>
-            -->
+                     Text="{Binding ScaleZ, Mode=TwoWay}"/>-->
+            
         </Grid>
 
         <Grid x:Name="MapGrid" Grid.Column="1" Visibility="Hidden" Margin="5,5,5,5">
@@ -188,7 +188,7 @@
                    VerticalAlignment="Center" HorizontalAlignment="Left"
                    Text="" Foreground="Red" />
         <Button x:Name="NextBtn" Grid.Row="2" Grid.Column="2" Margin="0,0,10,0"
-                Content="Next" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="20"
+                Content="下一步" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="20"
                 Click="Next_Click"/>
     </Grid>
 </Window>
