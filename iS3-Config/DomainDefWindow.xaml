@@ -29,10 +29,10 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <StackPanel Orientation="Horizontal">
-                <Button Content="+" Width="25" Margin="5,0,5,0" Click="AddDomain_Click" />
-                <Button Content="-" Width="25" Margin="5,0,5,0" Click="RemoveDomain_Click" />
+                <Button Content="添加" Width="auto" Margin="5,0,5,0" Click="AddDomain_Click" />
+                <Button Content="移除" Width="auto" Margin="5,0,5,0" Click="RemoveDomain_Click" />
             </StackPanel>
-            <TextBlock Text="Digital objects:" />
+            <TextBlock Text="数字对象" />
             <ListBox x:Name="DObjsLB" Height="Auto" MinHeight="175"
                      SelectionChanged="DObjsLB_SelectionChanged"
                      ItemContainerStyle="{StaticResource MyListBoxStyle}">
@@ -48,24 +48,24 @@
             </StackPanel>
         </StackPanel>
 
-        <GroupBox Grid.Column="1" Header="Digital object definition"
+        <GroupBox Grid.Column="1" Header="数字对象定义"
                   Margin="5,5,5,5">
             <Grid x:Name="DObjsDefGrid" Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="25" />
-                    <RowDefinition Height="25" />
-                    <RowDefinition Height="25" />
-                    <RowDefinition Height="25" />
-                    <RowDefinition Height="25" />
-                    <RowDefinition Height="25" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
                     <RowDefinition Height="10" />
-                    <RowDefinition Height="25" />
-                    <RowDefinition Height="25" />
-                    <RowDefinition Height="25" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
                     <RowDefinition Height="10" />
-                    <RowDefinition Height="25" />
-                    <RowDefinition Height="25" />
-                    <RowDefinition Height="25" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -74,17 +74,17 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0" Text="Name" />
+                   Margin="5,0,0,0" Text="名称" FontSize="20" />
                 <TextBox Width="400" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"
                          Margin="0,0,5,0" Text="{Binding Name, Mode=TwoWay}" IsReadOnly="True"/>
 
                 <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0" Text="Type" />
+                   Margin="5,0,0,0" Text="种类" FontSize="20"/>
                 <ComboBox x:Name="TypeCB" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Width="Auto" MinWidth="400"
                           Text="{Binding Type, Mode=TwoWay}" IsEditable="True" IsReadOnly="True" />
 
                 <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0" Text="Table name" />
+                   Margin="5,0,0,0" Text="表名" FontSize="20" />
                 <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Margin="0,0,5,0">
                     <TextBox x:Name="TableNameTB" Width="400"  VerticalAlignment="Center" Margin="0,0,5,0"
                              Text="{Binding TableNameSQL, Mode=TwoWay}"/>
@@ -93,7 +93,7 @@
                 </StackPanel>
 
                 <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0" Text="Condition (SQL)" />
+                   Margin="5,0,0,0" Text="条件 (SQL)" FontSize="20" />
                 <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Margin="0,0,5,0">
                     <TextBox Width="400"  VerticalAlignment="Center" Margin="0,0,5,0"
                              Text="{Binding ConditionSQL, Mode=TwoWay}"/>
@@ -102,7 +102,7 @@
                 </StackPanel>
 
                 <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0" Text="Order (SQL)" />
+                   Margin="5,0,0,0" Text="顺序 (SQL)" FontSize="20" />
                 <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" Margin="0,0,5,0">
                     <TextBox Width="400"  VerticalAlignment="Center" Margin="0,0,5,0"
                              Text="{Binding OrderSQL, Mode=TwoWay}"/>
@@ -110,14 +110,14 @@
                         Visibility="Collapsed"/>
                 </StackPanel>
 
-                <Button x:Name="PreviewTableBtn" Grid.Row="5" Grid.ColumnSpan="2" Content="Preview Table..."
+                <Button x:Name="PreviewTableBtn" Grid.Row="5" Grid.ColumnSpan="2" Content="图表预览" 
                         Width="120" Click="PreviewTableBtn_Click"/>
 
                 <CheckBox Grid.Row="7" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0" Content="Has 2D Model" IsChecked="{Binding HasGeometry, Mode=TwoWay}" />
+                   Margin="5,0,0,0" Content="存在2D模型" FontSize="16" IsChecked="{Binding HasGeometry, Mode=TwoWay}" />
 
                 <TextBlock Grid.Row="8" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Margin="5,0,0,0" Text="2D Layer" />
+                   Margin="5,0,0,0" Text="2D 图层" FontSize="16" />
                 <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="1" Margin="0,0,5,0">
                     <TextBox x:Name="LayerNameTB" Width="400"  VerticalAlignment="Center" Margin="0,0,5,0"
                              Text="{Binding GISLayerName, Mode=TwoWay}"/>
@@ -125,7 +125,7 @@
                         Click="TwoDimLayerBtn_Click"/>
                 </StackPanel>
 
-                <Button x:Name="Preview2DBtn" Grid.Row="9" Grid.ColumnSpan="2" Content="Preview 2D Layer..."
+                <Button x:Name="Preview2DBtn" Grid.Row="9" Grid.ColumnSpan="2" Content="预览2D图层"
                         Width="120" Click="Preview2DLayerBtn_Click"/>
 
                 <CheckBox Grid.Row="11" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"
