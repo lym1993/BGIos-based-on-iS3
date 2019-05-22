@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:iS3.Config"
         mc:Ignorable="d"
-        Title="Select map layer" Height="300" Width="300">
+        Title="选择地图图层" Height="300" Width="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25" />
@@ -18,8 +18,8 @@
         </Grid.ColumnDefinitions>
 
         <!-- Row 1-->
-        <TextBlock Text="Select 2D map:" Margin="5,5,5,0" />
-        <TextBlock Text="Select layer:" Grid.Column="1" Margin="5,5,5,0" />
+        <TextBlock Text="选择2D地图：" Margin="5,5,5,0" />
+        <TextBlock Text="选择图层：" Grid.Column="1" Margin="5,5,5,0" />
 
         <!-- Row 2 -->
         <ListBox x:Name="EMapListLB" Grid.Row="1" Margin="5,0,5,0"
@@ -37,7 +37,7 @@
         </ListBox>
 
         <!-- Row 3 -->
-        <Button x:Name="OKBtn" Grid.Row="2" Grid.Column="1" Margin="0,0,10,0"
+        <Button x:Name="OKBtn" Grid.Row="2" Grid.Column="1" Margin="0,0,15,0"
                 Content="OK" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="20"
                 Click="OK_Click"/>
 

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:iS3.Config"
         mc:Ignorable="d"
-        Title="Select 3d layer" Height="300" Width="300">
+        Title="选择3D图层" Height="300" Width="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25" />
@@ -15,7 +15,7 @@
 
 
         <!-- Row 1-->
-        <TextBlock Text="Layers:" Grid.Column="1" Margin="5,5,5,0" />
+        <TextBlock Text="图层：" Grid.Column="1" Margin="5,5,5,0" />
 
         <!-- Row 2 -->
         <TreeView x:Name="treeView" Grid.Row="1" SelectedItemChanged="treeView_SelectedItemChanged">
@@ -28,9 +28,9 @@
 
 
         <!-- Row 3 -->
-        <Button x:Name="OKBtn" Grid.Row="2" Grid.Column="1" Margin="0,0,10,0"
+        <Button x:Name="OKBtn" Grid.Row="2" Grid.Column="1" Margin="0,0,15,0"
                 Content="OK" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" Height="20"
-                Click="OK_Click"/>
+                Click="OK_Click" RenderTransformOrigin="-0.857,0.508"/>
 
     </Grid>
 </Window>

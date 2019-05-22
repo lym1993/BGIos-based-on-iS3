@@ -6,7 +6,7 @@
         xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
        xmlns:local="clr-namespace:iS3.Config"
         mc:Ignorable="d"
-        Title="Preview 2D Layer" Height="400" Width="600">
+        Title="2D图层预览" Height="400" Width="600">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
