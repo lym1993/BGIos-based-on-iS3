@@ -7,7 +7,7 @@ namespace iS3.Unity.Webplayer.UnityCore
 
         public override MessageType type { get { return MessageType.SetObjShowState; } }
         /// <summary>
-        /// /iS3Project/Geology/Borehole/1010101010
+        /// /iS3Project/ /Borehole/1010101010
         /// </summary>
         public string path { get; set; }
         public bool iSShow { get; set; }
