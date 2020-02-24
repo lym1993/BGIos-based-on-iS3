@@ -87,6 +87,7 @@ namespace iS3.Core
         //      Objects can be access with a DataSet (DGObjects.RawDataSet).
         public Dictionary<DataSet, DGObjects> dataSetIndex { get; set; }
 
+        //Project类的构造函数
         public Project()
         {
             projDef = null;

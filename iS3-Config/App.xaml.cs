@@ -196,12 +196,12 @@ namespace iS3.Config
             ConfigCore.WriteViewsDef(iS3Path, projID, projDef);
 
             string format = 
-                "Congratulations!\r\n" +
-                "The following files has been generated successfully.\r\n" +
+                "恭喜!\r\n" +
+                "下列文件被成功生成：\r\n" +
                 "    {0}\\ProjectList.xml\r\n" +
                 "    {1}\\{2}.xml\r\n" +
                 "    {3}\\Data\\{4}\\{5}.py\r\n" +
-                "The {6} project is ready to use in iS3.";
+                "{6} 项目成功载入北京某勘察系统.";
 
             string str = string.Format(format, dataPath, dataPath, projID, iS3Path, projID, projID, projID);
             MessageBox.Show(str, "Success", MessageBoxButton.OK);

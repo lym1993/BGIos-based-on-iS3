@@ -369,15 +369,22 @@ namespace iS3.Config
         public static Project LoadProject(string projPath, string projID)
         {
             string fileName = projPath + "\\" + projID + ".xml";
+
+            //如果不存在xml文件，返回null
+            //如果存在，跳过此句
             if (!File.Exists(fileName))
                 return null;
 
+            //生成一个新的Project实例proj
             Project proj = new Project();
             try
             {
+                //实例化一个阅读器（加载了xml文件的）
+                //
                 StreamReader reader = new StreamReader(fileName);
                 XElement root = XElement.Load(reader);
 
+                //如果实例root为null或者名字不是Project，返回null
                 if (root == null || root.Name != "Project")
                     return null;
 
