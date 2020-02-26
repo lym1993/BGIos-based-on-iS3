@@ -34,15 +34,15 @@ namespace iS3.Core
     // Engineering domain type
     public enum DomainType
     {
-        Unknown,
-        Geology,
-        Surroundings,
-        Structure,
-        Design,
-        Construction,
-        Monitoring,
-        Maintenance,
-        Tdisease,
+        Unknown,//未知
+        Geology,//地质
+        Surroundings,//周边环境
+        Structure,//结构
+        Design,//设计
+        Construction,//建造物、构筑物
+        Monitoring,//监测
+        Maintenance,//维护、保养、维持
+        Tdisease,//
     };
 
     // Summary:

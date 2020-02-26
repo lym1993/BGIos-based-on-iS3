@@ -17,10 +17,10 @@
             <esri:Map x:Name="Map"
                       InitialViewpoint="{StaticResource Z14}">
                 <!--调用网上地图服务-->
-                <esri:ArcGISTiledMapServiceLayer 
-                    ServiceUri="https://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineCommunity/MapServer"/>
-                <!--<esri:ArcGISLocalTiledLayer ID="BaseMap"
-                                            Path="Data\TPKs\Topographic.tpk"/>-->
+                <!--<esri:ArcGISTiledMapServiceLayer 
+                    ServiceUri="https://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineCommunity/MapServer"/>-->
+                <esri:ArcGISLocalTiledLayer ID="BaseMap"
+                                            Path="Data\TPKs\Topographic.tpk"/>
                 <esri:GraphicsLayer x:Name="ProjectGraphicsLayer"
                     ID="ProjectGraphicsLayer">
                 </esri:GraphicsLayer>
