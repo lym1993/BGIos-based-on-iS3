@@ -144,6 +144,7 @@ namespace iS3.Core.Serialization
             return ReadString(reader, ordina);
         }
 
+        //判断该列是否存在
         public bool IsDbColumnExist(DataRow row, string colName)
         {
             if (!row.Table.Columns.Contains(colName))
@@ -156,6 +157,7 @@ namespace iS3.Core.Serialization
             }
             return true;
         }
+        //处理空数据
         public bool IsDbNull(DataRow row, string colName)
         {
             if (row[colName].GetType() == typeof(System.DBNull))
@@ -163,6 +165,7 @@ namespace iS3.Core.Serialization
             else
                 return false;
         }
+        //读Double数据
         public double? ReadDouble(DataRow row, string colName)
         {
             if (!IsDbColumnExist(row, colName))
@@ -172,7 +175,8 @@ namespace iS3.Core.Serialization
             else
                 return Convert.ToDouble(row[colName]);
         }
-
+        
+        //读整数
         public int? ReadInt(DataRow row, string colName)
         {
             if (!IsDbColumnExist(row, colName))
@@ -183,6 +187,7 @@ namespace iS3.Core.Serialization
                 return Convert.ToInt32(row[colName]);
         }
 
+        //读日期
         public DateTime? ReadDateTime(DataRow row, string colName)
         {
             if (!IsDbColumnExist(row, colName))
@@ -195,6 +200,7 @@ namespace iS3.Core.Serialization
             }
         }
 
+        //读市场
         public TimeSpan? ReadTimeSpan(DataRow row, string colName)
         {
             if (!IsDbColumnExist(row, colName))
@@ -211,6 +217,7 @@ namespace iS3.Core.Serialization
             }
         }
         
+        //阅读字符串
         public string ReadString(DataRow row, string colName)
         {
             if (!IsDbColumnExist(row, colName))
@@ -221,6 +228,7 @@ namespace iS3.Core.Serialization
                 return Convert.ToString(row[colName]);
         }
 
+        //读byte
         public byte[] ReadBytes(DataRow row, string colName)
         {
             if (!IsDbColumnExist(row, colName))

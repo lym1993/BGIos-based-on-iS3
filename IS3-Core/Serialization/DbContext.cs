@@ -10,7 +10,7 @@ using System.Data.Common;
 namespace iS3.Core.Serialization
 {
     // Provide a ready-use database context.
-    // 
+    // 准备随时可用的数据信息
     public class DbContext
     {
         protected DbAdapter _adapter;
@@ -18,6 +18,7 @@ namespace iS3.Core.Serialization
         protected bool _isOpened;
 
         // option:
+        //两种链接方式
         //  0 - odbc connection
         //  1 - oledb connection
         public DbContext(string dbFileName, int option = 0)
@@ -41,6 +42,7 @@ namespace iS3.Core.Serialization
                 return true;
             try
             {
+                //尝试打开，如果成功_isOpened变为true
                 _connection.Open();
             }
             catch (Exception)

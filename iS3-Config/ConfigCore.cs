@@ -356,6 +356,7 @@ namespace iS3.Config
             strPrj = strPrj.Insert(text.Length, strPrjDef);
 
             // overide ProjectList.xml
+            // 覆写ProjectList.xml文件
             FileStream fs = new FileStream(fileName, FileMode.Create);
             StreamWriter writer = new StreamWriter(fs);
             writer.Write(strPrj);
@@ -371,7 +372,7 @@ namespace iS3.Config
             string fileName = projPath + "\\" + projID + ".xml";
 
             //如果不存在xml文件，返回null
-            //如果存在，跳过此句
+            //如果存在，继续执行
             if (!File.Exists(fileName))
                 return null;
 
@@ -380,7 +381,7 @@ namespace iS3.Config
             try
             {
                 //实例化一个阅读器（加载了xml文件的）
-                //
+                //StreamReader类用于从流中读取字符串
                 StreamReader reader = new StreamReader(fileName);
                 XElement root = XElement.Load(reader);
 
@@ -389,6 +390,7 @@ namespace iS3.Config
                     return null;
 
                 // Load domain definition
+                // 加载域定义
                 IEnumerable<XElement> nodes = root.Elements("Domain");
                 foreach (XElement node in nodes)
                 {
@@ -423,6 +425,7 @@ namespace iS3.Config
                     }
                 }
             }
+            //try模块只要由错误就会在这里体现
             catch (Exception error)
             {
                 MessageBox.Show(error.Message, "Error", MessageBoxButton.OK);
@@ -433,7 +436,7 @@ namespace iS3.Config
         }
 
         // Write 2d&3d views to the <projectID>.py
-        //
+        //写项目py文件
         public static void WriteViewsDef(string iS3Path, string projID, ProjectDefinition prjDef)
         {
             // This is a python template for loading views into iS3.

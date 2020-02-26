@@ -260,6 +260,7 @@ namespace iS3.Core
             // Load project data
             //
             DbContext dbContext = prj.getDbContext();
+            //判断加载能否成功，如果成功，进行下一步
             bool success = dbContext.Open();
             if (!success)
                 return prj;

@@ -43,6 +43,7 @@ namespace iS3.Config
             int count = TableNamesLB.SelectedItems.Count;
             for (int i = 0; i<count; ++i)
             {
+                //选择的表名加入SelectedName中，在中间加入逗号
                 SelectedName += TableNamesLB.SelectedItems[i].ToString();
                 if (i < count - 1)
                     SelectedName += ",";

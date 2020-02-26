@@ -81,6 +81,8 @@ namespace iS3.Config
             DObjsDefGrid.DataContext = DObjsDef;
         }
 
+
+        //表格选择按钮，笔记本上有问题的
         private void TableNameSQLBtn_Click(object sender, RoutedEventArgs e)
         {
             DGObjectsDefinition DObjsDef = DObjsDefGrid.DataContext as DGObjectsDefinition;
@@ -88,34 +90,47 @@ namespace iS3.Config
                 return;
 
             string dbFile = _prjDef.LocalFilePath + "\\" + _prjDef.LocalDatabaseName;
+
+            //新建names列表用来存放DbHelper类使用GetDbTablenames方法得到的表格名称
             List<string> names = DbHelper.GetDbTablenames(dbFile);
 
+            //实例化表格选择窗口
             SelectTableNamesWindow selectTableNamesWnd = new SelectTableNamesWindow(names, TableNameTB.Text);
             selectTableNamesWnd.Owner = this;
             selectTableNamesWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            //如果ok成立，显示selectTableNamesWnd窗口
             bool? ok = selectTableNamesWnd.ShowDialog();
             if (ok != null && ok.Value == true)
             {
                 TableNameTB.Text = selectTableNamesWnd.SelectedName;
+                //将选择的表传递给DObjsDef的TableNameSQL属性中
                 DObjsDef.TableNameSQL = selectTableNamesWnd.SelectedName;
             }
         }
+
+        //预览表格按钮
         private void PreviewTableBtn_Click(object sender, RoutedEventArgs e)
         {
             string dbFile = _prjDef.LocalFilePath + "\\" + _prjDef.LocalDatabaseName;
             DGObjectsDefinition dObjsDef = DObjsDefGrid.DataContext as DGObjectsDefinition;
+
+            //确保不是空集
             if (dObjsDef == null)
                 return;
 
+            //实例化DataSet类，运用DbHelper类的LoadTable方法，传入四个参数（文件路径、表格名称、条件名称、顺序名称）
             DataSet dataSet = DbHelper.LoadTable(dbFile, 
                 dObjsDef.TableNameSQL, dObjsDef.ConditionSQL, dObjsDef.OrderSQL);
-
+            //实例化新的预览窗口，传入两个参数（表名、数据设置）
             PreviewTableWindow previewTblWnd = new PreviewTableWindow(TableNameTB.Text, dataSet);
             previewTblWnd.Owner = this.Owner;
+            //定义窗口焦点
             previewTblWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            //显示窗口
             previewTblWnd.Show();
         }
 
+        //二维图层按钮操作
         private void TwoDimLayerBtn_Click(object sender, RoutedEventArgs e)
         {
             DGObjectsDefinition DObjsDef = DObjsDefGrid.DataContext as DGObjectsDefinition;
@@ -126,6 +141,7 @@ namespace iS3.Config
             selectEMapLayersWnd.Owner = this;
             selectEMapLayersWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             bool? ok = selectEMapLayersWnd.ShowDialog();
+            //点击ok后的操作
             if (ok != null && ok.Value == true)
             {
                 if (selectEMapLayersWnd.SelectedLayerName != null)

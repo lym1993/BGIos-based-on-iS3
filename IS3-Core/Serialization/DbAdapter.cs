@@ -23,6 +23,7 @@ namespace iS3.Core.Serialization
         // an additional 'dbo_' prefix will appear in MDB table names.
         // To deal with this issue, TableNamePrefix be added to each table name.
         // For example, Boreholes will be dbo_Boreholes.
+        // 前缀处理类，对MDB传入表格时候，自动在前面加上dbo_
         protected string _tableNamePrefix;
 
         protected DbType _dbType;
@@ -42,8 +43,10 @@ namespace iS3.Core.Serialization
         #endregion
 
         #region Constructor
+        //数据适配器
         public DbAdapter(string dbFile)
         {
+            //首先初始化受保护的字段
             _dbFile = dbFile;
             _dbType = DbType.Unknown;
             _connStr = "Unknown file format";
@@ -62,6 +65,7 @@ namespace iS3.Core.Serialization
         }
         #endregion
 
+        //数据扩展方法，返回string
         public string DbFileExtension()
         {
             int i = _dbFile.LastIndexOf('.');
@@ -82,11 +86,14 @@ namespace iS3.Core.Serialization
         public OdbcAdapter(string _dbFile)
             : base (_dbFile)
         {
+            //如果是MDB格式的，就使用access路径
             if (_dbType == DbType.MDB)
             {
+                
                 _connStr =
                     "DSN=MS Access Database;DBQ=" + _dbFile;
             }
+            //如果是xls格式的，就是用excel路径
             else if (_dbType == DbType.XLS)
             {
                 _connStr =

@@ -14,12 +14,14 @@ namespace iS3.Config
     {
         static List<string> _tableNames = null;
         public static char[] Separator = new char[] { ',' };
+        //表格前缀dbo_
         public static string TablePrefix = "dbo_";
 
         // Load MDB file table names, skip system tables
-        //
+        // 加载MDB文件的表格名称，忽略系统表格
         static bool LoadMDBTableNames(string file, List<string> tableNames)
         {
+            
             string connStr = "DSN=MS Access Database;DBQ=" + file;
             OdbcConnection con = new OdbcConnection(connStr);
 
@@ -30,8 +32,11 @@ namespace iS3.Config
                 foreach (DataRow row in dt.Rows)
                 {
                     string tableName = row[2].ToString();
+                    //取表名的前四位，用于判断是不是系统表格
+                    //判断前四位是不是dbo_可以吗，如果不是就 continue？
                     string sys = tableName.Substring(0, 4);
                     // Skip Access system tables
+                    //跳过系统表格
                     if (sys == "MSys")
                         continue;
                     tableNames.Add(tableName);
@@ -57,9 +62,14 @@ namespace iS3.Config
             return _tableNames;
         }
 
+        //DataSet类得LoadTable方法，四个参数分别为（文件名、表名、条件名、顺序）
         public static DataSet LoadTable(string file, string tableNameSQL, string conditionSQL, string orderSQL)
         {
-            string connStr = "DSN=MS Access Database;DBQ=" + file;
+            //原来是 DSN=MS Access Database;DBQ=
+            //可不可以改成DSN=文件名，例如TONGJI，或者Z14等等？
+            string connStr = "DSN=MS Access Database; DBQ=" + file;
+
+            //实例化新的ODBC链接con，参数为connStr
             OdbcConnection con = new OdbcConnection(connStr);
             DataSet dataset = new DataSet();
 
@@ -93,6 +103,8 @@ namespace iS3.Config
 
                 con.Close();
             }
+
+            //在这里报错得，数据库搜不到对象
             catch (Exception error)
             {
                 MessageBox.Show(error.Message, "Error", MessageBoxButton.OK);

@@ -92,6 +92,7 @@ namespace iS3.Core
             return def;
         }
 
+        //覆写方法ToString，规范化str
         public override string ToString()
         {
             string str = string.Format(
@@ -231,6 +232,7 @@ namespace iS3.Core
 
         // Summary:
         //     Build RowView index to object and vice versa.
+        // 建立行视角索引
         protected void buildRowViewIndex()
         {
             if (rawDataSet == null || rawDataSet.Tables.Count == 0)

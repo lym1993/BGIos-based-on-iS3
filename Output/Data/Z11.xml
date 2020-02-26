@@ -1,0 +1,39 @@
+<Project>
+<ProjectDefinition ID="Z14" ProjectTitle="Z14" DefaultMapID="{assembly:Null}" LocalFilePath="Data\Z14" LocalTilePath="Data\TPKs" LocalDatabaseName="Z14.mdb" DataServiceUrl="{assembly:Null}" GeometryServiceUrl="{assembly:Null}" xmlns="clr-namespace:iS3.Core;assembly=iS3.Core" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ProjectDefinition.EngineeringMaps>
+<EngineeringMap MapType="FootPrintMap" Calibrated="False" Scale="1" ScaleX="1" ScaleY="1" ScaleZ="1" MapID="Map0" LocalTileFileName1="Z14pingmiantu.tpk" LocalTileFileName2="{assembly:Null}" LocalMapFileName="{assembly:Null}" LocalGeoDbFileName="Z14.geodatabase" MapUrl="{assembly:Null}"  xmlns="clr-namespace:iS3.Core;assembly=iS3.Core" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+  <EngineeringMap.LocalGdbLayersDef>
+<LayerDef Name="MonPoint" GeometryType="Point" IsVisible="True" Color="#FFFF0000" SelectionColor="#FFFF0000" MarkerSize="12" MarkerStyle="Circle" LineStyle="Solid" FillStyle="Solid" OutlineColor="#FF000000" LineWidth="1" RendererDef="{assembly:Null}" EnableLabel="True" LabelTextExpression="[Name]" LabelWhereClause="{assembly:Null}" LabelColor="#FF000000" LabelBackgroundColor="#00000000" LabelBorderLineColor="#00000000" LabelBorderLineWidth="0" LabelFontFamily="Arial" LabelFontSize="12" LabelFontStyle="Normal" LabelFontWeight="Normal" LabelTextDecoration="None" xmlns="clr-namespace:iS3.Core;assembly=iS3.Core" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" />
+<LayerDef Name="Kancha" GeometryType="Point" IsVisible="True" Color="#FFFF0000" SelectionColor="#FFFF0000" MarkerSize="12" MarkerStyle="Circle" LineStyle="Solid" FillStyle="Solid" OutlineColor="#FF000000" LineWidth="1" RendererDef="{assembly:Null}" EnableLabel="True" LabelTextExpression="[Name]" LabelWhereClause="{assembly:Null}" LabelColor="#FF000000" LabelBackgroundColor="#00000000" LabelBorderLineColor="#00000000" LabelBorderLineWidth="0" LabelFontFamily="Arial" LabelFontSize="12" LabelFontStyle="Normal" LabelFontWeight="Normal" LabelTextDecoration="None" xmlns="clr-namespace:iS3.Core;assembly=iS3.Core" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" />
+</EngineeringMap.LocalGdbLayersDef>
+</EngineeringMap>
+</ProjectDefinition.EngineeringMaps>
+</ProjectDefinition>
+
+  <Domain Name="Geology" Type="Geology">
+    <ObjsDefinition>
+      <Borehole Name="Allboreholes" TableNameSQL="Boreholes,BoreholeStrataInfo" OrderSQL="[Name]" HasGeometry="true" GISLayerName="Kancha" Has3D="False" Layer3DName="iS3Project/Borehole" />
+      <Stratum Name="AllStratum" TableNameSQL="Strata" HasGeometry="false" Has3D="false" />
+      <SoilProperty Name="AllSoilProperties" TableNameSQL="SoilProperties" HasGeometry="false" Has3D="false" />
+    </ObjsDefinition>
+    <TreeDefinition>
+      <Geology DisplayName="Geology" Desc="See geology report for complete information.">
+        <EngineeringGeology DisplayName="Engineering Geology" Desc="Engineering geology information">
+          <Borehole DisplayName="Boreholes" Desc="Select a borehole for detail." RefDomainName="Geology" />
+          <Stratum DisplayName="Stratum" Desc="Select a strata for detail." RefDomainName="Geology" RefObjsName="AllStratum" />
+          <SoilProperty DisplayName="Soil Properties" Desc="Select a soil for detail." RefDomainName="Geology" RefObjsName="AllSoilProperties" />
+        </EngineeringGeology>
+      </Geology>
+    </TreeDefinition>
+  </Domain>
+  <Domain Name="Monitoring" Type="Monitoring">
+    <ObjsDefinition>
+      <MonPoint Name="Monpoint" TableNameSQL="Mon_Test,MonData_TestData" OrderSQL="[ID],[time]" HasGeometry="true" GISLayerName="MonPoint" Has3D="False" Layer3DName="iS3Project/Mon" />
+    </ObjsDefinition>
+    <TreeDefinition>
+      <MonitoringItem DisplayName="监测">
+        <MonPoint DisplayName="监测点" RefDomainName="Monitoring" />
+      </MonitoringItem>
+    </TreeDefinition>
+  </Domain>
+</Project>

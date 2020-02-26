@@ -1,0 +1,41 @@
+<Project>
+<ProjectDefinition ID="Z14" ProjectTitle="Z14" DefaultMapID="{assembly:Null}" LocalFilePath="Data\Z14" LocalTilePath="Data\TPKs" LocalDatabaseName="Z14.mdb" DataServiceUrl="{assembly:Null}" GeometryServiceUrl="{assembly:Null}" xmlns="clr-namespace:iS3.Core;assembly=iS3.Core" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ProjectDefinition.EngineeringMaps>
+<EngineeringMap MapType="GeneralProfileMap" Calibrated="False" Scale="1" ScaleX="1" ScaleY="1" ScaleZ="1" MapID="Map0" LocalTileFileName1="Z14pingmiantu.tpk" LocalTileFileName2="{assembly:Null}" LocalMapFileName="{assembly:Null}" LocalGeoDbFileName="Z14.geodatabase" MapUrl="{assembly:Null}" XMax="454263.11485349818" XMin="453728.44378415553" YMax="4420095.1877226373" YMin="4419618.2651114361" MinimumResolution="0" MapRotation="0" xmlns="clr-namespace:iS3.Core;assembly=iS3.Core" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+  <EngineeringMap.LocalGdbLayersDef><LayerDef Name="MonPoint" GeometryType="Point" IsVisible="True" Color="#FFFFD700" SelectionColor="#FFFF0000" MarkerSize="12" MarkerStyle="Triangle" LineStyle="DashDot" FillStyle="Cross" OutlineColor="#FFFFD700" LineWidth="1" RendererDef="{assembly:Null}" EnableLabel="True" LabelTextExpression="[Name]" LabelWhereClause="{assembly:Null}" LabelColor="#FF000000" LabelBackgroundColor="#00000000" LabelBorderLineColor="#00000000" LabelBorderLineWidth="0" LabelFontFamily="Arial" LabelFontSize="12" LabelFontStyle="Normal" LabelFontWeight="Normal" LabelTextDecoration="None" xmlns="clr-namespace:iS3.Core;assembly=iS3.Core" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" />
+<LayerDef Name="Kancha" GeometryType="Point" IsVisible="True" Color="#FFFF0000" SelectionColor="#FF00FFFF" MarkerSize="12" MarkerStyle="Circle" LineStyle="Solid" FillStyle="Solid" OutlineColor="#FFFF0000" LineWidth="1" RendererDef="{assembly:Null}" EnableLabel="True" LabelTextExpression="[Name]" LabelWhereClause="{assembly:Null}" LabelColor="#FF000000" LabelBackgroundColor="#00000000" LabelBorderLineColor="#00000000" LabelBorderLineWidth="0" LabelFontFamily="Arial" LabelFontSize="12" LabelFontStyle="Normal" LabelFontWeight="Normal" LabelTextDecoration="None" xmlns="clr-namespace:iS3.Core;assembly=iS3.Core" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" />
+<LayerDef Name="Zhoubian" GeometryType="Polyline" IsVisible="True" Color="#FF808080" SelectionColor="#FF7FFFD4" MarkerSize="12" MarkerStyle="Circle" LineStyle="Solid" FillStyle="Solid" OutlineColor="#FF808080" LineWidth="1" RendererDef="{assembly:Null}" EnableLabel="False" LabelTextExpression="{assembly:Null}" LabelWhereClause="{assembly:Null}" LabelColor="#FF000000" LabelBackgroundColor="#00000000" LabelBorderLineColor="#00000000" LabelBorderLineWidth="0" LabelFontFamily="Arial" LabelFontSize="12" LabelFontStyle="Normal" LabelFontWeight="Normal" LabelTextDecoration="None" xmlns="clr-namespace:iS3.Core;assembly=iS3.Core" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" />
+<LayerDef Name="Lunkuo" GeometryType="Polyline" IsVisible="True" Color="#FFFF7F50" SelectionColor="#FFFF0000" MarkerSize="12" MarkerStyle="Circle" LineStyle="Solid" FillStyle="Solid" OutlineColor="#FFFF7F50" LineWidth="1" RendererDef="{assembly:Null}" EnableLabel="False" LabelTextExpression="{assembly:Null}" LabelWhereClause="{assembly:Null}" LabelColor="#FF000000" LabelBackgroundColor="#00000000" LabelBorderLineColor="#00000000" LabelBorderLineWidth="0" LabelFontFamily="Arial" LabelFontSize="12" LabelFontStyle="Normal" LabelFontWeight="Normal" LabelTextDecoration="None" xmlns="clr-namespace:iS3.Core;assembly=iS3.Core" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" />
+<LayerDef Name="Chengtai" GeometryType="Polyline" IsVisible="True" Color="#FF6495ED" SelectionColor="#FFFF0000" MarkerSize="12" MarkerStyle="Circle" LineStyle="Solid" FillStyle="Solid" OutlineColor="#FF6495ED" LineWidth="1" RendererDef="{assembly:Null}" EnableLabel="False" LabelTextExpression="{assembly:Null}" LabelWhereClause="{assembly:Null}" LabelColor="#FF000000" LabelBackgroundColor="#00000000" LabelBorderLineColor="#00000000" LabelBorderLineWidth="0" LabelFontFamily="Arial" LabelFontSize="12" LabelFontStyle="Normal" LabelFontWeight="Normal" LabelTextDecoration="None" xmlns="clr-namespace:iS3.Core;assembly=iS3.Core" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" />
+</EngineeringMap.LocalGdbLayersDef>
+</EngineeringMap>
+</ProjectDefinition.EngineeringMaps>
+</ProjectDefinition>
+
+  <Domain Name="Geology" Type="Geology">
+    <ObjsDefinition>
+      <Borehole Name="Allboreholes" TableNameSQL="Boreholes,BoreholeStrataInfo" ConditionSQL="" OrderSQL="" HasGeometry="true" GISLayerName="Kancha" Has3D="false" Layer3DName="iS3Project/Borehole" />
+      <Stratum Name="AllStratum" TableNameSQL="Strata" HasGeometry="false" Has3D="false" />
+      <SoilProperty Name="AllSoilProperties" TableNameSQL="SoilProperties" HasGeometry="false" Has3D="false" />
+    </ObjsDefinition>
+    <TreeDefinition>
+      <Geology DisplayName="Geology" Desc="See geology report for complete information.">
+        <EngineeringGeology DisplayName="Engineering Geology" Desc="Engineering geology information">
+          <Borehole DisplayName="Boreholes" Desc="Select a borehole for detail." RefDomainName="Geology" RefObjsName="Allboreholes" />
+          <Stratum DisplayName="Stratum" Desc="Select a strata for detail." RefDomainName="Geology" RefObjsName="AllStratum" />
+          <SoilProperty DisplayName="Soil Properties" Desc="Select a soil for detail." RefDomainName="Geology" />
+        </EngineeringGeology>
+      </Geology>
+    </TreeDefinition>
+  </Domain>
+  <Domain Name="Monitoring" Type="Monitoring">
+    <ObjsDefinition>
+      <MonPoint Name="Monpoint" TableNameSQL="Mon,MonData" OrderSQL="" HasGeometry="true" GISLayerName="MonPoint" Has3D="false" Layer3DName="iS3Project/Mon" />
+    </ObjsDefinition>
+    <TreeDefinition>
+      <MonitoringItem DisplayName="监测">
+        <MonPoint DisplayName="监测点" RefDomainName="Monitoring" RefObjsName="Monpoint" />
+      </MonitoringItem>
+    </TreeDefinition>
+  </Domain>
+</Project>
