@@ -322,6 +322,8 @@ namespace iS3.Desktop
             return mapPoint;
         }
         bool _isHitTesting = false;
+
+        //触发默认的地图tip信息
         async Task showDefaultMapTip(Point screenPoint, MapPoint mapPoint)
         {
             if (_isHitTesting)
@@ -616,7 +618,9 @@ namespace iS3.Desktop
         // Summary:
         //     Generate a default label attributes according to the GeometryType
         //     The default labelling property of a feature is [Name]
-        //
+        //根据GeometryType生成默认的标签特性
+        //默认展示的标签名称是Name
+        //0229改为id
         AttributeLabelClass generateDefaultLayerAttributeLable(Core.Geometry.GeometryType geometryType)
         {
             IS3TextSymbol textSymbol = new IS3TextSymbol();
@@ -624,7 +628,7 @@ namespace iS3.Desktop
 
             AttributeLabelClass labelClass = new AttributeLabelClass();
             labelClass.IsVisible = true;
-            labelClass.TextExpression = "[Name]";
+            labelClass.TextExpression = "[ID]";
             labelClass.Symbol = textSymbol;
 
             if (geometryType == Core.Geometry.GeometryType.Polygon)
@@ -968,6 +972,7 @@ namespace iS3.Desktop
         //     Object selection event listener (function).
         //     It will highlight selected objects and unhighlight
         //     deselected objects.
+        //对象选择事件监听器，可以高亮选择的对象并且给没有选择的对象灭灯
         public void objSelectionChangedListener(object sender,
             ObjSelectionChangedEventArgs e)
         {

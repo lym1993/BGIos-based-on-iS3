@@ -1,0 +1,24 @@
+<Project>
+<ProjectDefinition ID="TEST" ProjectTitle="TEST" DefaultMapID="BaseMap" LocalFilePath="Data\TEST" LocalTilePath="Data\TPKs" LocalDatabaseName="TEST.mdb" DataServiceUrl="{assembly:Null}" GeometryServiceUrl="{assembly:Null}" xmlns="clr-namespace:iS3.Core;assembly=iS3.Core" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ProjectDefinition.EngineeringMaps>
+<EngineeringMap MapType="FootPrintMap" Calibrated="False" Scale="1" ScaleX="1" ScaleY="1" ScaleZ="1" MapID="Map0" LocalTileFileName1="Z14.tpk" LocalTileFileName2="{assembly:Null}" LocalMapFileName="{assembly:Null}" LocalGeoDbFileName="desktop.geodatabase" MapUrl="{assembly:Null}" XMax="453930.87728721759" XMin="453830.62645374361" YMax="4419959.7259137928" YMin="4419870.3029170819" MinimumResolution="0" MapRotation="0" xmlns="clr-namespace:iS3.Core;assembly=iS3.Core" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+  <EngineeringMap.LocalGdbLayersDef><LayerDef Name="MonPoint" GeometryType="Point" IsVisible="True" Color="#FFFF0000" SelectionColor="#FFFF0000" MarkerSize="12" MarkerStyle="Circle" LineStyle="Solid" FillStyle="Solid" OutlineColor="#FF000000" LineWidth="1" RendererDef="{assembly:Null}" EnableLabel="True" LabelTextExpression="[ID]" LabelWhereClause="{assembly:Null}" LabelColor="#FF000000" LabelBackgroundColor="#00000000" LabelBorderLineColor="#00000000" LabelBorderLineWidth="0" LabelFontFamily="Arial" LabelFontSize="12" LabelFontStyle="Normal" LabelFontWeight="Normal" LabelTextDecoration="None" xmlns="clr-namespace:iS3.Core;assembly=iS3.Core" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" />
+<LayerDef Name="liangdian" GeometryType="Point" IsVisible="True" Color="#FFFF0000" SelectionColor="#FFFF0000" MarkerSize="12" MarkerStyle="Circle" LineStyle="Solid" FillStyle="Solid" OutlineColor="#FF000000" LineWidth="1" RendererDef="{assembly:Null}" EnableLabel="True" LabelTextExpression="[ID]" LabelWhereClause="{assembly:Null}" LabelColor="#FF000000" LabelBackgroundColor="#00000000" LabelBorderLineColor="#00000000" LabelBorderLineWidth="0" LabelFontFamily="Arial" LabelFontSize="12" LabelFontStyle="Normal" LabelFontWeight="Normal" LabelTextDecoration="None" xmlns="clr-namespace:iS3.Core;assembly=iS3.Core" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" />
+</EngineeringMap.LocalGdbLayersDef>
+</EngineeringMap>
+</ProjectDefinition.EngineeringMaps>
+</ProjectDefinition>
+
+  <Domain Name="Monitoring" Type="Monitoring">
+    <ObjsDefinition>
+      <MonPoint Name="AllMonPoint" TableNameSQL="Mon_Test,Mon_TestData" OrderSQL="[ID]" HasGeometry="true" GISLayerName="liangdian" Has3D="false" Layer3DName="iS3Project/监测点/监测点" />
+    </ObjsDefinition>
+    <TreeDefinition>
+      <Root>
+        <Monitoring DisplayName="监测记录">
+          <MonPoint DisplayName="监测点" RefDomainName="Monitoring" RefObjsName="AllMonPoint" />
+        </Monitoring>
+      </Root>
+    </TreeDefinition>
+  </Domain>
+</Project>

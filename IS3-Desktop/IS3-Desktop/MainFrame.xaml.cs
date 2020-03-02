@@ -602,6 +602,7 @@ namespace iS3.Desktop
             base.OnKeyUp(e);
         }
 
+        //home按钮事件
         private void Home_Click(object sender, RoutedEventArgs e)
         {
             Application app = App.Current;
@@ -609,6 +610,7 @@ namespace iS3.Desktop
             mw.SwitchToProjectListPage();
         }
 
+        //Py图标事件
         private void Python_Click(object sender, RoutedEventArgs e)
         {
             string pyPath = Runtime.rootPath;

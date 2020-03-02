@@ -34,7 +34,9 @@ namespace iS3.Core
     //     objects definition
     // Remarks:
     //     Object non-graphic infos are usually stored in tables of a database.
+    // 对象的非图形信息通常存储在数据表中
     //     Object graphic infos are usually stored in GIS layers.
+    // 对象的图形信息通常存储在GIS图层中
     //     These infos are defined in objects definition.
     //
     public class DGObjectsDefinition

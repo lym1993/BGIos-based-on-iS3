@@ -153,6 +153,7 @@ namespace iS3.Config
            
         }
 
+        //双击放大图层
         private void LayrCB_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             System.Windows.Controls.CheckBox chkBox = sender as System.Windows.Controls.CheckBox;
@@ -326,6 +327,7 @@ namespace iS3.Config
             if (File.Exists(file))
             {
                 // Open geodatabase
+                //打开geodatabase文件
                 Geodatabase gdb = await Geodatabase.OpenAsync(file);
                 IEnumerable<GeodatabaseFeatureTable> featureTables =
                     gdb.FeatureTables;
