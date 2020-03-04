@@ -31,6 +31,7 @@ namespace iS3.Geology.Serialization
     //**
     //**************************************************************************
     #endregion
+    //加载地质对象的类
     public class GeologyDGObjectLoader
     {
         protected GeologyDbDataLoader _dbLoader;
@@ -38,6 +39,17 @@ namespace iS3.Geology.Serialization
         public GeologyDGObjectLoader(DbContext dbContext)
         {
             _dbLoader = new GeologyDbDataLoader(dbContext);
+        }
+
+        //200303加入LoadPileFoundation方法
+        public bool LoadPileFoundation(DGObjects objs)
+        {
+            DGObjectsDefinition def = objs.definition;
+            if (def == null)
+                return false;
+            bool success = _dbLoader.ReadPileFoundation(objs,
+                def.TableNameSQL, def.ConditionSQL, def.OrderSQL);
+            return success;
         }
 
         public bool LoadBoreholes(DGObjects objs)

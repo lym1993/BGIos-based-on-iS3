@@ -16,6 +16,11 @@ namespace iS3.Geology.UserControls
 {
     public partial class BoreholeView : UserControl
     {
+        //钻孔数据的用户控制界面，有时间可以进行优化，现在显示效果太拥挤了！！
+        //属于用户控件
+
+
+        //舒适化绘制区域
         public BoreholeView()
         {
             InitializeComponent();

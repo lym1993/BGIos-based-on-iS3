@@ -32,6 +32,7 @@ namespace iS3.Core
     #endregion
 
     // Engineering domain type
+    // 工程定义类型
     public enum DomainType
     {
         Unknown,//未知
@@ -42,7 +43,7 @@ namespace iS3.Core
         Construction,//建造物、构筑物
         Monitoring,//监测
         Maintenance,//维护、保养、维持
-        Tdisease,//
+        Tdisease,//病害
     };
 
     // Summary:

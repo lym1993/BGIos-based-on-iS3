@@ -67,6 +67,7 @@ namespace iS3.Geology
             return success;
         }
 
+        //ToString的覆写方法
         public override string ToString()
         {
             string str = base.ToString();

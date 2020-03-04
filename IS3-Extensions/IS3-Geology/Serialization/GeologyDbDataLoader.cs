@@ -37,11 +37,165 @@ namespace iS3.Geology.Serialization
     //**************************************************************************
 
     #endregion
+    //加载地质数据的类
     public class GeologyDbDataLoader : DbDataLoader
     {
+        //iS3地质信息序列化，用来读取各项信息
         public GeologyDbDataLoader(DbContext dbContext)
             : base(dbContext)
         { }
+
+        // 200303读取PileFoundation信息
+        // 重载3
+        public bool ReadPileFoundation(DGObjects objs, string tableNameSQL,
+            List<int> objsIDs)
+        {
+            string conditionSQL = WhereSQL(objsIDs);
+
+            return ReadPileFoundation(objs, tableNameSQL, conditionSQL, null);
+        }
+
+        //重载4
+        public bool ReadPileFoundation(DGObjects objs, string tableNameSQL,
+            string conditionSQL, string orderSQL)
+        {
+            try
+            {
+                //首先读取PileFoundation
+                //接着用第二种方法加载PileFoundationGeologies也就是桩基础属性
+                _ReadPileFoundation(objs, tableNameSQL, conditionSQL,
+                   orderSQL);
+                _ReadPileFoundationGeologies2(objs);
+            }
+            //报错模块，弹出错误信息
+            catch(DbException ex)
+            {
+                string str = ex.ToString();
+                ErrorReport.Report(str);
+                return false;
+            }
+            return true;
+        }
+
+        void _ReadPileFoundation(
+            DGObjects objs,
+            string tableNameSQL,
+            string conditionSQL,
+            string orderSQL)
+        {
+            ReadRawData(objs, tableNameSQL, orderSQL, conditionSQL);
+            DataTable table = objs.rawDataSet.Tables[0];
+            //以行为单位对数据进行枚举
+            foreach (DataRow row in table.Rows)
+            {
+                //如果此列名称不是ID，掠过
+                if (IsDbNull(row, "ID"))
+                    continue;
+
+                //实例化PileFoundation类
+                //为实例赋予读取得数值
+                PileFoundation PF = new PileFoundation(row);
+                //基础编号、名字、形状
+                PF.ID = ReadInt(row, "ID").Value;
+                PF.Name = ReadString(row, "Name");
+                PF.shape = ReadShape(row);
+
+                //以下调用PileFoundation类中数据结构
+                //基础形状，矩形、圆形
+                //矩形基础长边L、短边B、圆形基础半径R
+                //基础顶标高、基础底标高、桩底标高
+                PF.Type = ReadString(row, "Type");
+                PF.LOfRectangularBearingPlatform = ReadDouble(row, "L").Value;
+                PF.BOfRectangularBearingPlatform = ReadDouble(row, "B").Value;
+                PF.ROfRoundBearPlatform = ReadDouble(row, "R").Value;
+
+                PF.TopOfCushionCap = ReadDouble(row, "TopOfCushionCap").Value;
+                PF.BaseOfCushionCap = ReadDouble(row, "BaseOfCushiorCap").Value;
+                PF.BaseOfPile = ReadDouble(row, "BaseOfPile").Value;
+                PF.Xcoordinate = ReadDouble(row, "Xcoordinate").Value;
+                PF.Ycoordinate = ReadDouble(row, "Ycoordinate").Value;
+                PF.PileLength = ReadDouble(row, "PileLength").Value;
+
+                //将PF实例设置为objs对象中PF实例的key
+                objs[PF.key] = PF;
+            }
+        }
+
+        void _ReadPileFoundationGeologies2(DGObjects objs)
+        {
+            //如果录入的表数量少于两个，跳出方法
+            if (objs.rawDataSet.Tables.Count <= 1)
+                return;
+
+            // method2: index the stratra info
+            // 步骤2 插入地层信息
+            //在这里插入的是表2，也就是PileFoundationStrataInfo表
+            DataTable dt = objs.rawDataSet.Tables[1];
+            Dictionary<int, List<PileFoundationGeology>> strata_dict =
+                new Dictionary<int, List<PileFoundationGeology>>();
+
+            // put the strata information into the dictionary
+            // 将地层信息放入字典中
+            foreach (DataRow row in dt.Rows)
+            {
+                //如果列的名称不是这两个，就报错
+                if (IsDbNull(row, "StratumID") || IsDbNull(row, "ElevationOfStratumBottom"))
+                {
+                    string error = string.Format(
+                        "Data table [{0}] error: [StratumID] or [ElevationOfStratumBottom] can't be null, [PileFoundationID] = {1}."
+                        + Environment.NewLine
+                        + "This record is ignore. Checking data is strongly recommended.",
+                        dt.TableName, row["PileFoundation"]);
+                    ErrorReport.Report(error);
+                    continue;
+                }
+
+                int PFID = ReadInt(row, "PileFoundation").Value;
+                List<PileFoundationGeology> geo = null;
+                if (strata_dict.ContainsKey(PFID))
+                    geo = strata_dict[PFID];
+                else
+                {
+                    geo = new List<PileFoundationGeology>();
+                    strata_dict[PFID] = geo;
+                }
+                PileFoundationGeology bg = new PileFoundationGeology();
+                bg.StratumID = ReadInt(row, "StratumID").Value;
+                bg.Base = ReadDouble(row, "ElevationOfStratumBottom").Value;
+                geo.Add(bg);
+            }
+
+            // sort the pilefoundation geology
+            // 桩基础地质分类
+            // 这一句没看明白
+            foreach (var geo in strata_dict.Values)
+            {
+                //匿名函数么？
+                geo.Sort((x, y) => x.StratumID.CompareTo(y.StratumID));
+            }
+
+            // add the geology to pilefoundation
+            // 给桩基础添加地质结构
+            foreach (PileFoundation pf in objs.values)
+            {
+                //新建有关PFG的列表geo
+                List<PileFoundationGeology> geo = null;
+                if (strata_dict.ContainsKey(pf.ID))
+                    geo = strata_dict[pf.ID];
+                else
+                    continue;
+
+                double baseofcushioncap = pf.BaseOfCushionCap;
+                foreach (var x in geo)
+                {
+                    x.Top = baseofcushioncap;
+                    baseofcushioncap = x.Base;
+                     //对PF实例中的geologies属性添加值
+                    pf.Geologies.Add(x);
+                }
+            }
+        }
+
 
         // Read boreholes
         //
@@ -53,11 +207,8 @@ namespace iS3.Geology.Serialization
             return ReadBoreholes(objs, tableNameSQL, conditionSQL, null);
         }
 
-        public bool ReadBoreholes(
-            DGObjects objs,
-            string tableNameSQL,
-            string conditionSQL, 
-            string orderSQL)
+        public bool ReadBoreholes(DGObjects objs, string tableNameSQL,
+            string conditionSQL, string orderSQL)
         {
             try
             {
@@ -73,6 +224,7 @@ namespace iS3.Geology.Serialization
             }
             return true;
         }
+
         void _ReadBoreholes(
             DGObjects objs,
             string tableNameSQL,
@@ -104,6 +256,7 @@ namespace iS3.Geology.Serialization
 
         void _ReadBoreholeGeologies(DGObjects objs)
         {
+            // 方法1，使用linq，可能会很慢
             // method1: maybe very slow because linq is slow.
             DataTable dt = objs.rawDataSet.Tables[1];
             foreach (Borehole bh in objs.values)
@@ -204,7 +357,7 @@ namespace iS3.Geology.Serialization
         }
 
         // Read strata
-        //
+        // 读取地层
         public bool ReadStrata(
             DGObjects objs,
             string tableNameSQL,

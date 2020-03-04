@@ -200,7 +200,7 @@ namespace iS3.Core.Serialization
             }
         }
 
-        //读市场
+        //读取时间跨度
         public TimeSpan? ReadTimeSpan(DataRow row, string colName)
         {
             if (!IsDbColumnExist(row, colName))
@@ -501,6 +501,7 @@ namespace iS3.Core.Serialization
             return true;
         }
 
+        //读取形状
         public virtual ShapeObject ReadShape(DataRow row)
         {
             DataTable table = row.Table;
