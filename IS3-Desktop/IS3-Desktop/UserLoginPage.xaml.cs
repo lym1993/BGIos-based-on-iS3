@@ -53,6 +53,8 @@ namespace iS3.Desktop
             }
             App app = Application.Current as App;
             IS3MainWindow mw = (IS3MainWindow)app.MainWindow;
+
+            //跳转到项目列表页面
             mw.SwitchToProjectListPage();
         }
 

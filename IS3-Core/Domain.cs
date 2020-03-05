@@ -121,6 +121,7 @@ namespace iS3.Core
 
         // Summary:
         //     Load a Domain from XML element
+        // 从xml元素中加载定义域
         public static Domain loadDefinition(XElement root)
         {
             string name = root.Attribute("Name").Value;
@@ -130,11 +131,12 @@ namespace iS3.Core
             Domain domain = new Domain(name, domainType);
 
             // Load tree definition
-            //
+            // 加载树定义
             XElement treeDefNode = root.Element("TreeDefinition");
             if (treeDefNode != null)
             {
                 // only first node is loaded, other nodes are ignored.
+                // 只有第一个节点会被加载，忽略其他节点
                 IEnumerable<XElement> nodes = treeDefNode.Elements();
                 if (nodes.Count() > 0)
                 {
@@ -161,15 +163,17 @@ namespace iS3.Core
 
         // Summary:
         //     Load objects from database
+        // 从database加载对象（对象定义名称，数据库环境）
         public bool loadObjects(string objDefName, DbContext dbContext)
         {
             if (parent == null)
                 return false;
 
             DGObjectsDefinition def = objsDefinitions[objDefName];
+            //判断def是否为空
             if (def == null)
                 return false;
-
+            //实例化DGObjects
             DGObjects objs = new DGObjects(def);
             bool success = objs.load(dbContext);
             objs.parent = this;
@@ -183,6 +187,7 @@ namespace iS3.Core
 
         // Summary:
         //     Load all objects from database
+        // 从数据库加载所有对象
         public bool loadAllObjects(DbContext dbContext)
         {
             if (parent == null)

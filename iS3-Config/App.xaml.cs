@@ -53,6 +53,7 @@ namespace iS3.Config
     /// </summary>
     public partial class App : Application
     {
+        //iS3Config主程序
         string iS3Path = "";
         string dataPath = "";
 

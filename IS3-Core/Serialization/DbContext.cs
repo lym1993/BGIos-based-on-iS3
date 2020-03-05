@@ -36,6 +36,7 @@ namespace iS3.Core.Serialization
             Close();
         }
 
+        //DbContext的open方法
         public bool Open()
         {
             if (_isOpened)

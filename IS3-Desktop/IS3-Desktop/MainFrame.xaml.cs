@@ -19,6 +19,7 @@ using Xceed.Wpf.AvalonDock.Layout.Serialization;
 
 using iS3.Core;
 using iS3.Python;
+using System.Windows.Navigation;
 
 namespace iS3.Desktop
 {
@@ -320,6 +321,8 @@ namespace iS3.Desktop
                 ipcHost.addProjectPath(folders[i]);
             }
         }
+
+        //加载项目
         public void LoadProject(string definitionFile)
         {
             if (definitionFile == null
@@ -327,7 +330,9 @@ namespace iS3.Desktop
                 return;
 
             ////ShowProgressWindow("Loading project data...");
+            //加载项目数据
             _prj = Project.load(definitionFile);
+
             Globals.project = _prj;
             objSelectionChangedTrigger += _prj.objSelectionChangedListener;
             if (projectLoaded != null)
@@ -794,6 +799,17 @@ namespace iS3.Desktop
         public void runStatements(string statements)
         {
             ipcHost.runStatements(statements);
+        }
+
+
+        //200205桩基础沉降分析按钮，弹出配置页面1
+        private void MenuItem_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Settlement_calculation_page1 settlement_Calculation_Page1 = new Settlement_calculation_page1();
+            //显示桩基础沉降插件界面V1.0
+            //输入均布荷载，沉降经验系数
+            settlement_Calculation_Page1.ShowDialog();          
+            
         }
     }
 

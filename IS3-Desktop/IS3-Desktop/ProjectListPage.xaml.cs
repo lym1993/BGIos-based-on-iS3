@@ -56,7 +56,7 @@ namespace iS3.Desktop
             InitializeComponent();
 
             ProjectTitle.Text = "";
-
+            //加载地图页面
             MyMapView.Loaded += MyMapView_Loaded;
 
             MyMapView.MouseMove += MyMapView_MouseMove;
@@ -145,10 +145,12 @@ namespace iS3.Desktop
             }
         }
 
+        //在mapview视角中按下鼠标
         async void MyMapView_MouseDown(object sender, MouseButtonEventArgs e)
         {
             try
             {
+                //击中测试
                 _isHitTesting = true;
 
                 Point screenPoint = e.GetPosition(MyMapView);
@@ -159,6 +161,7 @@ namespace iS3.Desktop
                     App app = Application.Current as App;
 
                     IS3MainWindow mw = (IS3MainWindow)app.MainWindow;
+                    //主窗口跳转到mainframe
                     mw.SwitchToMainFrame(definitionFile);
                 }
             }
@@ -239,6 +242,7 @@ namespace iS3.Desktop
             }
         }
 
+        //在地图上添加项目
         private void AddProjectsToMap()
         {
             GraphicsLayer gLayer = 

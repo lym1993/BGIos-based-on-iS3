@@ -74,12 +74,17 @@ namespace iS3.Desktop
                 string rootPath = di.FullName+ "\\Output";
                 string dataPath = rootPath + "\\Data";
                 string tilePath = dataPath + "\\TPKs";
+                //确定根目录
                 Runtime.rootPath = rootPath;
+                //确定数据目录
                 Runtime.dataPath = dataPath;
+                //确定切片文件目录
                 Runtime.tilePath = tilePath;
+                //确定配置文件目录
                 Runtime.configurationPath = rootPath + "\\config\\DBconfig.xml";
 
                 //ArcGISRuntime.Initialize();
+                //arcgisruntime初始化
                 Runtime.initializeEngines(_graphicEngine, _geometryEngine);
                 Globals.application = this;
                 Globals.mainthreadID = Thread.CurrentThread.ManagedThreadId;

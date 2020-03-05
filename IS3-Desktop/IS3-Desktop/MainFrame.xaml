@@ -181,12 +181,9 @@
                             <MenuItem Header="覆盖层厚度" ></MenuItem>
                             <MenuItem Header="液化判别" ></MenuItem>
                         </MenuItem>
-                        <MenuItem Header="计算分析" >
-                            <MenuItem Header="沙土模量" ></MenuItem>
-                            <MenuItem Header="卵石模量" ></MenuItem>
-                            <MenuItem Header="地基承载力修正" ></MenuItem>
-                            <MenuItem Header="桩基础承载力" ></MenuItem>
-                            <MenuItem Header="抗浮验算" ></MenuItem>
+                        <MenuItem Header="沉降分析" >
+                            <MenuItem Header="独立基础沉降分析"  ></MenuItem>
+                            <MenuItem Header="桩基础沉降分析" PreviewMouseLeftButtonDown="MenuItem_MouseLeftButtonDown"></MenuItem>
                         </MenuItem>
                         <MenuItem Header="绘制图件" >
                             <!--这部分体现在下方页面即可-->

@@ -179,6 +179,7 @@ namespace iS3.Core
             return null;
         }
 
+        //项目定义类中的加载方法
         public static ProjectDefinition Load(XElement root)
         {
             XNamespace iS3 = "clr-namespace:iS3.Core;assembly=iS3.Core";

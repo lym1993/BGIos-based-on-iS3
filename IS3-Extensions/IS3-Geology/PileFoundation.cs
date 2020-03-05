@@ -22,6 +22,9 @@ namespace iS3.Geology
         public double Base { get; set; }     
         //天然地层编号
         public double StratumID { get; set; }
+        //土壤重度gama
+        public double Gama { get; set; }
+        //土壤
     }
 
     //PileFoundation类，代表桩基础的基本性质
@@ -118,7 +121,7 @@ namespace iS3.Geology
             return sql;
         }
 
-        //这是wpf显示控件么
+        //这是wpf显示控件
         public override List<FrameworkElement> chartViews(
             IEnumerable<DGObject> objs, double width, double height)
         {

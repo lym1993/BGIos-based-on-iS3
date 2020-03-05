@@ -40,7 +40,7 @@ namespace iS3.Core
         static IEnumerable<Type> subclasses = null;
 
         // create DGObject from give subclass name
-        //
+        // 从给出的子类名称创建DGObject
         public static DGObject CreateDGObjectFromSubclassName(string subclassName)
         {
             if (subclassName == "DGObject")
@@ -56,6 +56,7 @@ namespace iS3.Core
             }
 
             // match the subclassName with full name at first
+            // 首先将子类名称与全名进行匹配
             Type t = subclasses.FirstOrDefault(x => x.FullName == subclassName);
 
             // if not found, match the subclassName with name

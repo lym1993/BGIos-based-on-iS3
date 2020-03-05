@@ -20,6 +20,7 @@ namespace iS3.Desktop
     /// </summary>
     public partial class IS3MainWindow : Window
     {
+        //IS3主窗口
         public IS3MainWindow()
         {
             InitializeComponent();

@@ -120,6 +120,9 @@ namespace iS3.Core
     //     (3) DataRow of DataTable -> DGObject
     //     (4) DGObject -> DataRow of DataTable
     //
+    //DGObjects是DGObject的集合
+    //它不同于DGObject组成的列表
+    //又以下四个索引用来快速访问：name/id/datarow或datatable/DGObject
     public class DGObjects
     {
         // Summary:
@@ -214,7 +217,9 @@ namespace iS3.Core
             DGObject objHelper =
                 ObjectHelper.CreateDGObjectFromSubclassName(definition.Type);
             bool success = objHelper.LoadObjs(this, dbContext);
+            //建立ID索引
             buildIDIndex();
+            //建立行视角索引
             buildRowViewIndex();
 
             return success;
@@ -222,8 +227,10 @@ namespace iS3.Core
 
         // Summary:
         //     Build ID index to object
+        // 给对象建立ID索引
         protected void buildIDIndex()
         {
+
             _id2Obj = new Dictionary<int, DGObject>();
             foreach (DGObject obj in _objs.Values)
             {
@@ -239,7 +246,7 @@ namespace iS3.Core
         {
             if (rawDataSet == null || rawDataSet.Tables.Count == 0)
                 return;
-
+            //实例化DataTable dt，在这里指dbo_Boreholes
             DataTable dt = rawDataSet.Tables[0];
             rowView2Obj = new Dictionary<DataRow, DGObject>();
             foreach (DGObject obj in _objs.Values)

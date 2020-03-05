@@ -82,7 +82,6 @@ namespace iS3.Config
         }
 
 
-        //表格选择按钮，笔记本上有问题的
         private void TableNameSQLBtn_Click(object sender, RoutedEventArgs e)
         {
             DGObjectsDefinition DObjsDef = DObjsDefGrid.DataContext as DGObjectsDefinition;
@@ -152,6 +151,7 @@ namespace iS3.Config
             }
         }
 
+        //三维图层按钮
         private void ThreeDimLayerBtn_Click(object sender, RoutedEventArgs e)
         {
             DGObjectsDefinition DObjsDef = DObjsDefGrid.DataContext as DGObjectsDefinition;
@@ -179,6 +179,7 @@ namespace iS3.Config
             }
         }
 
+        //增加定义域按钮
         private void AddDomain_Click(object sender, RoutedEventArgs e)
         {
             AddDomainWindow addDomainWnd = new AddDomainWindow();
@@ -192,6 +193,7 @@ namespace iS3.Config
                 {
                     MessageBox.Show("Domain already exist!", "Error", MessageBoxButton.OK);
                 }
+                //如果是新的定义域
                 else
                 {
                     _prj.domains.Add(result.name, result);

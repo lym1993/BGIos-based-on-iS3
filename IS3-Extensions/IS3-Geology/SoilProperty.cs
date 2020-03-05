@@ -36,6 +36,8 @@ namespace iS3.Geology
 
     public class StratumSection : DGObject
     { 
+
+        //定义里程
         public double? StartMileage { get; set; }
         public double? EndMileage { get; set; }
 
@@ -56,11 +58,16 @@ namespace iS3.Geology
         }
     }
 
+    //定义土壤性质类
     public class SoilProperty : DGObject
     {
+        //定义土层ID
         public int StratumID { get; set; }
+        //定义土层截面ID
         public int? StratumSectionID { get; set; }
+        //土壤静态性质
         public SoilStaticProperty StaticProp { get; set; }
+        //土壤动态性质
         public SoilDynamicProperty DynamicProp { get; set; }
 
         // Use StratumSectionID:Name as the key
@@ -95,7 +102,9 @@ namespace iS3.Geology
 
     public class SoilStaticProperty
     {
+        //含水量
         public double? w { get; set; }
+        //重度
         public double? gama { get; set; }
         public double? c { get; set; }
         public double? fai { get; set; }

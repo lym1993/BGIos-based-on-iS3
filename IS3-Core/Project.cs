@@ -88,6 +88,7 @@ namespace iS3.Core
         public Dictionary<DataSet, DGObjects> dataSetIndex { get; set; }
 
         //Project类的构造函数
+        //Project类初始化
         public Project()
         {
             projDef = null;
@@ -109,18 +110,21 @@ namespace iS3.Core
 
         // Summary:
         //     Load project defintion from a XML file
-        //
+        // 从xml文件加载项目定义
         public bool loadDefinition(string file)
         {
             string filePath = Runtime.dataPath + "\\" + file;
+            //判断定义文件是否存在
             if (File.Exists(filePath) == false)
             {
                 ErrorReport.Report("Error: defintion file doesn't exist: " + filePath);
                 return false;
             }
+            //文件存在之后实例化streamreader类
             StreamReader reader = new StreamReader(filePath);
 
             // Load root element from xml
+            // 从xml文件加载根元素
             XElement root = XElement.Load(reader);
             if (root.Name != "Project")
             {
@@ -129,13 +133,17 @@ namespace iS3.Core
             }
 
             // Load project definition
+            // 加载项目定义
             projDef = ProjectDefinition.Load(root);
+            //判断projdef是否存在
             if (projDef == null)
                 return false;
 
             // get rid of ".xml", and use as default local file path
+            // 干掉.xml小尾巴
             string shortName = file.Substring(0, file.Length - 4);
 
+            //判断本地文件路径是否为空
             if (projDef.LocalFilePath == null)
             {
                 Runtime.projPath = Runtime.dataPath + "\\" + shortName;
@@ -143,15 +151,17 @@ namespace iS3.Core
             }
             else
                 Runtime.projPath = projDef.LocalFilePath;
-
+            //判断tpk路径是否为空
             if (projDef.LocalTilePath == null)
                 projDef.LocalTilePath = Runtime.tilePath;
+            //判断数据库是否存在
             if (projDef.LocalDatabaseName == null)
                 projDef.LocalDatabaseName = Runtime.projPath + "\\" + shortName + ".mdb";
             else
                 projDef.LocalDatabaseName = Runtime.projPath + "\\" + projDef.LocalDatabaseName;
 
             // Load domain definition
+            // 加载定义域定义
             IEnumerable<XElement> nodes = root.Elements("Domain");
             foreach (XElement node in nodes)
             {
@@ -181,7 +191,7 @@ namespace iS3.Core
         // Summary:
         //     Get a database context, which is requried to start reading
         //     objects from database file.
-        //
+        // 得到一个数据库语境，用来从database文件读取对象
         protected DbContext _dbContext;
         public DbContext getDbContext()
         {
@@ -247,21 +257,25 @@ namespace iS3.Core
         //      It involoved two steps:
         //      (1) Load defintion at first
         //      (2) Load project domain data specifiled in the definition file
-        //
+        // 从定义过的文件加载项目
+        // 分为两个步骤，首先加载定义，然后从定义文件加载项目定义域数据
         public static Project load(string definitionFile)
         {
             Project prj = new Project();
+            //将空的prj赋值给project属性
             iS3.Core.Globals.project = prj;
 
             // Load project definition first
-            // 
+            // 首先加载项目定义
             prj.loadDefinition(definitionFile);
 
             // Load project data
-            //
+            // 加载项目数据
             DbContext dbContext = prj.getDbContext();
+
             //判断加载能否成功，如果成功，进行下一步
             bool success = dbContext.Open();
+            //判断是否能成功打开
             if (!success)
                 return prj;
 

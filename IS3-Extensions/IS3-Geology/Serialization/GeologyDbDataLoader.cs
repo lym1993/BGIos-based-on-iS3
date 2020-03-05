@@ -66,6 +66,9 @@ namespace iS3.Geology.Serialization
                 _ReadPileFoundation(objs, tableNameSQL, conditionSQL,
                    orderSQL);
                 _ReadPileFoundationGeologies2(objs);
+
+                //202305加入第三个表，用于给桩基础下方地层土壤性质赋值
+                _ReadPileFoundationGeologies3(objs);
             }
             //报错模块，弹出错误信息
             catch(DbException ex)
@@ -138,7 +141,7 @@ namespace iS3.Geology.Serialization
             // 将地层信息放入字典中
             foreach (DataRow row in dt.Rows)
             {
-                //如果列的名称不是这两个，就报错
+                //检查表格完整性
                 if (IsDbNull(row, "StratumID") || IsDbNull(row, "ElevationOfStratumBottom"))
                 {
                     string error = string.Format(
@@ -150,7 +153,9 @@ namespace iS3.Geology.Serialization
                     continue;
                 }
 
-                int PFID = ReadInt(row, "PileFoundation").Value;
+                int PFID = ReadInt(row, "PileFoundationID").Value;
+
+                //初始化geo列表
                 List<PileFoundationGeology> geo = null;
                 if (strata_dict.ContainsKey(PFID))
                     geo = strata_dict[PFID];
@@ -196,9 +201,15 @@ namespace iS3.Geology.Serialization
             }
         }
 
+        //读取土壤性质，绑定到桩基础下的各地层中
+        void _ReadPileFoundationGeologies3(DGObjects objs)
+        {
+            
+        }
+
 
         // Read boreholes
-        //
+        // 读取钻孔数据
         public bool ReadBoreholes(DGObjects objs, string tableNameSQL,
             List<int> objsIDs)
         {
@@ -409,7 +420,7 @@ namespace iS3.Geology.Serialization
         }
 
         // Read Soil properties
-        //
+        // 读取土壤性质
         public bool ReadSoilProperties(
             DGObjects objs,
             string tableNameSQL,
@@ -448,7 +459,9 @@ namespace iS3.Geology.Serialization
                 soilProp.StratumID = ReadInt(reader, "StratumID").Value;
                 soilProp.StratumSectionID = ReadInt(reader, "StratumSectionID");
 
+                //含水量
                 soilProp.StaticProp.w = ReadDouble(reader, "w");
+                //重度
                 soilProp.StaticProp.gama = ReadDouble(reader, "gama");
                 soilProp.StaticProp.c = ReadDouble(reader, "c");
                 soilProp.StaticProp.fai = ReadDouble(reader, "fai");
@@ -459,6 +472,7 @@ namespace iS3.Geology.Serialization
                 soilProp.StaticProp.K0 = ReadDouble(reader, "K0");
                 soilProp.StaticProp.Kv = ReadDouble(reader, "Kv");
                 soilProp.StaticProp.Kh = ReadDouble(reader, "Kh");
+                //孔隙比?
                 soilProp.StaticProp.e = ReadDouble(reader, "e");
                 soilProp.StaticProp.av = ReadDouble(reader, "av");
                 soilProp.StaticProp.Cu = ReadDouble(reader, "Cu");
