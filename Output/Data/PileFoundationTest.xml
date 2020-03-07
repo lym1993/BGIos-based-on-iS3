@@ -1,0 +1,17 @@
+<Project>
+<ProjectDefinition ID="PileFoundationTest" ProjectTitle="PileFoundationTest" DefaultMapID="{assembly:Null}" LocalFilePath="Data\PileFoundationTest" LocalTilePath="Data\TPKs" LocalDatabaseName="PileFoundationTest.mdb" DataServiceUrl="{assembly:Null}" GeometryServiceUrl="{assembly:Null}" xmlns="clr-namespace:iS3.Core;assembly=iS3.Core" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ProjectDefinition.EngineeringMaps>
+</ProjectDefinition.EngineeringMaps>
+</ProjectDefinition>
+
+  <Domain Name="Construction" Type="Construction">
+    <ObjsDefinition>
+      <PileFoundation Name="AllPileFoundations" TableNameSQL="PileFoundation,PileFoundationStrataInfo" OrderSQL="[Name]" HasGeometry="false" Has3D="false" />
+    </ObjsDefinition>
+    <TreeDefinition>
+      <Unknown>
+        <PileFoundation DisplayName="PileFoundation" RefDomainName="Construction" RefObjsName="AllPileFoundations" />
+      </Unknown>
+    </TreeDefinition>
+  </Domain>
+</Project>

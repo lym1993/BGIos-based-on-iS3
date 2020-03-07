@@ -204,6 +204,7 @@ namespace iS3.Desktop
             }
         }
 
+        //加载项目列表
         public void LoadProjectList()
         {
             if (Projects != null)

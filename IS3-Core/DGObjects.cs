@@ -161,6 +161,7 @@ namespace iS3.Core
 
         // Summary:
         //     Get object by a key
+        // key是Name字段吗?
         public DGObject this[string key]
         {
             get { return _objs[key]; }

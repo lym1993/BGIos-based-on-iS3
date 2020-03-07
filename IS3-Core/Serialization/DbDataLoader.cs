@@ -170,8 +170,9 @@ namespace iS3.Core.Serialization
         {
             if (!IsDbColumnExist(row, colName))
                 return null;
+            //如果存在该列，但是没有数，返回0
             else if (IsDbNull(row, colName))
-                return null;
+                return 0;
             else
                 return Convert.ToDouble(row[colName]);
         }
@@ -477,6 +478,8 @@ namespace iS3.Core.Serialization
                     strCmd += OrderSQL(orders[i]);
 
                 DbDataAdapter adapter = _dbContext.GetDbDataAdapter(strCmd);
+                //桩基础例子在这里出错了
+                //200308解决此问题rawDataSet属性需要设置
                 adapter.Fill(objs.rawDataSet, tableName);
             }
 

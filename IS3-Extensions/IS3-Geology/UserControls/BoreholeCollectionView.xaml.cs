@@ -75,6 +75,7 @@ namespace iS3.Geology.UserControls
                 LayoutRoot.Children.Add(bhView);
                 LayoutRoot.Width += x_space * ScaleX;
 
+                //如果里程不为空
                 if (bh.Mileage != null)
                 {
                     TextBlock tbMileage = new TextBlock();

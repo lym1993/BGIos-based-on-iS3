@@ -79,6 +79,7 @@ namespace iS3.Core
         }
 
         // constructor
+        // 构造器
         public DGObject()
         {
         }

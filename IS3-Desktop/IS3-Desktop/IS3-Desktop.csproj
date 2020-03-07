@@ -484,6 +484,10 @@
       <Name>iS3-Core</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\IS3-Extensions\IS3-Geology\iS3-Geology.csproj">
+      <Project>{C88A7984-B96D-49A7-80A9-23AB3D0B5EF4}</Project>
+      <Name>iS3-Geology</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\IS3-Python\IS3-Python\iS3-Python.csproj">
       <Project>{e6f7f4ad-0e87-45d7-bd80-d66c99379692}</Project>
       <Name>iS3-Python</Name>

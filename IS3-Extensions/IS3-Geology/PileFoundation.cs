@@ -24,7 +24,13 @@ namespace iS3.Geology
         public double StratumID { get; set; }
         //土壤重度gama
         public double Gama { get; set; }
-        //土壤
+        //土壤压缩模量Es
+        public double Es0_100 { get; set; }
+        public double Es100_200 { get; set; }
+        public double Es200_300 { get; set; }
+        public double Es300_400 { get; set; }
+        public double Es400_500 { get; set; }
+        
     }
 
     //PileFoundation类，代表桩基础的基本性质
@@ -32,8 +38,8 @@ namespace iS3.Geology
     {
         //承台顶标高
         public double TopOfCushionCap { get; set; }
-        //承台底部标高
-        public double BaseOfCushionCap { get; set; }
+        //桩顶标高OR承台底部标高
+        public double TopOfPile { get; set; }
         //桩底部标高
         public double BaseOfPile { get; set; }
         //桩基础形状
@@ -59,7 +65,7 @@ namespace iS3.Geology
         {
             Geologies = new List<PileFoundationGeology>();
         }
-        //含参数的构造函数
+        //含database参数的构造函数
         public PileFoundation(DataRow rawData):base(rawData)
         {
             Geologies = new List<PileFoundationGeology>();
@@ -80,8 +86,8 @@ namespace iS3.Geology
 
             //桩底标高、桩顶标高，基础形状
             string str1 = string.Format(
-                ", BaseOfCushionCap={0}, BaseOfPile={1},  Type={2}, Geo=",
-                BaseOfCushionCap, BaseOfPile,  Type);
+                ", TopOfPile={0}, BaseOfPile={1},  Type={2}, Geo=",
+                TopOfPile, BaseOfPile,  Type);
             str += str1;
 
             foreach (var geo in Geologies)
@@ -122,6 +128,7 @@ namespace iS3.Geology
         }
 
         //这是wpf显示控件
+        //如果需要右下角显示图像，改这里
         public override List<FrameworkElement> chartViews(
             IEnumerable<DGObject> objs, double width, double height)
         {

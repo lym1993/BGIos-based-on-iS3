@@ -52,6 +52,12 @@ namespace iS3.Geology.Serialization
             return success;
         }
 
+        //20200308加入LoadPileFoundationInformation方法
+        public void LoadPileFoundationInformation(DGObjects objs)
+        {
+
+        }
+
         public bool LoadBoreholes(DGObjects objs)
         {
             DGObjectsDefinition def = objs.definition;

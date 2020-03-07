@@ -334,6 +334,8 @@ namespace iS3.Desktop
             _prj = Project.load(definitionFile);
 
             Globals.project = _prj;
+           
+
             objSelectionChangedTrigger += _prj.objSelectionChangedListener;
             if (projectLoaded != null)
                 projectLoaded(this, EventArgs.Empty);
