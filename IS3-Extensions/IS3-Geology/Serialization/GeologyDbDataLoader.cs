@@ -38,6 +38,7 @@ namespace iS3.Geology.Serialization
 
     #endregion
     //加载地质数据的类
+    //继承与DbDataLoader类
     public class GeologyDbDataLoader : DbDataLoader
     {
         //iS3地质信息序列化，用来读取各项信息
@@ -45,6 +46,7 @@ namespace iS3.Geology.Serialization
             : base(dbContext)
         { }
 
+        //以下为新代码
         // 200303读取PileFoundation信息
         // 重载3
         public bool ReadPileFoundation(DGObjects objs, string tableNameSQL,
@@ -387,7 +389,7 @@ namespace iS3.Geology.Serialization
             
         }
 
-
+        // 原代码
         // Read boreholes
         // 读取钻孔数据
         public bool ReadBoreholes(DGObjects objs, string tableNameSQL,

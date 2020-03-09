@@ -40,8 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="PileFoundationCalculate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\IS3-Core\iS3-Core.csproj">
+      <Project>{4B8B162C-3658-4FCC-AB41-C0C85A7DB281}</Project>
+      <Name>iS3-Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\IS3-Extensions\IS3-Geology\iS3-Geology.csproj">
+      <Project>{C88A7984-B96D-49A7-80A9-23AB3D0B5EF4}</Project>
+      <Name>iS3-Geology</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

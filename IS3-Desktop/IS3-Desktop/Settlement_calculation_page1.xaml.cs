@@ -36,28 +36,46 @@ namespace iS3.Desktop
             //因为仅仅使用database（后面画等值线需要GISLayer?）
             //option为0时，采用默认得odbc读取方法
             //option为1时，采用oledb方法读取
-            //先设置环境
+            //先设置运行环境
+            try
+            {
+                DbContext dbContext = new DbContext("Data\\PileFoundationTest\\PileFoundationTest.mdb", 0);
+
+                //定义DGObjectsDefinition的各项属性
+                DGObjectsDefinition def = new DGObjectsDefinition();
+                def.DefNamesSQL = null;
+                def.Name = "AllPileFoundations";
+                def.Type = "PileFoundation";
+                def.TableNameSQL = "PileFoundation,PileFoundationStrataInfo";
+                def.OrderSQL = "Name";
+
+                DGObjects objs = new DGObjects(def);
+                //objs的rawdataset属性
+                objs.rawDataSet = new System.Data.DataSet();
+
+                GeologyDbDataLoader geologyDbDataLoader = new GeologyDbDataLoader(dbContext);
+                //新增readpilefoundationinformation方法
+                geologyDbDataLoader.ReadPileFoundationInformation(objs, def.TableNameSQL, def.ConditionSQL
+                , def.OrderSQL);
+
+                //objs即为读取pilefoundation类的集合，用objs参数来进行后续计算
+
+
+
+            }
+            //报错模块，弹出错误信息
+            catch (DbException ex)
+            {
+                string str = ex.ToString();
+                ErrorReport.Report(str);
+
+            }
+           
+
+
+
+           
             
-            DbContext dbContext = new DbContext("Data\\PileFoundationTest\\PileFoundationTest.mdb", 0);
-
-            //定义DGObjectsDefinition的各项属性
-            DGObjectsDefinition dGObjectsDefinition = new DGObjectsDefinition();
-            dGObjectsDefinition.DefNamesSQL = null;
-            dGObjectsDefinition.Name = "AllPileFoundations";
-            dGObjectsDefinition.Type = "PileFoundation";
-            dGObjectsDefinition.TableNameSQL = "PileFoundation,PileFoundationStrataInfo";
-            dGObjectsDefinition.OrderSQL = "Name";
-
-            DGObjects objs = new DGObjects(dGObjectsDefinition);
-            //objs的rawdataset属性
-            objs.rawDataSet = new System.Data.DataSet();
-
-            GeologyDbDataLoader geologyDbDataLoader = new GeologyDbDataLoader(dbContext);
-            //新增readpilefoundationinformation方法
-            geologyDbDataLoader.ReadPileFoundationInformation( objs, "PileFoundation,PileFoundationStrataInfo",""
-            , "Name");
-
-            MessageBox.Show("shuijiao");
             
             
             

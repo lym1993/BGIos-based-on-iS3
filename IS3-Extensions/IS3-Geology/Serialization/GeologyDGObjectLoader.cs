@@ -42,6 +42,7 @@ namespace iS3.Geology.Serialization
         }
 
         //200303加入LoadPileFoundation方法
+        //该方法用来在iS3系统中加载PileFoundation生成的objs
         public bool LoadPileFoundation(DGObjects objs)
         {
             DGObjectsDefinition def = objs.definition;
@@ -53,9 +54,13 @@ namespace iS3.Geology.Serialization
         }
 
         //20200308加入LoadPileFoundationInformation方法
-        public void LoadPileFoundationInformation(DGObjects objs)
+        //该方法用来计算PileFoundatin沉降数据
+        public void LoadPileFoundationInformation(DGObjects objspf)
         {
-
+            DGObjectsDefinition def = objspf.definition;
+            _dbLoader.ReadPileFoundationInformation(objspf, def.TableNameSQL,
+            def.ConditionSQL, def.OrderSQL);
+                       
         }
 
         public bool LoadBoreholes(DGObjects objs)
