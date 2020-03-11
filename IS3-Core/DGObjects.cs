@@ -129,7 +129,10 @@ namespace iS3.Core
         //     Object dictionay
         // Remarks:
         //     Object name is used as the key
+        //300312 protected改为public
         protected Dictionary<string, DGObject> _objs;
+
+        public Dictionary<string, DGObject> objscal { get { return _objs; } }
         // Summary:
         //     id index to object
         protected Dictionary<int, DGObject> _id2Obj { get; set; }

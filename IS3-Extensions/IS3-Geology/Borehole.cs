@@ -85,6 +85,7 @@ namespace iS3.Geology
             return str;
         }
 
+        //右下角得tableview视角
         public override List<DataView> tableViews(IEnumerable<DGObject> objs)
         {
             List<DataView> dataViews = base.tableViews(objs);

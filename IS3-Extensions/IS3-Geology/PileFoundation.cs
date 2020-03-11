@@ -21,7 +21,7 @@ namespace iS3.Geology
         //地层底标高
         public double Base { get; set; }     
         //天然地层编号
-        public double StratumID { get; set; }
+        public int StratumID { get; set; }
         //土壤重度gama
         public double Gama { get; set; }
         //土壤压缩模量Es
@@ -36,12 +36,8 @@ namespace iS3.Geology
     //PileFoundation类，代表桩基础的基本性质
     public class PileFoundation:DGObject
     {
-        //承台顶标高
-        public double TopOfCushionCap { get; set; }
-        //桩顶标高OR承台底部标高
-        public double TopOfPile { get; set; }
-        //桩底部标高
-        public double BaseOfPile { get; set; }
+        //ID和Name、Shape继承自DGObject，因而不再定义
+
         //桩基础形状
         public string Type { get; set; }
         //矩形承台长边l
@@ -50,12 +46,27 @@ namespace iS3.Geology
         public double BOfRectangularBearingPlatform { get; set; }
         //圆形承台半径
         public double ROfRoundBearPlatform { get; set; }
+        //承台顶标高
+        public double TopOfCushionCap { get; set; }
+        //桩顶标高OR承台底部标高
+        public double TopOfPile { get; set; }
+        //桩底部标高
+        public double BaseOfPile { get; set; }
+       
         //桩基础横坐标
         public double Xcoordinate { get; set; }
         //桩基础纵坐标
         public double Ycoordinate { get; set; }
         //桩长
         public double PileLength { get; set; }
+        //承台底桩径
+        public double DiameterOfPile { get; set; }
+        //承台下总桩数
+        public int NumberOfPile { get; set; }
+        //矩形桩基础短边桩数量
+        public int PilesOfB { get; set; }
+        //桩间距离
+        public double DistanceOfPile { get; set; }
 
         //针对桩基础地质情况集合的列表
         public List<PileFoundationGeology> Geologies { get; set; }
@@ -79,6 +90,8 @@ namespace iS3.Geology
             return success;
         }
 
+
+        //现在用不上
         //ToString覆写方法
         public override string ToString()
         {
@@ -98,6 +111,7 @@ namespace iS3.Geology
             return str;
         }
 
+        //200311参照Borehole格式写表格视图
         public override List<DataView> tableViews(IEnumerable<DGObject> objs)
         {
             List<DataView> dataViews = base.tableViews(objs);
@@ -115,6 +129,7 @@ namespace iS3.Geology
         }
 
         //字符串加工
+        //没什么用
         string idFilter(IEnumerable<DGObject> objs)
         {
             string sql = "PileFoundatonID in (";
@@ -127,7 +142,7 @@ namespace iS3.Geology
             return sql;
         }
 
-        //这是wpf显示控件
+        //这是wpf显示控件图表视图
         //如果需要右下角显示图像，改这里
         public override List<FrameworkElement> chartViews(
             IEnumerable<DGObject> objs, double width, double height)

@@ -275,9 +275,11 @@ namespace iS3.Desktop
             }
         }
 
+        //刷新tableview方法
         void refreshTableView(
             Dictionary<string, IEnumerable<DGObject>> selectedObjsDict)
         {
+            //多于一个种类的对象被选择，不能展示
             // If more than 1 type objects are selected, can't display it.
             if (selectedObjsDict.Count != 1)
             {
@@ -290,6 +292,7 @@ namespace iS3.Desktop
                 return;
             }
 
+            // 没有对象被选择，直接跳出
             // If no object are selected, just return.
             IEnumerable<DGObject> objs = selectedObjsDict.Values.First();
             if (objs.Count() == 0)

@@ -20,7 +20,7 @@ namespace iS3.Geology.UserControls
         //属于用户控件
 
 
-        //舒适化绘制区域
+        //初始化绘图区域
         public BoreholeView()
         {
             InitializeComponent();

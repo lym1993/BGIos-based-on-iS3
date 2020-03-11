@@ -40,4 +40,16 @@
       </MonitoringItem>
     </TreeDefinition>
   </Domain>
+  <Domain Name="Construction" Type="Construction">
+    <ObjsDefinition>
+      <PileFoundation Name="AllPileFoundations" TableNameSQL="PileFoundation,PileFoundationStrataInfo" OrderSQL="[ID],[ID]" HasGeometry="false" Has3D="false" />
+    </ObjsDefinition>
+    <TreeDefinition>
+      <Unknown>
+        <Construction DisplayName="构筑物" RefDomainName="Construction" RefObjsName="AllPileFoundations">
+          <PileFoundation DisplayName="桩基础" RefDomainName="Construction" RefObjsName="AllPileFoundations" />
+        </Construction>
+      </Unknown>
+    </TreeDefinition>
+  </Domain>
 </Project>
