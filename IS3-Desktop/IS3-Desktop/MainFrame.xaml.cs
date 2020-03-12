@@ -420,6 +420,8 @@ namespace iS3.Desktop
             DataSet dataSet = dataTable.DataSet;
             if (dataSet == null)
                 return;
+
+            //PileFoundtionTest例子在这里跳出，
             if (!_prj.dataSetIndex.ContainsKey(dataSet))
                 return;
             DGObjects objs = _prj.dataSetIndex[dataSet];

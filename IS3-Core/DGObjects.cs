@@ -132,7 +132,7 @@ namespace iS3.Core
         //300312 protected改为public
         protected Dictionary<string, DGObject> _objs;
 
-        public Dictionary<string, DGObject> objscal { get { return _objs; } }
+        
         // Summary:
         //     id index to object
         protected Dictionary<int, DGObject> _id2Obj { get; set; }
@@ -215,6 +215,7 @@ namespace iS3.Core
         }
 
         public bool load(DbContext dbContext)
+
         {
             rawDataSet = new DataSet(definition.Type);
 

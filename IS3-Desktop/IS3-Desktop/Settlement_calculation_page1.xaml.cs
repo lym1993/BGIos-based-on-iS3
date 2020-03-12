@@ -24,6 +24,10 @@ namespace iS3.Desktop
     /// </summary>
     public partial class Settlement_calculation_page1 : Window
     {
+        //200312读取ReadPileFoundation后的objs
+        //先声明一个全局变量，用于传出数据
+        
+
         public Settlement_calculation_page1()
         {
             InitializeComponent();
@@ -37,40 +41,47 @@ namespace iS3.Desktop
             //option为0时，采用默认得odbc读取方法
             //option为1时，采用oledb方法读取
             //先设置运行环境
-            DbContext dbContext = new DbContext("Data\\PileFoundationTest\\PileFoundationTest.mdb", 0);
+            //string definitionFile = "PileFoundationTest.xml";
+            //DbContext dbContext = new DbContext("Data\\PileFoundationTest\\PileFoundationTest.mdb", 0);
 
-            //定义DGObjectsDefinition的各项属性
-            DGObjectsDefinition def = new DGObjectsDefinition();
-            def.DefNamesSQL = null;
-            def.Name = "AllPileFoundations";
-            def.Type = "PileFoundation";
-            def.TableNameSQL = "PileFoundation,PileFoundationStrataInfo";
-            def.OrderSQL = "ID";
+            ////定义DGObjectsDefinition的各项属性
+            //DGObjectsDefinition def = new DGObjectsDefinition();
+            //def.DefNamesSQL = null;
+            //def.Name = "AllPileFoundations";
+            //def.Type = "PileFoundation";
+            //def.TableNameSQL = "PileFoundation,PileFoundationStrataInfo";
+            //def.OrderSQL = "";
 
-            DGObjects objs = new DGObjects(def);
-            //objs的rawdataset属性
-            objs.rawDataSet = new System.Data.DataSet();
+            //DGObjects objs = new DGObjects(def);
 
-            GeologyDbDataLoader geologyDbDataLoader = new GeologyDbDataLoader(dbContext);
-            //新增readpilefoundationinformation方法
-            geologyDbDataLoader.ReadPileFoundationInformation(objs, def.TableNameSQL, def.ConditionSQL
-            , def.OrderSQL);
+            
+            ////objs的rawdataset属性
+            //objs.rawDataSet = new System.Data.DataSet();
 
-            Dictionary<string,DGObject> cals = objs.objscal;
+            //GeologyDbDataLoader geologyDbDataLoader = new GeologyDbDataLoader(dbContext);
+
+            //GeologyDGObjectLoader geologyDGObjectLoader = new GeologyDGObjectLoader(dbContext);
+
+            //geologyDGObjectLoader.LoadPileFoundationInformation(objs);
+            ////新增readpilefoundationinformation方法
+            //geologyDbDataLoader.ReadPileFoundationInformation(objs, def.TableNameSQL, def.ConditionSQL
+            //, def.OrderSQL);
+
+            //Dictionary<string,DGObject> cals = objs.objscal;
             
             
-            MessageBox.Show("chenggong");
+            //重新加载project，它包含了需要计算的信息，这种方法太麻烦了
+            //Project cal = Project.load("PileFoundationTest.xml");
             
-            //对桩基础计算类进行赋值
+            
 
 
-
+            
 
         }
 
 
-        //objs即为储蓄了pilefoundation类的集合，用objs参数来进行后续计算
-        //objs的Key为Name或者ID
+       
 
 
 

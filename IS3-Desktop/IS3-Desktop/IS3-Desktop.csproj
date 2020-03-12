@@ -77,11 +77,33 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AxInterop.UnityWebPlayerAXLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Output\libs\AxInterop.UnityWebPlayerAXLib.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.2\lib\net45\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="Esri.ArcGISRuntime, Version=10.2.5.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -504,7 +526,7 @@
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\IS3-Extensions\IS3-Geology\iS3-Geology.csproj">
-      <Project>{C88A7984-B96D-49A7-80A9-23AB3D0B5EF4}</Project>
+      <Project>{c88a7984-b96d-49a7-80a9-23ab3d0b5ef4}</Project>
       <Name>iS3-Geology</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\IS3-Python\IS3-Python\iS3-Python.csproj">
@@ -516,6 +538,10 @@
       <Project>{9d38c271-eb97-46d0-862e-8dd70d3f13d1}</Project>
       <Name>iS3-Unity-Webplayer</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Settlement-calculation-of-PilleFoundation\Settlement-calculation-of-PilleFoundation.csproj">
+      <Project>{7c013e26-9c84-4dc5-aa24-d8c6397e539a}</Project>
+      <Name>Settlement-calculation-of-PilleFoundation</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

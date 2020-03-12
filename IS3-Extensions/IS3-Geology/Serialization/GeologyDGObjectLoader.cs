@@ -36,10 +36,14 @@ namespace iS3.Geology.Serialization
     {
         protected GeologyDbDataLoader _dbLoader;
 
+        
+
         public GeologyDGObjectLoader(DbContext dbContext)
         {
             _dbLoader = new GeologyDbDataLoader(dbContext);
         }
+
+        
 
         //200303加入LoadPileFoundation方法
         //该方法用来在iS3系统中加载PileFoundation生成的objs
@@ -50,18 +54,19 @@ namespace iS3.Geology.Serialization
                 return false;
             bool success = _dbLoader.ReadPileFoundation(objs,
                 def.TableNameSQL, def.ConditionSQL, def.OrderSQL);
+            
             return success;
         }
 
         //20200308加入LoadPileFoundationInformation方法
         //该方法用来计算PileFoundatin沉降数据
-        public void LoadPileFoundationInformation(DGObjects objspf)
-        {
-            DGObjectsDefinition def = objspf.definition;
-            _dbLoader.ReadPileFoundationInformation(objspf, def.TableNameSQL,
-            def.ConditionSQL, def.OrderSQL);
+        //public void LoadPileFoundationInformation(DGObjects objspf)
+        //{
+        //    DGObjectsDefinition def = objspf.definition;
+        //    _dbLoader.ReadPileFoundationInformation(objspf, def.TableNameSQL,
+        //    def.ConditionSQL, def.OrderSQL);
                        
-        }
+        //}
 
         public bool LoadBoreholes(DGObjects objs)
         {
