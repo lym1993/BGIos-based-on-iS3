@@ -84,6 +84,8 @@ namespace iS3.Geology.UserControls
                 //
                 TextBlock tbStratumName = new TextBlock();
                 tbStratumName.Foreground = blueBrush;
+                //如果地层数据不为空，将地层名称赋值给tbstratumname
+                //若为空，使用pfgeo中的stratumid的名称
                 if (Strata != null)
                 {
                     Stratum stratum = Strata[pfGeo.StratumID] as Stratum;

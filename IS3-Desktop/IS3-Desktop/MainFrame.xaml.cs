@@ -411,7 +411,7 @@ namespace iS3.Desktop
                 return;
 
             // Trigger a ObjSelectionChangedEvent event
-            // 
+            // 触发一个对象选择改变的事件
             DataView dataView = MyDataGrid.DGObjectDataGrid.ItemsSource
                 as DataView;
             if (dataView == null)

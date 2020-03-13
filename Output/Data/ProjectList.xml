@@ -5,7 +5,7 @@
     <ProjectLocation ID="iS3DemoTest" X="13524400" Y="3665000" Description="同济车站案例" Default="false" DefinitionFile="iS3DemoTest.xml" />
     <ProjectLocation ID="TONGJI" X="13746603.970741902" Y="5096447.2309299894" Description="真地铁站案例！！" Default="false" DefinitionFile="TONGJI.xml" />
     <ProjectLocation ID="Z14" X="12965133.206757693" Y="4853295.6593356943" Description="北京Z14地块真实案例" Default="false" DefinitionFile="Z14.xml" />
-    <ProjectLocation ID="TEST" X="9504179.72831766" Y="5441274.8171368856" Description="111" Default="false" DefinitionFile="TEST.xml" />
+    <ProjectLocation ID="TEST" X="9504179.72831766" Y="5441274.8171368856" Description="桩基础测试项目" Default="false" DefinitionFile="TEST.xml" />
     <ProjectLocation ID="PileFoundationTest" X="12550156.59249223" Y="3623093.1689332384" Description="PileFoundationTest" Default="false" DefinitionFile="PileFoundationTest.xml" />
   </ProjectList.Locations>
 </ProjectList>

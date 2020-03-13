@@ -16,7 +16,6 @@ using iS3.Core;
 using iS3.Core.Serialization;
 using iS3.Geology;
 using iS3.Geology.Serialization;
-using Dapper;
 using System.Data.Odbc;
 using System.Data;
 using System.Data.OleDb;
@@ -46,8 +45,8 @@ namespace iS3.Desktop
             //option为1时，采用oledb方法读取
             //先设置运行环境
             //string definitionFile = "PileFoundationTest.xml";
-            DbContext dbContext = new DbContext("Data\\PileFoundationTest\\PileFoundationTest.mdb", 0);
-
+            //DbContext dbContext = new DbContext("Data\\PileFoundationTest\\PileFoundationTest.mdb", 0);
+            DbContext dbContext = new DbContext("Data\\Z14\\Z14.mdb", 0);
             //定义DGObjectsDefinition的各项属性
             DGObjectsDefinition def = new DGObjectsDefinition();
             def.DefNamesSQL = null;
@@ -67,18 +66,24 @@ namespace iS3.Desktop
             objs.buildIDIndex();
             objs.buildRowViewIndex();
 
-
-
-            
-
-            
-            
-
+            foreach (PileFoundation pf in objs.values)
+            {
+                MessageBox.Show("OK");
+            }
 
 
 
 
-            
+
+
+
+
+
+
+
+
+
+
 
 
 

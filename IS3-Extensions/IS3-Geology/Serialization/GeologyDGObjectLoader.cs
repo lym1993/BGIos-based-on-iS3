@@ -60,13 +60,13 @@ namespace iS3.Geology.Serialization
 
         //20200308加入LoadPileFoundationInformation方法
         //该方法用来计算PileFoundatin沉降数据
-        public void LoadPileFoundationInformation(DGObjects objspf)
-        {
-            DGObjectsDefinition def = objspf.definition;
-            _dbLoader.ReadPileFoundationInformation(objspf, def.TableNameSQL,
-            def.ConditionSQL, def.OrderSQL);
+        //public void LoadPileFoundationInformation(DGObjects objspf)
+        //{
+        //    DGObjectsDefinition def = objspf.definition;
+        //    _dbLoader.ReadPileFoundationInformation(objspf, def.TableNameSQL,
+        //    def.ConditionSQL, def.OrderSQL);
 
-        }
+        //}
 
         public bool LoadBoreholes(DGObjects objs)
         {

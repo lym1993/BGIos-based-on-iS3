@@ -132,7 +132,7 @@ namespace iS3.Geology
         //没什么用
         string idFilter(IEnumerable<DGObject> objs)
         {
-            string sql = "PileFoundatonID in (";
+            string sql = "PileFoundationID in (";
             foreach (var obj in objs)
             {
                 sql += obj.ID.ToString();
@@ -155,20 +155,22 @@ namespace iS3.Geology
                 if (pf != null && pf.Geologies.Count > 0)
                     pfs.Add(pf);
             }
-
-            Domain geologyDomain = Globals.project.getDomain(DomainType.Geology);
-            DGObjectsCollection strata = geologyDomain.getObjects("Stratum");
+            //200313.Geology改为Construnction
+            Domain geologyDomain = Globals.project.getDomain(DomainType.Construction);
+            
+            //DGObjectsCollection strata = geologyDomain.getObjects("Stratum");
 
 
             //实例化新的钻孔显示界面，这里尚未改动
-            BoreholeCollectionView bhsView = new BoreholeCollectionView();
-            bhsView.Name = "Geology";
-            // 这一句有问题，先不改了  bhsView.Boreholes = pfs;
-            bhsView.Strata = strata;
-            bhsView.ViewerHeight = height;
-            bhsView.RefreshView();
-            bhsView.UpdateLayout();
-            charts.Add(bhsView);
+            PileFoundationCollectionView pfsView = new PileFoundationCollectionView();
+            pfsView.Name = "Geology";
+            pfsView.PileFoundations = pfs;
+            //地层数据没有绑定上
+            pfsView.Strata = null;
+            pfsView.ViewerHeight = height;
+            pfsView.RefreshView();
+            pfsView.UpdateLayout();
+            charts.Add(pfsView);
 
             return charts;
         }
