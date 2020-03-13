@@ -233,7 +233,8 @@ namespace iS3.Core
         // Summary:
         //     Build ID index to object
         // 给对象建立ID索引
-        protected void buildIDIndex()
+        // 改为public
+        public void buildIDIndex()
         {
 
             _id2Obj = new Dictionary<int, DGObject>();
@@ -247,7 +248,8 @@ namespace iS3.Core
         // Summary:
         //     Build RowView index to object and vice versa.
         // 建立行视角索引
-        protected void buildRowViewIndex()
+        // 该为public
+        public void buildRowViewIndex()
         {
             if (rawDataSet == null || rawDataSet.Tables.Count == 0)
                 return;

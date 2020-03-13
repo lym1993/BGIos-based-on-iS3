@@ -16,6 +16,10 @@ using iS3.Core;
 using iS3.Core.Serialization;
 using iS3.Geology;
 using iS3.Geology.Serialization;
+using Dapper;
+using System.Data.Odbc;
+using System.Data;
+using System.Data.OleDb;
 
 namespace iS3.Desktop
 {
@@ -35,48 +39,51 @@ namespace iS3.Desktop
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+                  
             //点击计算按钮后，开始读取access表中数据
-            //运用到的两个类DbContext和GeologyDGObjectLoader
-            //因为仅仅使用database（后面画等值线需要GISLayer?）
+            
             //option为0时，采用默认得odbc读取方法
             //option为1时，采用oledb方法读取
             //先设置运行环境
             //string definitionFile = "PileFoundationTest.xml";
-            //DbContext dbContext = new DbContext("Data\\PileFoundationTest\\PileFoundationTest.mdb", 0);
+            DbContext dbContext = new DbContext("Data\\PileFoundationTest\\PileFoundationTest.mdb", 0);
 
-            ////定义DGObjectsDefinition的各项属性
-            //DGObjectsDefinition def = new DGObjectsDefinition();
-            //def.DefNamesSQL = null;
-            //def.Name = "AllPileFoundations";
-            //def.Type = "PileFoundation";
-            //def.TableNameSQL = "PileFoundation,PileFoundationStrataInfo";
-            //def.OrderSQL = "";
+            //定义DGObjectsDefinition的各项属性
+            DGObjectsDefinition def = new DGObjectsDefinition();
+            def.DefNamesSQL = null;
+            def.Name = "AllPileFoundations";
+            def.Type = "PileFoundation";
+            def.TableNameSQL = "PileFoundation,PileFoundationStrataInfo";
+            def.OrderSQL = "ID,ID";
+            
+            //Load方法
+            //实例化objs
+            DGObjects objs = new DGObjects(def);
+            //objs的rawdataset属性
+            objs.rawDataSet = new System.Data.DataSet();
 
-            //DGObjects objs = new DGObjects(def);
+            DGObject objhelper = ObjectHelper.CreateDGObjectFromSubclassName(def.Type);
+            objhelper.LoadObjs(objs, dbContext);
+            objs.buildIDIndex();
+            objs.buildRowViewIndex();
+
+
 
             
-            ////objs的rawdataset属性
-            //objs.rawDataSet = new System.Data.DataSet();
 
-            //GeologyDbDataLoader geologyDbDataLoader = new GeologyDbDataLoader(dbContext);
-
-            //GeologyDGObjectLoader geologyDGObjectLoader = new GeologyDGObjectLoader(dbContext);
-
-            //geologyDGObjectLoader.LoadPileFoundationInformation(objs);
-            ////新增readpilefoundationinformation方法
-            //geologyDbDataLoader.ReadPileFoundationInformation(objs, def.TableNameSQL, def.ConditionSQL
-            //, def.OrderSQL);
-
-            //Dictionary<string,DGObject> cals = objs.objscal;
-            
-            
-            //重新加载project，它包含了需要计算的信息，这种方法太麻烦了
-            //Project cal = Project.load("PileFoundationTest.xml");
             
             
 
 
+
+
+
             
+
+
+
+
+
 
         }
 

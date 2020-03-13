@@ -257,183 +257,183 @@ namespace iS3.Geology.Serialization
 
         //20200308读取桩基础所有数据,返回一个objs对象
         //此方法用来计算桩基础沉降
-        //public void ReadPileFoundationInformation(DGObjects objspf,string tableNameSQL,
-        //    string conditionSQL, string orderSQL)
-        //{
-        //    try
-        //    {
-        //        //首先读取PileFoundation基本信息
-        //        //接着用第二种方法加载PileFoundationGeologies也就是桩基础属性
-        //        _ReadPileFoundationInformation(objspf, tableNameSQL, conditionSQL,
-        //           orderSQL);
-        //        _ReadPileFoundationInformationGeo(objspf);
-                
+        public void ReadPileFoundationInformation(DGObjects objspf, string tableNameSQL,
+            string conditionSQL, string orderSQL)
+        {
+            try
+            {
+                //首先读取PileFoundation基本信息
+                //接着用第二种方法加载PileFoundationGeologies也就是桩基础属性
+                _ReadPileFoundationInformation(objspf, tableNameSQL, conditionSQL,
+                   orderSQL);
+                _ReadPileFoundationInformationGeo(objspf);
 
-        //    }
-        //    //报错模块，弹出错误信息
-        //    catch (DbException ex)
-        //    {
-        //        string str = ex.ToString();
-        //        ErrorReport.Report(str);
-                
-        //    }
-        //}
 
-        //void _ReadPileFoundationInformation(
-        //    DGObjects objspf,
-        //    string tableNameSQL,
-        //    string conditionSQL,
-        //    string orderSQL)
-        //{
-        //    ReadRawData(objspf, tableNameSQL, orderSQL, conditionSQL);
-        //    DataTable table = objspf.rawDataSet.Tables[0];
-        //    //以行为单位对数据进行枚举
-        //    foreach (DataRow row in table.Rows)
-        //    {
-        //        //判断ID列是否为空，非空才继续执行代码
-        //        if (IsDbNull(row, "ID"))
-        //            continue;
+            }
+            //报错模块，弹出错误信息
+            catch (DbException ex)
+            {
+                string str = ex.ToString();
+                ErrorReport.Report(str);
 
-        //        //实例化PileFoundation类
-        //        //为实例赋予读取得数值
-        //        PileFoundation PF = new PileFoundation(row);
-        //        //基础编号、名字、形状
-        //        PF.ID = ReadInt(row, "ID").Value;
-        //        PF.Name = ReadString(row, "Name");
-        //        PF.shape = ReadShape(row);
+            }
+        }
 
-        //        //以下调用PileFoundation类中数据结构
-        //        //基础形状，矩形、圆形
-        //        PF.Type = ReadString(row, "Type");
-        //        //长边L
-        //        PF.LOfRectangularBearingPlatform = ReadDouble(row, "L").Value;
-        //        //短边B
-        //        PF.BOfRectangularBearingPlatform = ReadDouble(row, "B").Value;
-        //        //圆形基础半径R
-        //        PF.ROfRoundBearPlatform = ReadDouble(row, "R").Value;
-        //        //承台顶标高
-        //        PF.TopOfCushionCap = ReadDouble(row, "TopOfCushionCap").Value;
-        //        //桩顶标高，也就是承台底
-        //        PF.TopOfPile = ReadDouble(row, "TopOfPile").Value;
-        //        //桩底标高，最后用来划分上部土层和下部土层
-        //        PF.BaseOfPile = ReadDouble(row, "BaseOfPile").Value;
-        //        //桩基础横纵坐标
-        //        PF.Xcoordinate = ReadDouble(row, "Xcoordinate").Value;
-        //        PF.Ycoordinate = ReadDouble(row, "Ycoordinate").Value;
-        //        //桩长度（承台以下）
-        //        PF.PileLength = ReadDouble(row, "PileLength").Value;
-        //        //承台下桩径D，直径
-        //        PF.DiameterOfPile = ReadDouble(row, "DiameterOfPile").Value;
-        //        //承台下总桩数量
-        //        PF.NumberOfPile = ReadInt(row, "NumberOfPile").Value;
-        //        //矩形桩基础短边桩数量
-        //        PF.PilesOfB = ReadInt(row, "PilesOfB").Value;
-        //        //桩间距离
-        //        PF.DistanceOfPile = ReadDouble(row, "DistanceOfPile").Value;
-                
+        void _ReadPileFoundationInformation(
+            DGObjects objspf,
+            string tableNameSQL,
+            string conditionSQL,
+            string orderSQL)
+        {
+            ReadRawData(objspf, tableNameSQL, orderSQL, conditionSQL);
+            DataTable table = objspf.rawDataSet.Tables[0];
+            //以行为单位对数据进行枚举
+            foreach (DataRow row in table.Rows)
+            {
+                //判断ID列是否为空，非空才继续执行代码
+                if (IsDbNull(row, "ID"))
+                    continue;
 
-        //        //将PF实例设置为objspf对象中PF实例的key
-        //        objspf[PF.key] = PF;
-        //    }
-            
-        //}
+                //实例化PileFoundation类
+                //为实例赋予读取得数值
+                PileFoundation PF = new PileFoundation(row);
+                //基础编号、名字、形状
+                PF.ID = ReadInt(row, "ID").Value;
+                PF.Name = ReadString(row, "Name");
+                PF.shape = ReadShape(row);
 
-        //void  _ReadPileFoundationInformationGeo(DGObjects objspf)
-        //{
-            
+                //以下调用PileFoundation类中数据结构
+                //基础形状，矩形、圆形
+                PF.Type = ReadString(row, "Type");
+                //长边L
+                PF.LOfRectangularBearingPlatform = ReadDouble(row, "L").Value;
+                //短边B
+                PF.BOfRectangularBearingPlatform = ReadDouble(row, "B").Value;
+                //圆形基础半径R
+                PF.ROfRoundBearPlatform = ReadDouble(row, "R").Value;
+                //承台顶标高
+                PF.TopOfCushionCap = ReadDouble(row, "TopOfCushionCap").Value;
+                //桩顶标高，也就是承台底
+                PF.TopOfPile = ReadDouble(row, "TopOfPile").Value;
+                //桩底标高，最后用来划分上部土层和下部土层
+                PF.BaseOfPile = ReadDouble(row, "BaseOfPile").Value;
+                //桩基础横纵坐标
+                PF.Xcoordinate = ReadDouble(row, "Xcoordinate").Value;
+                PF.Ycoordinate = ReadDouble(row, "Ycoordinate").Value;
+                //桩长度（承台以下）
+                PF.PileLength = ReadDouble(row, "PileLength").Value;
+                //承台下桩径D，直径
+                PF.DiameterOfPile = ReadDouble(row, "DiameterOfPile").Value;
+                //承台下总桩数量
+                PF.NumberOfPile = ReadInt(row, "NumberOfPile").Value;
+                //矩形桩基础短边桩数量
+                PF.PilesOfB = ReadInt(row, "PilesOfB").Value;
+                //桩间距离
+                PF.DistanceOfPile = ReadDouble(row, "DistanceOfPile").Value;
 
-        //    // method2: index the stratra info
-        //    // 步骤2 插入地层信息
-        //    //在这里插入的是表2，也就是PileFoundationStrataInfo表
-        //    DataTable dt = objspf.rawDataSet.Tables[1];
 
-        //    //新建地层字典用来存放由PileFoundationGeology组成的列表
-        //    Dictionary<int, List<PileFoundationGeology>> strata_dict =
-        //        new Dictionary<int, List<PileFoundationGeology>>();
+                //将PF实例设置为objspf对象中PF实例的key
+                objspf[PF.key] = PF;
+            }
 
-        //    // put the strata information into the dictionary
-        //    // 将地层信息放入字典中
-        //    foreach (DataRow row in dt.Rows)
-        //    {
-        //        //检查表格完整性
-        //        //20200307进行了改动，在access表中添加了新的字段，
-        //        if (IsDbNull(row, "StratumID") || IsDbNull(row, "ElevationOfStratumBottom"))
-        //        {
-        //            string error = string.Format(
-        //                "Data table [{0}] error: [StratumID] or [ElevationOfStratumBottom] can't be null, [PileFoundationID] = {1}."
-        //                + Environment.NewLine
-        //                + "This record is ignore. Checking data is strongly recommended.",
-        //                dt.TableName, row["PileFoundationID"]);
-        //            ErrorReport.Report(error);
-        //            continue;
-        //        }
+        }
 
-        //        //新建PFID字段，存放桩基础ID信息
-        //        int PFID = ReadInt(row, "PileFoundationID").Value;
+        void _ReadPileFoundationInformationGeo(DGObjects objspf)
+        {
 
-        //        //初始化geo列表，用来存储桩基础地质信息
-        //        List<PileFoundationGeology> geo = null;
-        //        //如果strata字典中包含Key值也就是PFID，将该键对应的值赋予geo实例
-        //        if (strata_dict.ContainsKey(PFID))
-        //            geo = strata_dict[PFID];
-        //        else
-        //        {
-        //            geo = new List<PileFoundationGeology>();
-        //            strata_dict[PFID] = geo;
-        //        }
 
-        //        //实例化PFGeology，给桩基础下地层的性质赋值
-        //        PileFoundationGeology pfg = new PileFoundationGeology();
-        //        pfg.StratumID = ReadInt(row, "StratumID").Value;
-        //        //地层底高程
-        //        pfg.Base = ReadDouble(row, "ElevationOfStratumBottom").Value;
-        //        //地层土壤重度
-        //        pfg.Gama = ReadDouble(row, "Gama").Value;
-        //        //地层土弹性模量Es
-        //        pfg.Es0_100 = ReadDouble(row, "Es0_100").Value;
-        //        pfg.Es100_200 = ReadDouble(row, "Es100_200").Value;
-        //        pfg.Es200_300 = ReadDouble(row, "Es200_300").Value;
-        //        pfg.Es300_400 = ReadDouble(row, "Es300_400").Value;
-        //        pfg.Es400_500 = ReadDouble(row, "Es400_500").Value;
+            // method2: index the stratra info
+            // 步骤2 插入地层信息
+            //在这里插入的是表2，也就是PileFoundationStrataInfo表
+            DataTable dt = objspf.rawDataSet.Tables[1];
 
-        //        //将pfg实例添加到包含桩基础地层信息集合geo中
-        //        geo.Add(pfg);
-        //    }
+            //新建地层字典用来存放由PileFoundationGeology组成的列表
+            Dictionary<int, List<PileFoundationGeology>> strata_dict =
+                new Dictionary<int, List<PileFoundationGeology>>();
 
-        //    // sort the pilefoundation geology
-        //    // 桩基础下地层排序
-        //    // 这一句没看明白
-        //    foreach (var geo in strata_dict.Values)
-        //    {
-        //        //匿名函数么？
-        //        geo.Sort((x, y) => x.StratumID.CompareTo(y.StratumID));
-        //    }
+            // put the strata information into the dictionary
+            // 将地层信息放入字典中
+            foreach (DataRow row in dt.Rows)
+            {
+                //检查表格完整性
+                //20200307进行了改动，在access表中添加了新的字段，
+                if (IsDbNull(row, "StratumID") || IsDbNull(row, "ElevationOfStratumBottom"))
+                {
+                    string error = string.Format(
+                        "Data table [{0}] error: [StratumID] or [ElevationOfStratumBottom] can't be null, [PileFoundationID] = {1}."
+                        + Environment.NewLine
+                        + "This record is ignore. Checking data is strongly recommended.",
+                        dt.TableName, row["PileFoundationID"]);
+                    ErrorReport.Report(error);
+                    continue;
+                }
 
-        //    // add the geology to pilefoundation
-        //    // 将geo实例绑定到桩基础实例
-        //    foreach (PileFoundation pf in objspf.values)
-        //    {
-        //        //新建有关PFG的列表geo
-        //        List<PileFoundationGeology> geo = null;
-        //        if (strata_dict.ContainsKey(pf.ID))
-        //            geo = strata_dict[pf.ID];
-        //        else
-        //            continue;
+                //新建PFID字段，存放桩基础ID信息
+                int PFID = ReadInt(row, "PileFoundationID").Value;
 
-        //        double topofpile = pf.TopOfPile;
-        //        foreach (var x in geo)
-        //        {
-        //            //桩顶标高赋给TOP属性
-        //            x.Top = topofpile;
-        //            //
-        //            topofpile = x.Base;
-        //            //对PF实例中的geologies属性添加元素
-        //            pf.Geologies.Add(x);
-        //        }
-        //    }
-            
-            
-        //}
+                //初始化geo列表，用来存储桩基础地质信息
+                List<PileFoundationGeology> geo = null;
+                //如果strata字典中包含Key值也就是PFID，将该键对应的值赋予geo实例
+                if (strata_dict.ContainsKey(PFID))
+                    geo = strata_dict[PFID];
+                else
+                {
+                    geo = new List<PileFoundationGeology>();
+                    strata_dict[PFID] = geo;
+                }
+
+                //实例化PFGeology，给桩基础下地层的性质赋值
+                PileFoundationGeology pfg = new PileFoundationGeology();
+                pfg.StratumID = ReadInt(row, "StratumID").Value;
+                //地层底高程
+                pfg.Base = ReadDouble(row, "ElevationOfStratumBottom").Value;
+                //地层土壤重度
+                pfg.Gama = ReadDouble(row, "Gama").Value;
+                //地层土弹性模量Es
+                pfg.Es0_100 = ReadDouble(row, "Es0_100").Value;
+                pfg.Es100_200 = ReadDouble(row, "Es100_200").Value;
+                pfg.Es200_300 = ReadDouble(row, "Es200_300").Value;
+                pfg.Es300_400 = ReadDouble(row, "Es300_400").Value;
+                pfg.Es400_500 = ReadDouble(row, "Es400_500").Value;
+
+                //将pfg实例添加到包含桩基础地层信息集合geo中
+                geo.Add(pfg);
+            }
+
+            // sort the pilefoundation geology
+            // 桩基础下地层排序
+            // 这一句没看明白
+            foreach (var geo in strata_dict.Values)
+            {
+                //匿名函数么？
+                geo.Sort((x, y) => x.StratumID.CompareTo(y.StratumID));
+            }
+
+            // add the geology to pilefoundation
+            // 将geo实例绑定到桩基础实例
+            foreach (PileFoundation pf in objspf.values)
+            {
+                //新建有关PFG的列表geo
+                List<PileFoundationGeology> geo = null;
+                if (strata_dict.ContainsKey(pf.ID))
+                    geo = strata_dict[pf.ID];
+                else
+                    continue;
+
+                double topofpile = pf.TopOfPile;
+                foreach (var x in geo)
+                {
+                    //桩顶标高赋给TOP属性
+                    x.Top = topofpile;
+                    //
+                    topofpile = x.Base;
+                    //对PF实例中的geologies属性添加元素
+                    pf.Geologies.Add(x);
+                }
+            }
+
+
+        }
 
         // 原代码
         // Read boreholes

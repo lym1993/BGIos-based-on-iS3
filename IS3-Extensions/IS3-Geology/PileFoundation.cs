@@ -86,7 +86,7 @@ namespace iS3.Geology
         {
             //GDGOLoader中没有定义LoadPileFoundation方法，重新去定义一下
             GeologyDGObjectLoader loader = new GeologyDGObjectLoader(dbContext);
-            bool success = loader.LoadPileFoundation(objs);
+            bool success = loader.LoadPileFoundations(objs);
             return success;
         }
 
