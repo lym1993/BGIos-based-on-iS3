@@ -304,6 +304,7 @@ namespace iS3.Desktop
             }
 
             // We can display the selected objects in datagrids
+            // datagrid中显示选择的对象
             tableViewNA.Visibility = System.Windows.Visibility.Collapsed;
             tableViewHolder.Visibility = System.Windows.Visibility.Visible;
 

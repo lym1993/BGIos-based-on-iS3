@@ -13,31 +13,15 @@ using iS3.Geology.UserControls;
 namespace iS3.Geology
 {
     //参照BoreholeGeology
-    //代表桩基础的地质性质（各层标高、天然地层等等）
-    public class PileFoundationGeology
-    {
-        //地层顶标高
-        public double Top { get; set; }
-        //地层底标高
-        public double Base { get; set; }     
-        //天然地层编号
-        public int StratumID { get; set; }
-        //土壤重度gama
-        public double Gama { get; set; }
-        //土壤压缩模量Es
-        public double Es0_100 { get; set; }
-        public double Es100_200 { get; set; }
-        public double Es200_300 { get; set; }
-        public double Es300_400 { get; set; }
-        public double Es400_500 { get; set; }
-        
-    }
+    
 
     //PileFoundation类，代表桩基础的基本性质
     public class PileFoundation:DGObject
     {
-        //ID和Name、Shape继承自DGObject，因而不再定义
-
+        //ID和Name、Shape继承自DGObject，不用再定义
+        
+        //桩基础ID、绑定表1的ID字段
+        public int PFID { get; set; }
         //桩基础形状
         public string Type { get; set; }
         //矩形承台长边l
@@ -68,7 +52,13 @@ namespace iS3.Geology
         //桩间距离
         public double DistanceOfPile { get; set; }
 
+        
+
+        
+
         //针对桩基础地质情况集合的列表
+        //第二个表中的数据，其中PileFoundationID与表一中的ID是对应的
+        //一个Geologies列表包含一个PileFoundation实例的信息
         public List<PileFoundationGeology> Geologies { get; set; }
 
         //PileFoundation的构造函数,构造新列表赋值给Geologies列表
@@ -174,5 +164,27 @@ namespace iS3.Geology
 
             return charts;
         }
+    }
+
+    //代表桩基础的地质性质（各层标高、天然地层等等）表2信息
+    public class PileFoundationGeology
+    {
+        //200319新加PFID
+        public long PileFoundationID { get; set; }
+        //地层顶标高
+        public double Top { get; set; }
+        //地层底标高
+        public double Base { get; set; }
+        //天然地层编号
+        public int StratumID { get; set; }
+        //土壤重度gama
+        public double Gama { get; set; }
+        //土壤压缩模量Es
+        public double Es0_100 { get; set; }
+        public double Es100_200 { get; set; }
+        public double Es200_300 { get; set; }
+        public double Es300_400 { get; set; }
+        public double Es400_500 { get; set; }
+
     }
 }

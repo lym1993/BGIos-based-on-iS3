@@ -19,6 +19,7 @@ using Xceed.Wpf.AvalonDock.Layout.Serialization;
 
 using iS3.Core;
 using iS3.Python;
+using iS3.Geology;
 using System.Windows.Navigation;
 
 namespace iS3.Desktop
@@ -230,11 +231,17 @@ namespace iS3.Desktop
         {
             Thread.Sleep(1000);
             output("\r\n");
+            //加载项目
             LoadProject("");
+            //加载视角
             LoadViews();
+            //加载定义域面板
             loadDomainPanels();
+            //加载扩展
             loadExtensions();
+            //加载工具箱
             loadToolboxes();
+            //加载py
             loadPyPlugins();
             loadByPython();
             _init = true;
@@ -254,7 +261,7 @@ namespace iS3.Desktop
             //WriteProject();
         }
 
-        //
+        
         void Manager_Loaded(object sender, RoutedEventArgs e)
         {
             bool fileExist = File.Exists(_configFile);
@@ -398,6 +405,7 @@ namespace iS3.Desktop
             _lastSelectedTree = tree;
         }
 
+        //datagrid选择改变事件
         void DGObjectDataGrid_SelectionChanged(object sender, 
             SelectionChangedEventArgs e)
         {
@@ -676,14 +684,17 @@ namespace iS3.Desktop
             {
                 // skip the assembly that has been loaded
                 string shortName = Path.GetFileName(file);
+                
                 if (allAssemblies.Any(x => x.ManifestModule.Name == shortName))
                     continue;
 
+                
                 // Assembly.LoadFile doesn't resolve dependencies, 
                 // so don't use Assembly.LoadFile
                 Assembly assembly = Assembly.LoadFrom(file);
                 if (assembly != null)
-                    _loadedExtensions.Add(assembly);
+                    
+                _loadedExtensions.Add(assembly);
             }
 
             // call init() in extensions
@@ -812,6 +823,8 @@ namespace iS3.Desktop
             Settlement_calculation_page1 settlement_Calculation_Page1 = new Settlement_calculation_page1();
             //显示桩基础沉降插件界面V1.0
             //输入均布荷载，沉降经验系数
+            
+            settlement_Calculation_Page1.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             settlement_Calculation_Page1.ShowDialog();          
             
         }

@@ -66,6 +66,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.2\lib\net45\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -76,7 +79,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PileFoundationCalculate.cs" />
+    <Compile Include="PileFoundationDto.cs" />
+    <Compile Include="PileFoundationReader.cs" />
+    <Compile Include="PileFoundationStrataInfoDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -85,9 +90,12 @@
       <Name>iS3-Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\IS3-Extensions\IS3-Geology\iS3-Geology.csproj">
-      <Project>{c88a7984-b96d-49a7-80a9-23ab3d0b5ef4}</Project>
+      <Project>{C88A7984-B96D-49A7-80A9-23AB3D0B5EF4}</Project>
       <Name>iS3-Geology</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

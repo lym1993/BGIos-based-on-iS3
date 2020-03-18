@@ -130,7 +130,9 @@ namespace iS3.Core
         // Remarks:
         //     Object name is used as the key
         //300312 protected改为public
-        protected Dictionary<string, DGObject> _objs;
+
+        //20200315改为public
+        public Dictionary<string, DGObject> _objs;
 
         
         // Summary:
@@ -221,6 +223,7 @@ namespace iS3.Core
 
             DGObject objHelper =
                 ObjectHelper.CreateDGObjectFromSubclassName(definition.Type);
+
             bool success = objHelper.LoadObjs(this, dbContext);
             //建立ID索引
             buildIDIndex();

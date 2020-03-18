@@ -179,6 +179,7 @@ namespace iS3.Core
             objs.parent = this;
 
             // Old objs will be replaced recently loaded objects.
+            // 旧的objs将被替换为最近加载的objects！！这一句很重要
             if (success)
                 objsContainer[def.Name] = objs;
 

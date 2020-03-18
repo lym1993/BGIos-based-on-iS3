@@ -223,6 +223,7 @@ namespace iS3.Geology.Serialization
             // 将geo实例绑定到桩基础实例
             foreach (PileFoundation pf in objs.values)
             {
+                
                 //新建有关PFG的列表geo
                 //用来存储桩基础下地质数据
                 List<PileFoundationGeology> geo = null;
@@ -249,10 +250,11 @@ namespace iS3.Geology.Serialization
                     
                      //对PF实例中的geologies属性添加元素
                     pf.Geologies.Add(x);
+                    
                 }
             }
         }
-
+        
 
 
         //20200308读取桩基础所有数据,返回一个objs对象

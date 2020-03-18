@@ -120,6 +120,7 @@ namespace iS3.Core
 
         // Summary:
         //    Load objects from database
+        // 从数据库加载objs
         public virtual bool LoadObjs(DGObjects objs, DbContext dbContext)
         {
             DGObjectLoader loader2 = new DGObjectLoader(dbContext);

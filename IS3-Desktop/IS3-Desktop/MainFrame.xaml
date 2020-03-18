@@ -167,13 +167,13 @@
                             <MenuItem Header="文件"></MenuItem>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="  外业  " FontSize="25">
+                    <MenuItem Header="  勘察数据 " FontSize="25">
                         <MenuItem Header="测量" ></MenuItem>
                         <MenuItem Header="交底" ></MenuItem>
                         <MenuItem Header="变更" ></MenuItem>
                         <MenuItem Header="调查与测绘" ></MenuItem>
                     </MenuItem>
-                    <MenuItem Header="  内业  " FontSize="25">
+                    <MenuItem Header="  数据统计  " FontSize="25">
                         <MenuItem Header="室内试验" ></MenuItem>
                         <MenuItem Header="地层划分" ></MenuItem>
                         <MenuItem Header="水" ></MenuItem>
@@ -196,10 +196,10 @@
 
 
                     </MenuItem>
-                    <MenuItem Header="  地基方案与建议  " FontSize="25">
-                        <MenuItem Header="天然地基方案" ></MenuItem>
+                    <MenuItem Header="  勘察成果  " FontSize="25">
+                        <MenuItem Header="基础方案建议" ></MenuItem>
                         <MenuItem Header="地基处理方案" ></MenuItem>
-                        <MenuItem Header="桩基础方案"  ></MenuItem>
+                        
                     </MenuItem>
                 </Menu>
             </StackPanel>

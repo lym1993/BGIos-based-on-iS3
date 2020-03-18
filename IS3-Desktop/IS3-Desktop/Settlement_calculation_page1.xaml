@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:iS3.Desktop"
         mc:Ignorable="d"
-        Title="桩基础沉降测算插件V1.0" Height="768" Width="1024">
+        Title="桩基础沉降测算插件V1.0" Height="600" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -16,7 +16,7 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-            <GroupBox BorderBrush="Black" Header="基础数据" FontSize="18">
+            <GroupBox BorderBrush="Black" Header="基本数据" FontSize="18">
                 <Grid >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="150"/>
@@ -45,7 +45,7 @@
                 </Grid>
                 
             </GroupBox>
-            <GroupBox Grid.Column="1" BorderBrush="Black" FontSize="15" Header="桩基础数据预览">
+            <GroupBox Grid.Column="1" BorderBrush="Black" FontSize="15" Header="桩基础沉降计算过程">
                 <ScrollViewer Height="auto" >
                     <DataGrid CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" CanUserSortColumns="True"/>
                 </ScrollViewer>
