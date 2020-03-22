@@ -8,7 +8,13 @@ namespace Settlement_calculation_of_PilleFoundation
 {
     public class PileFoundationDto
     {
-        public string Name { get; set; }
+        //上部荷载
+        public double Load { get; set; }
+
+        //桩基沉降等效系数
+        public double PosiE { get; set; }
+
+        public long Name { get; set; }
 
         public string Type { get; set; }
 
@@ -16,11 +22,11 @@ namespace Settlement_calculation_of_PilleFoundation
 
         public double R { get; set; }
 
-        public string B { get; set; }
+        public double B { get; set; }
 
         public double Xcoordinate { get; set; }
 
-        public string Ycoordinate { get; set; }
+        public double Ycoordinate { get; set; }
 
         public double TopOfCushionCap { get; set; }
 
@@ -39,5 +45,28 @@ namespace Settlement_calculation_of_PilleFoundation
         public double PilesOfB { get; set; }
 
         public List<PileFoundationStrataInfoDto> PileFoundationStrataInfos { get; set; } = new List<PileFoundationStrataInfoDto>();
+
+
+        #region
+        //计算矩形桩基础PosiE的值
+        //public double GetPosiE()
+        //{
+        //    double _posiE;
+        //    double _C0;
+        //    double _C1;
+        //    double _C2;
+
+        //    //矩形承台短边桩数量
+        //    double nb = Math.Pow((this.NumberOfPile*B/L), 0.5);
+
+        //    //距径比C0、长径比C1、基础长款比C2
+
+        //    return _posiE;
+
+        //}
+        #endregion
+
+        //以下为计算方法
+
     }
 }

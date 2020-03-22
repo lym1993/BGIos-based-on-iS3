@@ -32,6 +32,7 @@ namespace Settlement_calculation_of_PilleFoundation
                 {
                     lookup.Add(pfs.PileFoundationID, pileFoundation = pf);
                 }
+                //如果strataInfo是空的，新建列表并加入地质数据，以PileFoundationID为筛选分界
                 if (pileFoundation.PileFoundationStrataInfos == null)
                     pileFoundation.PileFoundationStrataInfos = new List<PileFoundationStrataInfoDto>();
                 pileFoundation.PileFoundationStrataInfos.Add(pfs);

@@ -5,21 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:iS3.Desktop"
         mc:Ignorable="d"
-        Title="桩基础沉降测算插件V1.0" Height="600" Width="800">
+        Title="桩基础沉降计算插件V1.0" Height="auto" Width="auto"
+        >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="35"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" >
             <Grid.ColumnDefinitions >
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <GroupBox BorderBrush="Black" Header="基本数据" FontSize="18">
-                <Grid >
+                <Grid MaxWidth="280" >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="150"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid  Background="AliceBlue" Grid.Row="0" >
@@ -31,24 +33,57 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Row="0" FontSize="15" Width="auto"
+                        <!--<TextBlock Grid.Row="0" FontSize="15" Width="auto"
                                HorizontalAlignment="Left" VerticalAlignment="Center" Text="均布荷载（Kpa）" Margin="5"/>
                         <TextBox x:Name="load" FontSize="15" HorizontalAlignment="Left" 
-                             VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Width="100"/>
+                             VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Width="100"/>-->
                         <TextBlock Grid.Row="1" Grid.Column="0" FontSize="15" Width="auto"
                                HorizontalAlignment="Center" VerticalAlignment="Center" Text="桩基沉降经验系数ψ" Margin="5"/>
                         <TextBox x:Name="posi" FontSize="15" HorizontalAlignment="Left" 
                              VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Width="100"/>
+                        
+                        
                     </Grid>
-                    
+                    <Grid Grid.Row="1" >
+                        <TextBlock xml:space="preserve" FontSize="15" >
+ 使用说明:
+ 1、本插件通过读取数据库文件中的
+      dbo_PileFoundation表和
+      dbo_PileFoundationStrataInfo表
+      确定表内桩基础信息后即可进行计算；
+ 2、桩基沉降经验系数ψ的取值请参照
+      当地的真实情况进行取值，如没有
+      可不填，插件将按照规范进行插值
+      计算；
+ 3、插件右侧将显示的计算中间过程，
+      确认结果之后可生成沉降等值线图。
+                        </TextBlock>
+                    </Grid>
                     
                 </Grid>
                 
+                
             </GroupBox>
-            <GroupBox Grid.Column="1" BorderBrush="Black" FontSize="15" Header="桩基础沉降计算过程">
-                <ScrollViewer Height="auto" >
-                    <DataGrid CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" CanUserSortColumns="True"/>
-                </ScrollViewer>
+            <GroupBox Grid.Column="1" BorderBrush="Black" FontSize="15" Header="沉降计算过程" MinWidth="300">
+                <TabControl Margin="5" TabStripPlacement="Top">
+                    <TabItem Header="桩基础基本信息">
+                        <ScrollViewer>
+                            <DataGrid x:Name="GeneralInformation" ItemsSource="{Binding}" LoadingRow="GeneralInformation_LoadingRow" CanUserAddRows="False"
+                                      CanUserSortColumns="True" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="PileFoundationID" Binding="{Binding PileFoundationID}"/>
+                                    <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
+                                </DataGrid.Columns>
+                                
+                            </DataGrid>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="沉降计算结果">
+                        <ScrollViewer>
+                            <DataGrid></DataGrid>
+                        </ScrollViewer>
+                    </TabItem>
+                </TabControl>
             </GroupBox>
             
         </Grid>

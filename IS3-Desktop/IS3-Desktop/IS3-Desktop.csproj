@@ -539,9 +539,9 @@
       <Name>iS3-Unity-Webplayer</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Settlement-calculation-of-PilleFoundation\Settlement-calculation-of-PilleFoundation.csproj">
+    <ProjectReference Include="..\Settlement-calculation-of-PilleFoundation\Settlement-calculation.csproj">
       <Project>{7c013e26-9c84-4dc5-aa24-d8c6397e539a}</Project>
-      <Name>Settlement-calculation-of-PilleFoundation</Name>
+      <Name>Settlement-calculation</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

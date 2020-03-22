@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iS3-Config", "..\iS3-Config
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iS3-Geology", "..\IS3-Extensions\IS3-Geology\iS3-Geology.csproj", "{C88A7984-B96D-49A7-80A9-23AB3D0B5EF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settlement-calculation-of-PilleFoundation", "Settlement-calculation-of-PilleFoundation\Settlement-calculation-of-PilleFoundation.csproj", "{7C013E26-9C84-4DC5-AA24-D8C6397E539A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Settlement-calculation", "Settlement-calculation-of-PilleFoundation\Settlement-calculation.csproj", "{7C013E26-9C84-4DC5-AA24-D8C6397E539A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

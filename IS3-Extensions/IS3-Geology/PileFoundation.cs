@@ -51,11 +51,7 @@ namespace iS3.Geology
         public int PilesOfB { get; set; }
         //桩间距离
         public double DistanceOfPile { get; set; }
-
         
-
-        
-
         //针对桩基础地质情况集合的列表
         //第二个表中的数据，其中PileFoundationID与表一中的ID是对应的
         //一个Geologies列表包含一个PileFoundation实例的信息
@@ -66,6 +62,7 @@ namespace iS3.Geology
         {
             Geologies = new List<PileFoundationGeology>();
         }
+
         //含database参数的构造函数
         public PileFoundation(DataRow rawData):base(rawData)
         {
@@ -79,8 +76,7 @@ namespace iS3.Geology
             bool success = loader.LoadPileFoundations(objs);
             return success;
         }
-
-
+        
         //现在用不上
         //ToString覆写方法
         public override string ToString()
@@ -164,6 +160,53 @@ namespace iS3.Geology
 
             return charts;
         }
+
+        //20200320
+        //沉降计算模块，不知道能不能用
+        public void PileFoundationCalculate()
+        {
+            MessageBox.Show("桩基计算模块开始！");
+
+            #region 桩基础扩展方法
+            
+            //option为0时，采用默认得odbc读取方法
+            //option为1时，采用oledb方法读取
+            //string definitionFile = "PileFoundationTest.xml";
+            //DbContext dbContext = new DbContext("Data\\PileFoundationTest\\PileFoundationTest.mdb", 0);
+            DbContext dbContext = new DbContext("Data\\Z14\\Z14.mdb", 0);
+            //定义DGObjectsDefinition的各项属性
+            DGObjectsDefinition def = new DGObjectsDefinition();
+            def.DefNamesSQL = null;
+            def.Name = "AllPileFoundations";
+            def.Type = "PileFoundation";
+            def.TableNameSQL = "PileFoundation,PileFoundationStrataInfo";
+            def.OrderSQL = "ID,ID";
+
+            //Load方法
+            //实例化objs
+            DGObjects objs = new DGObjects(def);
+            bool success = objs.load(dbContext);
+
+            DGObjects objcal = objs;
+
+            foreach (var pf in objs.values)
+            {
+                
+                MessageBox.Show("转换成功！");
+            }
+
+            //objs的rawdataset属性
+            objs.rawDataSet = new System.Data.DataSet();
+
+            DGObject objhelper = ObjectHelper.CreateDGObjectFromSubclassName(def.Type);
+            objhelper.LoadObjs(objs, dbContext);
+            objs.buildIDIndex();
+            objs.buildRowViewIndex();
+
+            MessageBox.Show("该类调用完成！");
+            //objscal.count是桩基础的数量，进行循环
+            #endregion
+        }
     }
 
     //代表桩基础的地质性质（各层标高、天然地层等等）表2信息
@@ -187,4 +230,6 @@ namespace iS3.Geology
         public double Es400_500 { get; set; }
 
     }
+
+    
 }
