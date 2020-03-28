@@ -51,10 +51,11 @@
       dbo_PileFoundation表和
       dbo_PileFoundationStrataInfo表
       确定表内桩基础信息后即可进行计算；
+                            
  2、桩基沉降经验系数ψ的取值请参照
       当地的真实情况进行取值，如没有
-      可不填，插件将按照规范进行插值
-      计算；
+      可不填，插件将按照规范进行插值;
+      
  3、插件右侧将显示的计算中间过程，
       确认结果之后可生成沉降等值线图。
                         </TextBlock>
@@ -66,23 +67,48 @@
             </GroupBox>
             <GroupBox Grid.Column="1" BorderBrush="Black" FontSize="15" Header="沉降计算过程" MinWidth="300">
                 <TabControl Margin="5" TabStripPlacement="Top">
-                    <TabItem Header="桩基础基本信息">
-                        <ScrollViewer>
-                            <DataGrid x:Name="GeneralInformation" ItemsSource="{Binding}" LoadingRow="GeneralInformation_LoadingRow" CanUserAddRows="False"
-                                      CanUserSortColumns="True" >
+                    <TabItem Header="最终各点的沉降计算结果">
+                        <ScrollViewer HorizontalScrollBarVisibility="Visible">
+                            <DataGrid x:Name="FinalResult" CanUserAddRows="False" LoadingRow="GeneralInformation_LoadingRow"
+                                      CanUserSortColumns="True" AutoGenerateColumns="False" CanUserReorderColumns="True" AllowDrop="False">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="PileFoundationID" Binding="{Binding PileFoundationID}"/>
-                                    <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
+                                    <DataGridTextColumn  Header="桩基础名称" Binding="{Binding Name,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="承台形状" Binding="{Binding Type,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="分层总和法计算的沉降mm" Binding="{Binding FirstSettlement ,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="规范法计算的沉降mm" Binding="{Binding FinalSettlement,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="PosiE" Binding="{Binding PosiE,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="荷载" Binding="{Binding Load,Mode=OneWay}" Width="auto"/>
                                 </DataGrid.Columns>
-                                
                             </DataGrid>
                         </ScrollViewer>
                     </TabItem>
-                    <TabItem Header="沉降计算结果">
-                        <ScrollViewer>
-                            <DataGrid></DataGrid>
+                    <TabItem Header="分层总和法下各土层压缩量">
+                        <ScrollViewer HorizontalScrollBarVisibility="Visible">
+                            <DataGrid x:Name="GeneralInformation" LoadingRow="GeneralInformation_LoadingRow" CanUserAddRows="False" AllowDrop="True"
+                                      CanUserSortColumns="True" AutoGenerateColumns="False" CanUserReorderColumns="True" >
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID"  Binding="{Binding OBJECTID}" Width="auto"/>
+                                    <DataGridTextColumn Header="层底深度m" Binding="{Binding ZOfBase,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="分层厚度m" Binding="{Binding Thickness,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="所属天然土层" Binding="{Binding StratumID, Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="该层压缩量mm" Binding="{Binding SettlementOfSoil,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="土层压缩累积值mm" Binding="{Binding TotalOfSttlement,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="自重应力KPa" Binding="{Binding GravityStress,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="附加应力KPa" Binding="{Binding AdditionalStress,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="平均附加应力系数" Binding="{Binding AverageAdditionalStressCoefficient,Mode=OneWay }" Width="auto"/>
+                                    <DataGridTextColumn Header="Ai" Binding="{Binding Ai,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="附加应力系数" Binding="{Binding AdditionnalStressCoefficnt,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="TotalOfAi" Binding="{Binding TotalOfAi,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="Es/Ers" Binding="{Binding Esi,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="TotalOfAiEsi" Binding="{Binding TotalOfAiEsi,Mode=OneWay}" Width="auto"/>
+                                    
+
+                                </DataGrid.Columns>
+
+                            </DataGrid>
                         </ScrollViewer>
                     </TabItem>
+                    
                 </TabControl>
             </GroupBox>
             

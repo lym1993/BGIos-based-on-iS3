@@ -25,11 +25,13 @@ namespace iS3.Geology
         //桩基础形状
         public string Type { get; set; }
         //矩形承台长边l
-        public double LOfRectangularBearingPlatform { get; set; }
+        public double L { get; set; }
         //矩形承台短边b
-        public double BOfRectangularBearingPlatform { get; set; }
+        public double B { get; set; }
         //圆形承台半径
-        public double ROfRoundBearPlatform { get; set; }
+        public double R { get; set; }
+        //荷载
+        public double Load { get; set; }
         //承台顶标高
         public double TopOfCushionCap { get; set; }
         //桩顶标高OR承台底部标高
@@ -48,7 +50,7 @@ namespace iS3.Geology
         //承台下总桩数
         public int NumberOfPile { get; set; }
         //矩形桩基础短边桩数量
-        public int PilesOfB { get; set; }
+        public int PileOfB { get; set; }
         //桩间距离
         public double DistanceOfPile { get; set; }
         
@@ -219,7 +221,7 @@ namespace iS3.Geology
         //地层底标高
         public double Base { get; set; }
         //天然地层编号
-        public int StratumID { get; set; }
+        public string StratumID { get; set; }
         //土壤重度gama
         public double Gama { get; set; }
         //土壤压缩模量Es

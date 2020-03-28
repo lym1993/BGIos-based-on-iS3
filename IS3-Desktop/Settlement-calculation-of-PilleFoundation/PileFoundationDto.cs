@@ -8,13 +8,21 @@ namespace Settlement_calculation_of_PilleFoundation
 {
     public class PileFoundationDto
     {
+        //桩基础ID
+        public  int ID { get; set; }
         //上部荷载
         public double Load { get; set; }
 
         //桩基沉降等效系数
         public double PosiE { get; set; }
+        
+        //分层总和法计算的沉降量
+        public double FirstSettlement { get; set; }
 
-        public long Name { get; set; }
+        //该桩基沉降量
+        public double FinalSettlement { get; set; }
+        
+        public string Name { get; set; }
 
         public string Type { get; set; }
 

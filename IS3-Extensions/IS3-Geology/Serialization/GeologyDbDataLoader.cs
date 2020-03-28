@@ -110,11 +110,13 @@ namespace iS3.Geology.Serialization
                 //基础形状，矩形、圆形
                 PF.Type = ReadString(row, "Type");
                 //长边L
-                PF.LOfRectangularBearingPlatform = ReadDouble(row, "L").Value;
+                PF.L = ReadDouble(row, "L").Value;
                 //短边B
-                PF.BOfRectangularBearingPlatform = ReadDouble(row, "B").Value;
+                PF.B = ReadDouble(row, "B").Value;
                 //圆形基础半径R
-                PF.ROfRoundBearPlatform = ReadDouble(row, "R").Value;
+                PF.R = ReadDouble(row, "R").Value;
+                //荷载
+                PF.Load = ReadDouble(row, "Load").Value;
                 //承台顶标高
                 PF.TopOfCushionCap = ReadDouble(row, "TopOfCushionCap").Value;
                 //桩顶标高，也就是承台底
@@ -131,7 +133,7 @@ namespace iS3.Geology.Serialization
                 //承台下总桩数量
                 PF.NumberOfPile = ReadInt(row, "NumberOfPile").Value;
                 //矩形桩基础短边桩数量
-                PF.PilesOfB = ReadInt(row, "PilesOfB").Value;
+                PF.PileOfB =PF.Type=="Rectangle"? ReadInt(row, "PileOfB").Value:0;
                 //桩间距离
                 PF.DistanceOfPile = ReadDouble(row, "DistanceOfPile").Value;
 
@@ -192,7 +194,8 @@ namespace iS3.Geology.Serialization
                 //实例化PFGeology，给桩基础下地层的性质赋值
                 //所有的pfg实例组成了geo列表！！
                 PileFoundationGeology pfg = new PileFoundationGeology();
-                pfg.StratumID = ReadInt(row, "StratumID").Value;
+                //0323更改为string
+                pfg.StratumID = ReadString(row, "StratumID");
                 //地层底高程
                 pfg.Base = ReadDouble(row, "ElevationOfStratumBottom").Value;
                 //地层土壤重度
@@ -308,11 +311,13 @@ namespace iS3.Geology.Serialization
                 //基础形状，矩形、圆形
                 PF.Type = ReadString(row, "Type");
                 //长边L
-                PF.LOfRectangularBearingPlatform = ReadDouble(row, "L").Value;
+                PF.L = ReadDouble(row, "L").Value;
                 //短边B
-                PF.BOfRectangularBearingPlatform = ReadDouble(row, "B").Value;
+                PF.B = ReadDouble(row, "B").Value;
                 //圆形基础半径R
-                PF.ROfRoundBearPlatform = ReadDouble(row, "R").Value;
+                PF.R = ReadDouble(row, "R").Value;
+                //荷载
+                PF.Load = ReadDouble(row, "Load").Value;
                 //承台顶标高
                 PF.TopOfCushionCap = ReadDouble(row, "TopOfCushionCap").Value;
                 //桩顶标高，也就是承台底
@@ -329,7 +334,7 @@ namespace iS3.Geology.Serialization
                 //承台下总桩数量
                 PF.NumberOfPile = ReadInt(row, "NumberOfPile").Value;
                 //矩形桩基础短边桩数量
-                PF.PilesOfB = ReadInt(row, "PilesOfB").Value;
+                PF.PileOfB = ReadInt(row, "PileOfB").Value;
                 //桩间距离
                 PF.DistanceOfPile = ReadDouble(row, "DistanceOfPile").Value;
 
@@ -386,7 +391,7 @@ namespace iS3.Geology.Serialization
 
                 //实例化PFGeology，给桩基础下地层的性质赋值
                 PileFoundationGeology pfg = new PileFoundationGeology();
-                pfg.StratumID = ReadInt(row, "StratumID").Value;
+                pfg.StratumID = ReadString(row, "StratumID");
                 //地层底高程
                 pfg.Base = ReadDouble(row, "ElevationOfStratumBottom").Value;
                 //地层土壤重度

@@ -33,24 +33,34 @@ namespace Settlement_calculation_of_PilleFoundation
 
         public double Es400_500 { get; set; }
 
+        //回弹再压缩模量
+        public double Ers { get; set; }
+
         //以下为隐藏属性
         //土层厚度
         public double Thickness { get; set; }
         //桩端距离
         public double ZOfBase { get; set; }
-        //层顶自重应力
+        //层底处自重应力
         public double GravityStress { get; set; }
-        //层顶附加应力
-        public double AdditionStress { get; set; }
+        //层底处附加应力
+        public double AdditionalStress { get; set; }
+        //平均附加应力系数
+        public double AverageAdditionalStressCoefficient { get; set; }
         //附加应力系数
-        public double AdditionalStressCoefficient { get; set; }
-        //该层总应力
-        public double TotalStress { get; set; }
-        //压缩模量Es
-        public double CompressionModulus { get; set; }
+        public double AdditionnalStressCoefficnt { get; set; }
+        
+        //i层土压缩模量Es、回弹压缩模量Ers
+        public double Esi { get; set; }
+        //第i层土附加应力系数沿土层厚度积分值
+        public double Ai { get; set; }
         //该层压缩量
         public double SettlementOfSoil { get; set; }
-
-
+        //总积分值
+        public double TotalOfAi { get; set; }
+        //积分除以压缩模量累加值
+        public double TotalOfAiEsi { get; set; }
+        //沉降累加值
+        public double TotalOfSttlement { get; set; }
     }
 }
