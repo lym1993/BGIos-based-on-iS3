@@ -28,13 +28,13 @@ namespace iS3.Desktop
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        //沉降计算按钮
+        private void Button_Click_AllPF(object sender, RoutedEventArgs e)
         {
 
             //PileFoundation pf1 = new PileFoundation();
             //pf1.PileFoundationCalculate();
-            
+           
             #region 使用Dapper扩展方法
             //设置路径
             string pt = "Data\\Z14\\Z14.mdb";
@@ -46,30 +46,35 @@ namespace iS3.Desktop
                 var foundations = reader.GetPileFoundations();
                 //按Name名称排序
                 foundations.OrderBy(x => x.ID);
-                MessageBox.Show($"共读取表内桩基础数量: {foundations.Count()}个，即将开始进行沉降计算","计算提示");
-
-                //怎么绑定datagrid呢
-                //ObservableCollection<PileFoundationDto> pfd = foundations;
-
-                //20200322将录入结果绑定在datagrid1上面
-                //GeneralInformation.ItemsSource = foundations;
-              
+                //MessageBox.Show($"共读取表内桩基础数量: {foundations.Count()}个，即将开始进行沉降计算","计算提示");
+                
                 //建筑物地平面标高
                 double HorizontalPlane =38.25;
 
                 //新建结果集合，用来显示桩基础计算结果
-                var pilefoundationfinal = new List<PileFoundationDto>();
+                //var pilefoundationfinal = new List<PileFoundationDto>();
+                var pffinalViewCollection = new List<PileFoundationFinalView>();
+
+                //第二页，用来显示分层总和法的计算步骤
+                var strataInfoViewCollection = new List<StaraInfoFinalView>();
+                int id = 0;
+
+                //桩基础Name筛选框
+                var PFName = pfName.Text;
 
                 //遍历集合，开始计算沉降
                 foreach (var pfdto in foundations)
                 {
-                    //测试代码
-                    //if (pfdto.Name != "CZ-1")
-                       // continue;
+                    //如果搜索框是空的，计算所有
+                    if (PFName == "") ;
+
+                    else if (pfdto.Name != PFName)
+                        continue;
                     //按地层排序
                     //以地层标高降序排列
                     pfdto.PileFoundationStrataInfos.OrderByDescending(x => x.ElevationOfStratumBottom);
-                    
+
+                    #region 桩顶以上土的自重Upper
                     //地平面以下，桩顶以上原土层自重应力
                     double Upper = 0;
                     for (int i=0;i<pfdto.PileFoundationStrataInfos.Count;i++)
@@ -109,7 +114,9 @@ namespace iS3.Desktop
                         Upper += _upper;
                     }
                     //MessageBox.Show($"被挖掉的土自重为{Upper}KPa");
+                    #endregion
 
+                    #region 桩顶至桩底土的自重Middle
                     //计算桩顶至桩底土的自重应力
                     double Middle = 0;
                     for (int i = 0; i < pfdto.PileFoundationStrataInfos.Count; i++)
@@ -156,14 +163,13 @@ namespace iS3.Desktop
                         //累加赋值
                         Middle += _middle;
                     }
-
                     //MessageBox.Show($"中间自重应力计算完成，数值为{Middle}KPa");
+                    #endregion
+
 
                     //基底处某点的平均附加应力单位KN/M2
                     //等于荷载加上承台重减去原Upper土重
                     double P0 = pfdto.Load + 25 * (pfdto.TopOfCushionCap - pfdto.TopOfPile) - Upper;
-
-                    
 
                     //基底处土的自重应力
                     double Lower = Middle;
@@ -263,7 +269,7 @@ namespace iS3.Desktop
                     double totalofai = 0;
                     double totalofaiesi = 0;
                     double totalofsettlement = 0;
-                    
+
 
                     //新建一个列表，作为最终显示计算过程使用
                     //注意一定不要用之前的list进行计算，前面的list只是用来保存原始数据
@@ -271,6 +277,7 @@ namespace iS3.Desktop
                     //新建一个列表，进行插入与赋值，然后提供给datagrid显示
                     //使用old进行计算，计算结果给new
                     var calculateFinal = new List<PileFoundationStrataInfoDto>();
+                    
 
                     for (int i=0;i<lowersoilcal.Count;i++)
                     {
@@ -401,22 +408,64 @@ namespace iS3.Desktop
                             //输出结果
                             //MessageBox.Show($"当前是天然层第{finalsoil.StratumID}层，0.2倍的自重应力{finalsoil.GravityStress * 0.2}>=附加应力{finalsoil.AdditionalStress}，" +
                                 //$"分层总和法下该层沉降量为{finalsoil.TotalOfSttlement}mm，先不计算后面了");
-
+                                
                             //加入计算的尾层
                             calculateFinal.Add(finalsoil);
                             //传出分层总和沉降值
                             pfdto.FirstSettlement = finalsoil.TotalOfSttlement;
                             //因为这次是加入新List，不用删除土层元素了
+
+                            //第二页显示元素，建立好之后加入列表中
+                            var temp0 = new StaraInfoFinalView();
+
+                            id += 1;
+                            temp0.ID = id;
+                            temp0.Name = pfdto.Name;
+                            temp0.ZOfBase = finalsoil.ZOfBase.ToString("#0.0");
+                            temp0.Thickness = finalsoil.Thickness.ToString("#0.0");
+                            temp0.StratumID = finalsoil.StratumID;
+                            temp0.GravityStress = finalsoil.GravityStress.ToString("#0.0");
+                            temp0.AdditionalStress = finalsoil.AdditionalStress.ToString("#0.000");
+                            temp0.Esi = finalsoil.Esi.ToString("#0.000");
+                            temp0.AverageAdditionalStressCoefficient = finalsoil.AverageAdditionalStressCoefficient.ToString("#0.000");
+                            temp0.Ai = finalsoil.Ai.ToString("#0.000");
+                            temp0.SettlementOfSoil = finalsoil.SettlementOfSoil.ToString("#0.000");
+                            temp0.TotalOfAi = finalsoil.TotalOfAi.ToString("#0.000");
+                            temp0.TotalOfSttlement = finalsoil.TotalOfSttlement.ToString("#0.000");
+                            temp0.TotalOfAiEsi = finalsoil.TotalOfAiEsi.ToString("#0.000");
+
+                            strataInfoViewCollection.Add(temp0);
+
                             //跳出循环，不在进行计算分层总和法沉降
                             break;
                         }
 
                         //将地层元素加入
                         calculateFinal.Add(finalsoil);
+
+                        //第二页显示元素，建立好之后加入列表中
+                        var temp =new StaraInfoFinalView();
+                        id += 1;
+                        temp.ID = id;
+                        temp.Name = pfdto.Name;
+                        temp.ZOfBase = finalsoil.ZOfBase.ToString("#0.0");
+                        temp.Thickness = finalsoil.Thickness.ToString("#0.0");
+                        temp.StratumID = finalsoil.StratumID;
+                        temp.GravityStress = finalsoil.GravityStress.ToString("#0.0");
+                        temp.AdditionalStress=finalsoil.AdditionalStress.ToString("#0.000");
+                        temp.Esi = finalsoil.Esi.ToString("#0.000");
+                        temp.AverageAdditionalStressCoefficient=finalsoil.AverageAdditionalStressCoefficient.ToString("#0.000");
+                        temp.Ai=finalsoil.Ai.ToString("#0.000");
+                        temp.SettlementOfSoil=finalsoil.SettlementOfSoil.ToString("#0.000");
+                        temp.TotalOfAi=finalsoil.TotalOfAi.ToString("#0.000");
+                        temp.TotalOfSttlement=finalsoil.TotalOfSttlement.ToString("#0.000");
+                        temp.TotalOfAiEsi=finalsoil.TotalOfAiEsi.ToString("#0.000");
+
+                        strataInfoViewCollection.Add(temp);
                     }
                     
                     //显示分层总和法计算步骤，数据源为final
-                    GeneralInformation.ItemsSource = calculateFinal;
+                    //GeneralInformation.ItemsSource = calculateFinal;
 
                     //计算最终沉降量
                     //压缩模量当量值
@@ -424,33 +473,50 @@ namespace iS3.Desktop
 
                     //判断用户是否输入Posi值
                     //如果没有，就自动计算
-                    double Posi =posi==null?
-                        double.Parse(posi.Text):
-                        GetEmpiricalCoefficientOfSettlementCalculation(AvEsi);
+                    double Posi = posi.Text == string.Empty ? GetEmpiricalCoefficientOfSettlementCalculation(AvEsi) : double.Parse(posi.Text);
+                        
                     
                     //得到最终沉降
                     pfdto.FinalSettlement = pfdto.PosiE * Posi * totalofsettlement;
                     //MessageBox.Show($"桩基础{pfdto.Name}的最终沉降为{pfdto.FinalSettlement}mm");
-                    //桩基础集合页面赋值
-                    var pffinal = new PileFoundationDto();
-                    pffinal.Xcoordinate = pfdto.Xcoordinate;
-                    pffinal.Ycoordinate = pfdto.Ycoordinate;
-                    pffinal.Name = pfdto.Name;
-                    pffinal.FirstSettlement = totalofsettlement;
-                    pffinal.FinalSettlement = pfdto.FinalSettlement;
-                    pffinal.PosiE = pfdto.PosiE;
-                    pffinal.Type = pfdto.Type;
-                    pffinal.Load = pfdto.Load;
-                    //加入List
-                    pilefoundationfinal.Add(pffinal);
+
+                    //第一页桩基础集合页面赋值
+                    var pffinalview = new PileFoundationFinalView();
+                    pffinalview.ID = pffinalViewCollection.Count + 1;
+                    pffinalview.Name = pfdto.Name;
+                    pffinalview.Type = pfdto.Type;
+                    pffinalview.FirstSettlement= totalofsettlement.ToString("#0.000");
+                    pffinalview.PosiE = pfdto.PosiE.ToString("#0.000");
+                    pffinalview.FinalSettlement = pfdto.FinalSettlement.ToString("#0.000");
+                    pffinalview.Load=pfdto.Load.ToString("#0");
+                    pffinalview.Posi = Posi.ToString("#0.000");
+
+                    pffinalViewCollection.Add(pffinalview);
+
+                    //var pffinal = new PileFoundationDto();
+                    //pffinal.ID =pilefoundationfinal.Count+1;
+                    //pffinal.Xcoordinate = pfdto.Xcoordinate;
+                    //pffinal.Ycoordinate = pfdto.Ycoordinate;
+                    //pffinal.Name = pfdto.Name;
+                    //pffinal.FirstSettlement = totalofsettlement;
+                    //pffinal.FinalSettlement = pfdto.FinalSettlement;
+                    //pffinal.PosiE = pfdto.PosiE;
+                    //pffinal.Type = pfdto.Type;
+                    //pffinal.Load = pfdto.Load;
+                    ////加入List
+                    //pilefoundationfinal.Add(pffinal);
 
                 }
 
-                //显示桩基础沉降结果集合
-                FinalResult.ItemsSource = pilefoundationfinal;
+                //显示第一页桩基础沉降结果集合
+                //FinalResult.ItemsSource = pilefoundationfinal;
+                FinalResult.ItemsSource = pffinalViewCollection;
+
+                //第二页分层总和法步骤
+                GeneralInformation.ItemsSource = strataInfoViewCollection;
                 #endregion
 
-                MessageBox.Show("计算完成！");
+                MessageBox.Show("所有计算全部完成！");
 
             }
 
@@ -565,7 +631,18 @@ namespace iS3.Desktop
         //DataGrid生成新的行时候加入Index
         private void GeneralInformation_LoadingRow(object sender, System.Windows.Controls.DataGridRowEventArgs e)
         {
-            
+            //e.Row.Header = e.Row.GetIndex() + 1;
+        }
+
+        private void Button_Click_PFName(object sender, RoutedEventArgs e)
+        {
+            this.Button_Click_AllPF(sender,e);
+            Steps_Of_Layered_Summation_Method.IsSelected=true;
+        }
+
+        private void Button_Click_Contour(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

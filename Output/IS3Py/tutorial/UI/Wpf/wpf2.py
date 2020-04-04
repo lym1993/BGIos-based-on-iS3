@@ -7,7 +7,7 @@ from System.Windows import Window
 from System.Windows.Controls import Label
 
 # you need to change the path here
-fileName = r'D:\iS3\IS3Py\tutorial\UI\Wpf\HelloWorld.xaml'
+fileName = r'D:\BGIos\BGIos-based-on-iS3\Output\IS3Py\tutorial\UI\Wpf\HelloWorld.xaml'
 
 class HelloWorld(object):
     def __init__(self):

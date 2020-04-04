@@ -80,9 +80,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PileFoundationDto.cs" />
+    <Compile Include="PileFoundationFinalView.cs" />
     <Compile Include="PileFoundationReader.cs" />
     <Compile Include="PileFoundationStrataInfoDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaraInfoFinalView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\IS3-Core\iS3-Core.csproj">
