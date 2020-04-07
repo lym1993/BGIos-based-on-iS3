@@ -20,8 +20,7 @@ namespace iS3.Desktop
     /// </summary>
     public partial class Settlement_calculation_page1 : Window
     {
-        //200312读取ReadPileFoundation后的objs
-        //先声明一个全局变量，用于传出数据
+        
         
 
         public Settlement_calculation_page1()
@@ -44,6 +43,8 @@ namespace iS3.Desktop
             {
                 //读取桩基础信息
                 var foundations = reader.GetPileFoundations();
+
+                
                 //按Name名称排序
                 foundations.OrderBy(x => x.ID);
                 //MessageBox.Show($"共读取表内桩基础数量: {foundations.Count()}个，即将开始进行沉降计算","计算提示");
@@ -57,19 +58,21 @@ namespace iS3.Desktop
 
                 //第二页，用来显示分层总和法的计算步骤
                 var strataInfoViewCollection = new List<StaraInfoFinalView>();
+                //第二页索引
                 int id = 0;
 
                 //桩基础Name筛选框
                 var PFName = pfName.Text;
 
-                //遍历集合，开始计算沉降
-                foreach (var pfdto in foundations)
+                //桩基础第一次遍历
+                //目的是计算middle和独立p0；
+                foreach(var pfdto in foundations)
                 {
                     //如果搜索框是空的，计算所有
                     if (PFName == "") ;
-
                     else if (pfdto.Name != PFName)
                         continue;
+
                     //按地层排序
                     //以地层标高降序排列
                     pfdto.PileFoundationStrataInfos.OrderByDescending(x => x.ElevationOfStratumBottom);
@@ -77,13 +80,15 @@ namespace iS3.Desktop
                     #region 桩顶以上土的自重Upper
                     //地平面以下，桩顶以上原土层自重应力
                     double Upper = 0;
-                    for (int i=0;i<pfdto.PileFoundationStrataInfos.Count;i++)
+
+                    //第二层，元素为天然地层，求桩顶以上自重应力
+                    for (int i = 0; i < pfdto.PileFoundationStrataInfos.Count; i++)
                     {
                         //临时变量
-                        double _upper=0;
+                        double _upper = 0;
                         var temp1 = pfdto.PileFoundationStrataInfos[i];
                         //如果为首层，i-1为空
-                        var temp0 =i==0?null: pfdto.PileFoundationStrataInfos[i - 1];
+                        var temp0 = i == 0 ? null : pfdto.PileFoundationStrataInfos[i - 1];
                         //判断是否含水
                         double _gama = temp1.IsHasWater ? temp1.Gama - 10 : temp1.Gama;
 
@@ -91,21 +96,22 @@ namespace iS3.Desktop
 
                         //如果是第一层土，地平面减去第一层底
                         //由于是深基础，桩顶标高必小于天然土层底标高
-                        if(i==0)
+                        if (i == 0)
                         {
                             _upper = _gama * (HorizontalPlane - temp1.ElevationOfStratumBottom);
                         }
                         //上部土中间段，上层底减去该层底
                         //1底标高大于等于桩顶标高且大于上层底标高
                         //20200327是否要改为承台顶标高
-                        else if (temp1.ElevationOfStratumBottom>=pfdto.TopOfPile)
+                        else if (temp1.ElevationOfStratumBottom >= pfdto.TopOfPile)
                         {
-                            _upper=_gama*(temp0.ElevationOfStratumBottom-temp1.ElevationOfStratumBottom);
+                            _upper = _gama * (temp0.ElevationOfStratumBottom - temp1.ElevationOfStratumBottom);
                         }
                         //上部土桩顶处土层，上层底减去桩顶
-                        else if(pfdto.TopOfPile>=temp1.ElevationOfStratumBottom&&pfdto.TopOfPile<temp0.ElevationOfStratumBottom)
+                        else if (pfdto.TopOfPile >= temp1.ElevationOfStratumBottom && pfdto.TopOfPile < temp0.ElevationOfStratumBottom)
                         {
                             _upper = _gama * (temp0.ElevationOfStratumBottom - pfdto.TopOfPile);
+
                             //剩下土层不用计算了
                             Upper += _upper;
                             break;
@@ -125,7 +131,7 @@ namespace iS3.Desktop
                         double _middle = 0;
                         var temp1 = pfdto.PileFoundationStrataInfos[i];
                         //如果是首层i-1就为空
-                        var temp0 =i==0?null:pfdto.PileFoundationStrataInfos[i - 1];
+                        var temp0 = i == 0 ? null : pfdto.PileFoundationStrataInfos[i - 1];
 
                         //判断是否含水
                         double _gama = temp1.IsHasWater ? temp1.Gama - 10 : temp1.Gama;
@@ -151,7 +157,7 @@ namespace iS3.Desktop
                         }
                         //桩底所在层，得到最终结果
                         //桩底标高大于该层底，小于上层底
-                        else if (pfdto.BaseOfPile >=temp1.ElevationOfStratumBottom &&
+                        else if (pfdto.BaseOfPile >= temp1.ElevationOfStratumBottom &&
                             pfdto.BaseOfPile < temp0.ElevationOfStratumBottom)
                         {
                             _middle = _gama * (temp0.ElevationOfStratumBottom - pfdto.BaseOfPile);
@@ -164,21 +170,34 @@ namespace iS3.Desktop
                         Middle += _middle;
                     }
                     //MessageBox.Show($"中间自重应力计算完成，数值为{Middle}KPa");
+                    //输出Middle值
+                    pfdto.MiddleSoilWeight = Middle;
                     #endregion
 
-
-                    //基底处某点的平均附加应力单位KN/M2
+                    //基底处某点的平均附加应力值的单位是Kn/M2
                     //等于荷载加上承台重减去原Upper土重
                     double P0 = pfdto.Load + 25 * (pfdto.TopOfCushionCap - pfdto.TopOfPile) - Upper;
+                    //输出无干扰的有效应力值
+                    pfdto.AloneAdditionalStress = P0;
+                }
+
+                //桩基础第二次遍历
+                //目的是扫描相邻基础，开始计算沉降
+                foreach (var pfdto in foundations)
+                {
+                    //如果搜索框是空的，计算所有
+                    if (PFName == "") ;
+                    else if (pfdto.Name != PFName)
+                        continue;
 
                     //基底处土的自重应力
-                    double Lower = Middle;
-                    
+                    double Lower = pfdto.MiddleSoilWeight;
+
                     //分层总和法计算土层压缩量
                     //新建列表，计算下层土的压缩量
                     var lowersoilcal = pfdto.PileFoundationStrataInfos;
                     //移除桩底以上土层
-                    for (int i=0;i<lowersoilcal.Count;i++)
+                    for (int i = 0; i < lowersoilcal.Count; i++)
                     {
                         //层底标高大于等于桩底标高的土层移除
                         if (lowersoilcal[i].ElevationOfStratumBottom >= pfdto.BaseOfPile)
@@ -190,24 +209,24 @@ namespace iS3.Desktop
                     }
                     //MessageBox.Show("移除土层完成");
                     //自然土厚度分层
-                    for (int i=0; i<lowersoilcal.Count; i++)
+                    for (int i = 0; i < lowersoilcal.Count; i++)
                     {
-                        
                         var temp1 = lowersoilcal[i];
                         var temp0 = i == 0 ? null : lowersoilcal[i - 1];
                         //天然地层厚度划分
                         //如果是首层桩底减去层底，非首层桩底减去上层底
                         temp1.Thickness = i == 0 ? pfdto.BaseOfPile - temp1.ElevationOfStratumBottom : temp0.ElevationOfStratumBottom - temp1.ElevationOfStratumBottom;
                     }
+
                     //自然土层显示
                     //MessageBox.Show("自然土分层完成");
                     //人工土分层
                     //土层厚度标志
                     double flag = 0.5;
-                    for (int i=0;i<lowersoilcal.Count;i++)
+                    for (int i = 0; i < lowersoilcal.Count; i++)
                     {
                         var temp1 = lowersoilcal[i];
-                        if(temp1.Thickness>flag)
+                        if (temp1.Thickness > flag)
                         {
                             int a = 0;
                             double b = temp1.Thickness;
@@ -235,10 +254,10 @@ namespace iS3.Desktop
                                 Gama = temp1.Gama
                             };
                             //新建后插入新层
-                            for (int c=0;c<a;c++)
+                            for (int c = 0; c < a; c++)
                             {
                                 lowersoilcal.Insert(i, intelligentlayer_1);
-                                
+
                             }
                             //新建与插入尾层
                             PileFoundationStrataInfoDto intelligentlayer_2 = new PileFoundationStrataInfoDto
@@ -259,7 +278,7 @@ namespace iS3.Desktop
                             //移除被分解土层
                             lowersoilcal.Remove(lowersoilcal[i + a + 1]);
                         }
-                        
+
                     }
                     //MessageBox.Show("人工划分土完成");
 
@@ -270,6 +289,24 @@ namespace iS3.Desktop
                     double totalofaiesi = 0;
                     double totalofsettlement = 0;
 
+                    //设定相邻桩基础划分幅度
+                    double Flag = 150;
+                    //相邻基础集合
+                    //表示会对pfdto有影响的集合
+                    var AdjacentFoundations = new List<PileFoundationDto>();
+                    foreach (var pfdto0 in foundations)
+                    {
+                        var x = pfdto.Xcoordinate;
+                        var y = pfdto.Ycoordinate;
+                        var x1 = pfdto0.Xcoordinate;
+                        var y1 = pfdto0.Ycoordinate;
+                        //a=x*x+y*y
+                        var a = Math.Pow(x - x1, 2) + Math.Pow(y - y1, 2);
+                        var b = Math.Pow(Flag, 2);
+                        //距离小于15且不等于0；
+                        if (a <= b & a != 0)
+                            AdjacentFoundations.Add(pfdto0);
+                    }
 
                     //新建一个列表，作为最终显示计算过程使用
                     //注意一定不要用之前的list进行计算，前面的list只是用来保存原始数据
@@ -278,8 +315,7 @@ namespace iS3.Desktop
                     //使用old进行计算，计算结果给new
                     var calculateFinal = new List<PileFoundationStrataInfoDto>();
                     
-
-                    for (int i=0;i<lowersoilcal.Count;i++)
+                    for (int i = 0; i < lowersoilcal.Count; i++)
                     {
                         //old土层
                         var cal1 = lowersoilcal[i];
@@ -290,17 +326,17 @@ namespace iS3.Desktop
                         //new土层，计算完成后Add到final中
                         var finalsoil = new PileFoundationStrataInfoDto();
 
-                        //new土层的上一层，List的最后一个元素
+                        //new土层的上一层，也就是List的最后一个元素
                         var finalsoil0 = calculateFinal.Count == 0 ?
                             null :
                             calculateFinal.Last();
 
                         //此项目用来判断是否为抗拔桩
-                        double temp_p0 = P0;
+                        double temp_p0 = pfdto.AloneAdditionalStress;
 
                         //判断是否含水，含水减去10
                         var _gama = cal1.IsHasWater ? cal1.Gama - 10 : cal1.Gama;
-                       
+
 
                         //先给相同属性赋值
                         finalsoil.PileFoundationID = cal1.PileFoundationID;
@@ -316,27 +352,105 @@ namespace iS3.Desktop
                         finalsoil.IsHasWater = cal1.IsHasWater;
                         finalsoil.Ers = cal1.Ers;
                         finalsoil.IsHasWater = cal1.IsHasWater;
-                        finalsoil.OBJECTID += i+1;
+                        finalsoil.OBJECTID += i + 1;
                         finalsoil.StratumID = cal1.StratumID;
                         //深度等于叠加厚度值
                         finalsoil.ZOfBase = zofbase;
                         //这里是土的有效重度，减去含水10的
                         finalsoil.Gama = _gama;
 
-                       //平均附加应力系数，用来求Ai
-                       //区分矩形和圆形承台
+                        //平均附加应力系数，用来求Ai
+                        //200405到这里要考虑相邻基的础影响了
+                        //第一步：求本基础自身荷载影响下的平均附加应力系数
+                        //区分矩形和圆形承台，矩形因为是中心角点，这一部分系数要乘以四，圆形不用乘
                         finalsoil.AverageAdditionalStressCoefficient = pfdto.Type == "Rectangle" ?
-                            GetAverageAdditionalStressCoefficientRectangle(pfdto.L / pfdto.B, finalsoil.ZOfBase / (pfdto.B / 2)) :
+                            4*GetAverageAdditionalStressCoefficientRectangle(pfdto.L / pfdto.B, finalsoil.ZOfBase / (pfdto.B / 2)) :
                             GetAverageAdditionalStressCoefficientRound(pfdto.R, finalsoil.ZOfBase / pfdto.R);
+
+                        //受到相邻基础影响后的新增的有效应力
+                        double totalofadjacent = 0;
+
+                        //遍历影响列表，以桩基础为单位
+                        foreach(var pfdto0 in AdjacentFoundations)
+                        {
+                            //有效应力为负时，使用荷载数值
+                            double tempP0 = 0;
+                            
+                            //如果相邻基础附加应力小于零，其荷载数值直接作为传过来的附加应力
+                            if (pfdto0.AloneAdditionalStress <= 0)
+                                tempP0 = pfdto0.Load;
+                            //如果是圆形承台，等效为矩形
+                            if (pfdto0.Type == "Round")
+                                pfdto0.L = pfdto0.B = 2 * pfdto0.R;
+
+                            //开始计算
+                            //临时变量
+                            //中心基础
+                            var x = pfdto.Xcoordinate;
+                            var y = pfdto.Ycoordinate;
+                            //相邻基础
+                            var x1 = pfdto0.Xcoordinate;
+                            var y1 = pfdto0.Ycoordinate;
+                            //距离基础距离
+                            double n = finalsoil.ZOfBase;
+                            //临时附加应力
+                            double additionaltempP0 = 0;
+                           
+                            //长度均选择绝对值
+                            var x2 = Math.Abs(x - x1);
+                            var y2 = Math.Abs(y - y1);
+                            //关键假设，本项目基础长边L在Y轴方向，短边B在X轴方向
+                            //4个临时变量
+                            double temp1 = x2 + pfdto0.B / 2;
+                            double temp2 = y2 + pfdto0.L / 2;
+                            double temp3 = x2 - pfdto0.B / 2;
+                            double temp4 = y2 - pfdto0.L / 2;
+
+                            //被竖着切成两块
+                            if (x1>x-pfdto.B/2&&x1<x+pfdto.B/2)
+                            {
+                                //横竖原理相同，不同就在于L和B的选择
+                                additionaltempP0 = tempP0 * (GetAdditionalStressCoeffcientRectangle(LdivideB(temp2, pfdto0.B / 2 - Math.Abs(x1 - x)), n) -
+                                    GetAdditionalStressCoeffcientRectangle(LdivideB(temp4, pfdto0.B / 2 - Math.Abs(x1 - x)), n) +
+                                    GetAdditionalStressCoeffcientRectangle(LdivideB(temp2, pfdto0.B / 2 + Math.Abs(x1 - x)), n) -
+                                    GetAdditionalStressCoeffcientRectangle(LdivideB(temp4, pfdto0.B / 2 + Math.Abs(x1 - x)), n));
+                                
+                            }
+                            //被横着切成两块
+                            else if(y1>y-pfdto.L/2&&y1<y+pfdto.L/2)
+                            {
+                                //两个大矩形减去两个小的矩形之后叠加
+                                additionaltempP0 = tempP0 * (GetAdditionalStressCoeffcientRectangle(LdivideB(temp1, pfdto0.L / 2 - Math.Abs(y1 - y)), n) -
+                                     GetAdditionalStressCoeffcientRectangle(LdivideB(temp3, pfdto0.L / 2 - Math.Abs(y1 - y)), n) +
+                                     GetAdditionalStressCoeffcientRectangle(LdivideB(temp1, pfdto0.L / 2 + Math.Abs(y1 - y)), n) -
+                                     GetAdditionalStressCoeffcientRectangle(LdivideB(temp3, pfdto0.L / 2 + Math.Abs(y1 - y)), n));
+                            
+                            }
+                            //其他情况（xy均不同轴且没有交叉点）
+                            else
+                            {
+                                
+                                //考虑L很大B很小的情况？？
+                                additionaltempP0 = tempP0 * (GetAdditionalStressCoeffcientRectangle(LdivideB(temp1,temp2),n) + 
+                                    GetAdditionalStressCoeffcientRectangle(LdivideB(temp3,temp4),n) -
+                                    GetAdditionalStressCoeffcientRectangle(LdivideB(temp1,temp4),n) - 
+                                    GetAdditionalStressCoeffcientRectangle(LdivideB(temp2,temp3),n));
+                            }
+                            //累加值输出
+                            totalofadjacent += additionaltempP0;
+
+                            //MessageBox.Show($"{pfdto0.Name}影响该基础的附加应力为{additionaltempP0}Kn，累计值为{totalofadjacent}Kn");
+
+                        }
 
                         //如果是第一层土，自重应力和Ai求法不一样
                         if (i == 0)
                         {
                             //自重用来确定计算深度
-                            finalsoil.GravityStress = Middle + finalsoil.Gama * finalsoil.Thickness;
+                            finalsoil.GravityStress = pfdto.MiddleSoilWeight + finalsoil.Gama * finalsoil.Thickness;
                             //Ai为第i层土附加应力系数沿土层厚度的积分值，可近似按分块面积计算
                             finalsoil.Ai = finalsoil.ZOfBase * finalsoil.AverageAdditionalStressCoefficient;
-                            
+
                         }
                         //非第一层土
                         else
@@ -347,14 +461,10 @@ namespace iS3.Desktop
                             finalsoil.Ai = finalsoil.ZOfBase * finalsoil.AverageAdditionalStressCoefficient -
                                 finalsoil0.ZOfBase * finalsoil0.AverageAdditionalStressCoefficient;
                         }
-
-                        //判断使用Es值还是Ers值
-                        finalsoil.Esi = temp_p0 > 0 ? GetEs(finalsoil) : GetErs(finalsoil);
-
+                        
                         //为下一步判断附加应力值做准备
                         temp_p0 = pfdto.Load;
-
-
+                        
                         //附加应力，以P0正负作为判断标准
                         //求附加应力，矩形和圆形的附加应力分情况讨论
                         if (pfdto.Type == "Rectangle")
@@ -362,12 +472,14 @@ namespace iS3.Desktop
                             //附加应力系数
                             finalsoil.AdditionnalStressCoefficnt = GetAdditionalStressCoeffcientRectangle(pfdto.L / pfdto.B, finalsoil.ZOfBase / (pfdto.B / 2));
                             //附加应力
-                            finalsoil.AdditionalStress = P0 >= 0 ?
-                                  P0 *  finalsoil.AdditionnalStressCoefficnt :
-                                  temp_p0 *  finalsoil.AdditionnalStressCoefficnt;
+                            finalsoil.AdditionalStress = pfdto.AloneAdditionalStress >= 0 ?
+                                  pfdto.AloneAdditionalStress * finalsoil.AdditionnalStressCoefficnt+totalofadjacent :
+                                  temp_p0 * finalsoil.AdditionnalStressCoefficnt+totalofadjacent;
+                            //判断使用Es值还是Ers值
+                            finalsoil.Esi = temp_p0 > 0 ? GetEs(finalsoil) : GetErs(finalsoil);
                             //该层沉降量
-                            finalsoil.SettlementOfSoil = P0 >= 0 ?
-                                    P0 * finalsoil.Ai / finalsoil.Esi :
+                            finalsoil.SettlementOfSoil = pfdto.AloneAdditionalStress >= 0 ?
+                                    pfdto.AloneAdditionalStress * finalsoil.Ai / finalsoil.Esi :
                                     temp_p0 * finalsoil.Ai / finalsoil.Esi;
                         }
                         else if (pfdto.Type == "Round")
@@ -375,12 +487,14 @@ namespace iS3.Desktop
                             //附加应力系数
                             finalsoil.AdditionnalStressCoefficnt = GetAdditionalStressCoeffcientRound(pfdto.R, finalsoil.ZOfBase);
                             //附加应力
-                            finalsoil.AdditionalStress = P0 >= 0 ?
-                                  P0 * finalsoil.AdditionnalStressCoefficnt :
-                                  temp_p0 * finalsoil.AdditionnalStressCoefficnt;
+                            finalsoil.AdditionalStress = pfdto.AloneAdditionalStress >= 0 ?
+                                  pfdto.AloneAdditionalStress * finalsoil.AdditionnalStressCoefficnt + totalofadjacent :
+                                  temp_p0 * finalsoil.AdditionnalStressCoefficnt + totalofadjacent;
+                            //判断使用Es值还是Ers值
+                            finalsoil.Esi = temp_p0 > 0 ? GetEs(finalsoil) : GetErs(finalsoil);
                             //该层沉降
-                            finalsoil.SettlementOfSoil = P0 >= 0 ?
-                                P0 * finalsoil.Ai / finalsoil.Esi :
+                            finalsoil.SettlementOfSoil = pfdto.AloneAdditionalStress >= 0 ?
+                                pfdto.AloneAdditionalStress * finalsoil.Ai / finalsoil.Esi :
                                 temp_p0 * finalsoil.Ai / finalsoil.Esi;
                         }
 
@@ -392,23 +506,23 @@ namespace iS3.Desktop
                         //以下为错误示范！！
                         //finalsoil.TotalOfAi  += finalsoil.Ai;
                         //totalofai= finalsoil.TotalOfAi;
-                        
-                        totalofaiesi += finalsoil.Ai / finalsoil.Esi ;
+
+                        totalofaiesi += finalsoil.Ai / finalsoil.Esi;
                         finalsoil.TotalOfAiEsi = totalofaiesi;
 
                         //土层压缩累加值
                         totalofsettlement += finalsoil.SettlementOfSoil;
                         finalsoil.TotalOfSttlement = totalofsettlement;
-                        
 
-                        //是否继续计算
+
+                        //判断是否继续计算
                         //0.2自重应力大于等于附加应力，计算最后一次跳出循环
                         if (0.2 * finalsoil.GravityStress >= finalsoil.AdditionalStress)
                         {
                             //输出结果
                             //MessageBox.Show($"当前是天然层第{finalsoil.StratumID}层，0.2倍的自重应力{finalsoil.GravityStress * 0.2}>=附加应力{finalsoil.AdditionalStress}，" +
-                                //$"分层总和法下该层沉降量为{finalsoil.TotalOfSttlement}mm，先不计算后面了");
-                                
+                            //$"分层总和法下该层沉降量为{finalsoil.TotalOfSttlement}mm，先不计算后面了");
+
                             //加入计算的尾层
                             calculateFinal.Add(finalsoil);
                             //传出分层总和沉降值
@@ -426,7 +540,7 @@ namespace iS3.Desktop
                             temp0.StratumID = finalsoil.StratumID;
                             temp0.GravityStress = finalsoil.GravityStress.ToString("#0.0");
                             temp0.AdditionalStress = finalsoil.AdditionalStress.ToString("#0.000");
-                            temp0.Esi = finalsoil.Esi.ToString("#0.000");
+                            temp0.Esi = finalsoil.Esi.ToString("#0.0");
                             temp0.AverageAdditionalStressCoefficient = finalsoil.AverageAdditionalStressCoefficient.ToString("#0.000");
                             temp0.Ai = finalsoil.Ai.ToString("#0.000");
                             temp0.SettlementOfSoil = finalsoil.SettlementOfSoil.ToString("#0.000");
@@ -444,7 +558,7 @@ namespace iS3.Desktop
                         calculateFinal.Add(finalsoil);
 
                         //第二页显示元素，建立好之后加入列表中
-                        var temp =new StaraInfoFinalView();
+                        var temp = new StaraInfoFinalView();
                         id += 1;
                         temp.ID = id;
                         temp.Name = pfdto.Name;
@@ -452,18 +566,18 @@ namespace iS3.Desktop
                         temp.Thickness = finalsoil.Thickness.ToString("#0.0");
                         temp.StratumID = finalsoil.StratumID;
                         temp.GravityStress = finalsoil.GravityStress.ToString("#0.0");
-                        temp.AdditionalStress=finalsoil.AdditionalStress.ToString("#0.000");
-                        temp.Esi = finalsoil.Esi.ToString("#0.000");
-                        temp.AverageAdditionalStressCoefficient=finalsoil.AverageAdditionalStressCoefficient.ToString("#0.000");
-                        temp.Ai=finalsoil.Ai.ToString("#0.000");
-                        temp.SettlementOfSoil=finalsoil.SettlementOfSoil.ToString("#0.000");
-                        temp.TotalOfAi=finalsoil.TotalOfAi.ToString("#0.000");
-                        temp.TotalOfSttlement=finalsoil.TotalOfSttlement.ToString("#0.000");
-                        temp.TotalOfAiEsi=finalsoil.TotalOfAiEsi.ToString("#0.000");
+                        temp.AdditionalStress = finalsoil.AdditionalStress.ToString("#0.000");
+                        temp.Esi = finalsoil.Esi.ToString("#0.0");
+                        temp.AverageAdditionalStressCoefficient = finalsoil.AverageAdditionalStressCoefficient.ToString("#0.000");
+                        temp.Ai = finalsoil.Ai.ToString("#0.000");
+                        temp.SettlementOfSoil = finalsoil.SettlementOfSoil.ToString("#0.000");
+                        temp.TotalOfAi = finalsoil.TotalOfAi.ToString("#0.000");
+                        temp.TotalOfSttlement = finalsoil.TotalOfSttlement.ToString("#0.000");
+                        temp.TotalOfAiEsi = finalsoil.TotalOfAiEsi.ToString("#0.000");
 
                         strataInfoViewCollection.Add(temp);
                     }
-                    
+
                     //显示分层总和法计算步骤，数据源为final
                     //GeneralInformation.ItemsSource = calculateFinal;
 
@@ -474,8 +588,8 @@ namespace iS3.Desktop
                     //判断用户是否输入Posi值
                     //如果没有，就自动计算
                     double Posi = posi.Text == string.Empty ? GetEmpiricalCoefficientOfSettlementCalculation(AvEsi) : double.Parse(posi.Text);
-                        
-                    
+
+
                     //得到最终沉降
                     pfdto.FinalSettlement = pfdto.PosiE * Posi * totalofsettlement;
                     //MessageBox.Show($"桩基础{pfdto.Name}的最终沉降为{pfdto.FinalSettlement}mm");
@@ -485,29 +599,17 @@ namespace iS3.Desktop
                     pffinalview.ID = pffinalViewCollection.Count + 1;
                     pffinalview.Name = pfdto.Name;
                     pffinalview.Type = pfdto.Type;
-                    pffinalview.FirstSettlement= totalofsettlement.ToString("#0.000");
+                    pffinalview.FirstSettlement = totalofsettlement.ToString("#0.000");
                     pffinalview.PosiE = pfdto.PosiE.ToString("#0.000");
                     pffinalview.FinalSettlement = pfdto.FinalSettlement.ToString("#0.000");
-                    pffinalview.Load=pfdto.Load.ToString("#0");
+                    pffinalview.Load = pfdto.Load.ToString("#0");
                     pffinalview.Posi = Posi.ToString("#0.000");
 
                     pffinalViewCollection.Add(pffinalview);
-
-                    //var pffinal = new PileFoundationDto();
-                    //pffinal.ID =pilefoundationfinal.Count+1;
-                    //pffinal.Xcoordinate = pfdto.Xcoordinate;
-                    //pffinal.Ycoordinate = pfdto.Ycoordinate;
-                    //pffinal.Name = pfdto.Name;
-                    //pffinal.FirstSettlement = totalofsettlement;
-                    //pffinal.FinalSettlement = pfdto.FinalSettlement;
-                    //pffinal.PosiE = pfdto.PosiE;
-                    //pffinal.Type = pfdto.Type;
-                    //pffinal.Load = pfdto.Load;
-                    ////加入List
-                    //pilefoundationfinal.Add(pffinal);
-
+                    
                 }
 
+                
                 //显示第一页桩基础沉降结果集合
                 //FinalResult.ItemsSource = pilefoundationfinal;
                 FinalResult.ItemsSource = pffinalViewCollection;
@@ -516,11 +618,12 @@ namespace iS3.Desktop
                 GeneralInformation.ItemsSource = strataInfoViewCollection;
                 #endregion
 
-                MessageBox.Show("所有计算全部完成！");
+                //MessageBox.Show("所有计算全部完成！");
 
             }
 
         }
+
         //沉降计算经验系数
         private double GetEmpiricalCoefficientOfSettlementCalculation(double avEsi)
         {
@@ -546,7 +649,7 @@ namespace iS3.Desktop
         private double GetEs(PileFoundationStrataInfoDto temp1)
         {
             double value = 0;
-            //首先赋值
+            //首先将结果赋值0-100
             value = temp1.Es0_100;
 
             //判断附加应力在Es曲线的哪一段，如果该段不为空替换value
@@ -558,8 +661,9 @@ namespace iS3.Desktop
                 value = temp1.Es300_400 == 0 ? value : temp1.Es300_400;
             else if (temp1.AdditionalStress >= 400 && temp1.AdditionalStress < 500)
                 value = temp1.Es400_500 == 0 ? value : temp1.Es400_500;
+            //大于500的统统使用400-500的值
             else if (temp1.AdditionalStress > 500)
-                MessageBox.Show($"该分层附加应力值大于500，设置600的表吧！");
+                value = temp1.Es400_500 == 0 ? value : temp1.Es400_500;
             return value;
         }
 
@@ -569,7 +673,7 @@ namespace iS3.Desktop
             return temp1.Ers ;
         }
 
-        //平均附加应力系数矩形
+        //平均附加应力系数矩形，没有乘以四！！！
         private double GetAverageAdditionalStressCoefficientRectangle(double m,double n)
         {
             double result;
@@ -586,7 +690,7 @@ namespace iS3.Desktop
                     + m / n * Math.Log((temp1 - 1) * (temp2 + 1) / ((temp1 + 1) * (temp2 - 1)), Math.E)
                     + 1 / n * Math.Log((temp1 - m) * (temp2 + m) / ((temp1 + m) * (temp2 - m)), Math.E));
             }
-            return 4*result;
+            return result;
 
         }
 
@@ -634,15 +738,25 @@ namespace iS3.Desktop
             //e.Row.Header = e.Row.GetIndex() + 1;
         }
 
+        //桩基础筛选框
         private void Button_Click_PFName(object sender, RoutedEventArgs e)
         {
             this.Button_Click_AllPF(sender,e);
+            //切换视角
             Steps_Of_Layered_Summation_Method.IsSelected=true;
         }
 
+        //绘制等值线图方法
         private void Button_Click_Contour(object sender, RoutedEventArgs e)
         {
+            //
+            MessageBox.Show("敬请期待！");
+        }
 
+        private double LdivideB(double a,double b)
+        {
+            var result = a > b ? (a / b) : (b / a);
+            return result;
         }
     }
 }

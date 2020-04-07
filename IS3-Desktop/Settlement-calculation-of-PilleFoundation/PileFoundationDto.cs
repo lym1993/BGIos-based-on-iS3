@@ -12,7 +12,10 @@ namespace Settlement_calculation_of_PilleFoundation
         public  int ID { get; set; }
         //上部荷载
         public double Load { get; set; }
-
+        //独立附加应力值
+        public double AloneAdditionalStress { get; set; }
+        //桩底处土的自重应力
+        public double MiddleSoilWeight { get; set; }
         //桩基沉降等效系数
         public double PosiE { get; set; }
         

@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="桩基础沉降计算插件V1.0" Height="auto" Width="auto"
         >
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style x:Key="contentCenterStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+
+        </ResourceDictionary>
+    </Window.Resources>
     
     <Grid>
         <Grid.RowDefinitions>
@@ -35,10 +43,7 @@
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <!--<TextBlock Grid.Row="0" FontSize="15" Width="auto"
-                               HorizontalAlignment="Left" VerticalAlignment="Center" Text="均布荷载（Kpa）" Margin="5"/>
-                        <TextBox x:Name="load" FontSize="15" HorizontalAlignment="Left" 
-                             VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" Width="100"/>-->
+                        
                         <TextBlock Grid.Row="0" Grid.Column="0" FontSize="15" Width="auto"
                                HorizontalAlignment="Left" VerticalAlignment="Center" Text="沉降经验系数ψ" Margin="3"/>
                         <TextBox x:Name="posi" FontSize="20" HorizontalAlignment="Center" 
@@ -81,19 +86,18 @@
                                       CanUserSortColumns="True" AutoGenerateColumns="False" CanUserReorderColumns="True" AllowDrop="False">
                                 <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="DataGridColumnHeader" >
-                                        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
                                     </Style>
                                 </DataGrid.ColumnHeaderStyle>
-                                
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn  Header="ID" Binding="{Binding ID,Mode=OneWay}" Width="auto"  />
-                                    <DataGridTextColumn  Header="桩基础名称" Binding="{Binding Name,Mode=OneWay}" Width="auto"/>
-                                    <DataGridTextColumn Header="承台形状" Binding="{Binding Type,Mode=OneWay}" Width="auto"/>
-                                    <DataGridTextColumn Header="分层法沉降mm" Binding="{Binding FirstSettlement ,Mode=OneWay}" Width="auto"/>
-                                    <DataGridTextColumn Header="规范法沉降mm" Binding="{Binding FinalSettlement,Mode=OneWay}" Width="auto"/>
-                                    <DataGridTextColumn Header="Posi" Binding="{Binding Posi,Mode=OneWay}" Width="auto"/>
-                                    <DataGridTextColumn Header="PosiE" Binding="{Binding PosiE,Mode=OneWay}" Width="auto"/>
-                                    <DataGridTextColumn Header="荷载" Binding="{Binding Load,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn  Header="ID" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding ID,Mode=OneWay}" Width="auto"  />
+                                    <DataGridTextColumn  Header="桩基础名称" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding Name,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="承台形状" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding Type,Mode=OneWay}" Width="150"/>
+                                    <DataGridTextColumn Header="分层法沉降mm" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding FirstSettlement ,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="规范法沉降mm" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding FinalSettlement,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="Posi" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding Posi,Mode=OneWay}" Width="100"/>
+                                    <DataGridTextColumn Header="PosiE" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding PosiE,Mode=OneWay}" Width="100"/>
+                                    <DataGridTextColumn Header="荷载Kn/m2" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding Load,Mode=OneWay}" Width="auto"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </ScrollViewer>
@@ -102,24 +106,27 @@
                         <ScrollViewer HorizontalScrollBarVisibility="Visible">
                             <DataGrid x:Name="GeneralInformation" LoadingRow="GeneralInformation_LoadingRow" CanUserAddRows="False" AllowDrop="True"
                                       CanUserSortColumns="True" AutoGenerateColumns="False" CanUserReorderColumns="True" >
+                                <DataGrid.ColumnHeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader" >
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGrid.ColumnHeaderStyle>
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="ID"  Binding="{Binding ID,Mode=OneWay}" Width="auto"/>
-                                    <DataGridTextColumn Header="桩基础" Binding="{Binding Name,Mode=OneWay}" Width="auto"/>
-                                    <DataGridTextColumn Header="层底深度m" Binding="{Binding ZOfBase,Mode=OneWay}" Width="auto"/>
-                                    <DataGridTextColumn Header="分层厚度m" Binding="{Binding Thickness,Mode=OneWay}" Width="auto"/>
-                                    <DataGridTextColumn Header="天然土层" Binding="{Binding StratumID, Mode=OneWay}" Width="auto"/>
-                                    <DataGridTextColumn Header="压缩量mm" Binding="{Binding SettlementOfSoil,Mode=OneWay}" Width="auto"/>
-                                    <DataGridTextColumn Header="压缩累积值mm" Binding="{Binding TotalOfSttlement,Mode=OneWay}" Width="auto"/>
-                                    <DataGridTextColumn Header="自重应力KPa" Binding="{Binding GravityStress,Mode=OneWay}" Width="auto"/>
-                                    <DataGridTextColumn Header="附加应力KPa" Binding="{Binding AdditionalStress,Mode=OneWay}" Width="auto"/>
-                                    <DataGridTextColumn Header="平均附加应力系数" Binding="{Binding AverageAdditionalStressCoefficient,Mode=OneWay }" Width="auto"/>
-                                    <DataGridTextColumn Header="Ai" Binding="{Binding Ai,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="ID" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding ID,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="桩基础" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding Name,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="层底深度m" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding ZOfBase,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="分层厚度m" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding Thickness,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="天然土层" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding StratumID, Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="压缩量mm" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding SettlementOfSoil,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="压缩累积值mm" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding TotalOfSttlement,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="自重应力KPa" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding GravityStress,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="附加应力KPa" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding AdditionalStress,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="平均附加应力系数" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding AverageAdditionalStressCoefficient,Mode=OneWay }" Width="auto"/>
+                                    <DataGridTextColumn Header="Ai" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding Ai,Mode=OneWay}" Width="80"/>
                                     <!--<DataGridTextColumn Header="附加应力系数" Binding="{Binding AdditionnalStressCoefficnt,Mode=OneWay}" Width="auto"/>-->
-                                    <DataGridTextColumn Header="TotalOfAi" Binding="{Binding TotalOfAi,Mode=OneWay}" Width="auto"/>
-                                    <DataGridTextColumn Header="Es/Ers" Binding="{Binding Esi,Mode=OneWay}" Width="auto"/>
-                                    <DataGridTextColumn Header="TotalOfAiEsi" Binding="{Binding TotalOfAiEsi,Mode=OneWay}" Width="auto"/>
-                                    
-                                    
+                                    <DataGridTextColumn Header="TotalOfAi" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding TotalOfAi,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="Es/Ers" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding Esi,Mode=OneWay}" Width="auto"/>
+                                    <DataGridTextColumn Header="TotalOfAiEsi" ElementStyle="{StaticResource contentCenterStyle}" Binding="{Binding TotalOfAiEsi,Mode=OneWay}" Width="auto"/>
 
                                 </DataGrid.Columns>
 
