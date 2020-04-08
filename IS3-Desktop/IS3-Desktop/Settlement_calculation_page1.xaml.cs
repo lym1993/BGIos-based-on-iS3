@@ -20,9 +20,9 @@ namespace iS3.Desktop
     /// </summary>
     public partial class Settlement_calculation_page1 : Window
     {
+        //用来存储沉降集合
+        List<PileFoundationDto> FinalPileFoundationDtos = new List<PileFoundationDto>();
         
-        
-
         public Settlement_calculation_page1()
         {
             InitializeComponent();
@@ -30,20 +30,19 @@ namespace iS3.Desktop
         //沉降计算按钮
         private void Button_Click_AllPF(object sender, RoutedEventArgs e)
         {
+            //清空结果集合
+            FinalPileFoundationDtos.Clear();
 
-            //PileFoundation pf1 = new PileFoundation();
-            //pf1.PileFoundationCalculate();
-           
             #region 使用Dapper扩展方法
             //设置路径
             string pt = "Data\\Z14\\Z14.mdb";
            // string pt = "Data\\Z14\\0327.mdb";
             var path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, pt);
+            //开始进行计算
             using (var reader = new PileFoundationReader(path))
             {
                 //读取桩基础信息
                 var foundations = reader.GetPileFoundations();
-
                 
                 //按Name名称排序
                 foundations.OrderBy(x => x.ID);
@@ -53,7 +52,6 @@ namespace iS3.Desktop
                 double HorizontalPlane =38.25;
 
                 //新建结果集合，用来显示桩基础计算结果
-                //var pilefoundationfinal = new List<PileFoundationDto>();
                 var pffinalViewCollection = new List<PileFoundationFinalView>();
 
                 //第二页，用来显示分层总和法的计算步骤
@@ -148,7 +146,6 @@ namespace iS3.Desktop
                             //跳出本次循环
                             continue;
                         }
-
                         //中间层，叠加即可
                         else if (temp1.ElevationOfStratumBottom > pfdto.BaseOfPile &&
                             temp0.ElevationOfStratumBottom < pfdto.TopOfPile)
@@ -177,7 +174,7 @@ namespace iS3.Desktop
                     //基底处某点的平均附加应力值的单位是Kn/M2
                     //等于荷载加上承台重减去原Upper土重
                     double P0 = pfdto.Load + 25 * (pfdto.TopOfCushionCap - pfdto.TopOfPile) - Upper;
-                    //输出无干扰的有效应力值
+                    //输出由于基础上方均布荷载所产生的有效应力值
                     pfdto.AloneAdditionalStress = P0;
                 }
 
@@ -289,7 +286,7 @@ namespace iS3.Desktop
                     double totalofaiesi = 0;
                     double totalofsettlement = 0;
 
-                    //设定相邻桩基础划分幅度
+                    //设定相邻桩基础扫描幅度
                     double Flag = 150;
                     //相邻基础集合
                     //表示会对pfdto有影响的集合
@@ -589,10 +586,12 @@ namespace iS3.Desktop
                     //如果没有，就自动计算
                     double Posi = posi.Text == string.Empty ? GetEmpiricalCoefficientOfSettlementCalculation(AvEsi) : double.Parse(posi.Text);
 
-
                     //得到最终沉降
                     pfdto.FinalSettlement = pfdto.PosiE * Posi * totalofsettlement;
                     //MessageBox.Show($"桩基础{pfdto.Name}的最终沉降为{pfdto.FinalSettlement}mm");
+
+                    //输出pfdto的值，该集合包含了沉降项目的沉降信息
+                    FinalPileFoundationDtos.Add(pfdto);
 
                     //第一页桩基础集合页面赋值
                     var pffinalview = new PileFoundationFinalView();
@@ -617,11 +616,9 @@ namespace iS3.Desktop
                 //第二页分层总和法步骤
                 GeneralInformation.ItemsSource = strataInfoViewCollection;
                 #endregion
-
                 //MessageBox.Show("所有计算全部完成！");
 
             }
-
         }
 
         //沉降计算经验系数
@@ -749,10 +746,21 @@ namespace iS3.Desktop
         //绘制等值线图方法
         private void Button_Click_Contour(object sender, RoutedEventArgs e)
         {
-            //
-            MessageBox.Show("敬请期待！");
+            //读取桩基础信息
+            //FinalPileFoundationDtos就是
+            if (FinalPileFoundationDtos.Count == 0)
+                MessageBox.Show("请先计算桩基础沉降！");
+
+            MessageBox.Show($"扫描到桩基础信息{FinalPileFoundationDtos.Count}个，即将开始绘制等值线图");
+
+            //文博后面交给你了
+            foreach(var pfdto in FinalPileFoundationDtos)
+            {
+                MessageBox.Show($"桩基础{pfdto.Name}的横坐标{pfdto.Xcoordinate},的纵坐标{pfdto.Ycoordinate},最终沉降为{pfdto.FinalSettlement}。");
+            }
         }
 
+        //相邻基础影响下m值的求法
         private double LdivideB(double a,double b)
         {
             var result = a > b ? (a / b) : (b / a);
